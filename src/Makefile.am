@@ -1,2 +1,2 @@
-bin_PROGRAMS = rcube
-rcube_SOURCES = main.c
+bin_PROGRAMS = r3
+r3_SOURCES = main.c
