@@ -1,4 +1,4 @@
-AC_INIT([rcube], [0.1])
+AC_INIT([rcube], [0.0])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 AC_PROG_CC
 AC_CONFIG_HEADERS([config.h])
