@@ -7,15 +7,19 @@
 #
 lib_LIBRARIES = libr3.a
 
-libr3_a_SOURCES = r3_init.c \
-		  r3_move.c
+libr3_a_SOURCES = \
+		  r3_init.c \
+		  r3_move.c \
+		  r3_sprint.c
 
-include_HEADERS = r3.h \
+include_HEADERS = \
+		  r3.h \
 		  r3_init.h \
 		  r3_move.h \
+		  r3_sprint.h \
 		  r3colors.h \
 		  r3cube.h \
 		  r3moves.h \
 		  r3sides.h
 
-AM_CFLAGS = -std=c99
+AM_CFLAGS = -std=c99 -Wall -Wextra -Werror

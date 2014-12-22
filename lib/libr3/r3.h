@@ -21,6 +21,7 @@
 // API
 #include "r3_init.h"
 #include "r3_move.h"
+#include "r3_sprint.h"
 
 #endif /* _R3_H_ */
 // vim: et ts=4 sw=4 sts=-1 :
