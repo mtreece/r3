@@ -22,7 +22,6 @@ int r3_init(r3cube *cube)
     memset(cube, 0x00, sizeof(r3cube));
     cube->position = 0;
 
-    int color;
     int colors[] = {
         R3_WHITE,
         R3_RED,
@@ -36,15 +35,15 @@ int r3_init(r3cube *cube)
 
     for(int i = 0; i < NUM_SIDES; ++i)
     {
-        color = colors[i];
         for(int j = 0; j < CUBE_HEIGHT; ++j)
         {
             for(int k = 0; k < CUBE_WIDTH; ++k)
             {
-                cube->sides[i].cells[j][k].color = color;
+                cube->sides[i].cells[j][k].color = colors[i];
             }
         }
     }
+
     return 0;
 }
 
