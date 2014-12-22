@@ -1,1 +1,1 @@
-SUBDIRS = src/
+SUBDIRS = lib/libr3 src/
