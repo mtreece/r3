@@ -2,7 +2,7 @@
 #define _R3CUBE_H_
 
 typedef struct {
-
+    int initialized;
 } r3cube;
 
 #endif /* _R3CUBE_H_ */
