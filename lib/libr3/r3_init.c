@@ -35,9 +35,9 @@ int r3_init(r3cube *cube)
 
     for(int i = 0; i < NUM_SIDES; ++i)
     {
-        for(int j = 0; j < CUBE_HEIGHT; ++j)
+        for(int j = 0; j < NUM_ROWS; ++j)
         {
-            for(int k = 0; k < CUBE_WIDTH; ++k)
+            for(int k = 0; k < NUM_COLS; ++k)
             {
                 cube->sides[i].cells[j][k].color = colors[i];
             }

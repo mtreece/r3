@@ -15,15 +15,15 @@
 
 // TODO: put in build system & generalize
 #define NUM_SIDES 6
-#define CUBE_WIDTH 3
-#define CUBE_HEIGHT 3
+#define NUM_COLS 3
+#define NUM_ROWS 3
 
 typedef struct {
     int color;
 } r3cell;
 
 typedef struct {
-    r3cell cells[CUBE_WIDTH][CUBE_HEIGHT];
+    r3cell cells[NUM_COLS][NUM_ROWS];
 } r3side;
 
 #endif /* _R3SIDES_H_ */
