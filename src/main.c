@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
     r3cube cube;
     r3_init(&cube);
-    r3_move(&cube, 0, R3_UP);
+    r3_move(&cube, R3_UP, 0);
 
     return 0;
 }
