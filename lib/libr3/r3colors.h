@@ -9,6 +9,8 @@
 #ifndef _R3COLORS_H_
 #define _R3COLORS_H_
 
+#include <config.h>
+
 #define R3_WHITE   0
 #define R3_RED     1
 #define R3_BLUE    2

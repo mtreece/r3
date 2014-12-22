@@ -9,6 +9,8 @@
 #ifndef _R3CUBE_H_
 #define _R3CUBE_H_
 
+#include <config.h>
+
 #include "r3sides.h"
 
 typedef struct {

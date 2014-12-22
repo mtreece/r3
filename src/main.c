@@ -6,6 +6,7 @@
  * published by the Free Software Foundation.
  *
  */
+#include <config.h>
 
 #include <r3.h>
 

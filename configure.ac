@@ -12,4 +12,14 @@ AC_PROG_RANLIB
 AM_PROG_AR
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_FILES([Makefile src/Makefile lib/libr3/Makefile])
+
+AC_ARG_ENABLE([assertions],
+	    AS_HELP_STRING([--enable-assertions],
+			   [turn on assert() for development]),
+	   [ASSERTIONS=$enableval], [ASSERTIONS="no"])
+if test "x$ASSERTIONS" != "xyes"; then
+	AC_SUBST(WITH_ASSERTIONS)
+	AC_DEFINE([NDEBUG], , [If defined, assertions do nothing])
+fi
+
 AC_OUTPUT

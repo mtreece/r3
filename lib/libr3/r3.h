@@ -9,6 +9,8 @@
 #ifndef _R3_H_
 #define _R3_H_
 
+#include <config.h>
+
 // common structures
 #include "r3cube.h"
 

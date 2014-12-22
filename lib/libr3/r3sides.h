@@ -9,6 +9,8 @@
 #ifndef _R3SIDES_H_
 #define _R3SIDES_H_
 
+#include <config.h>
+
 #include "r3colors.h"
 
 // TODO: put in build system & generalize

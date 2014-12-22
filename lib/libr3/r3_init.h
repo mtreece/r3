@@ -9,6 +9,8 @@
 #ifndef _R3_INIT_H_
 #define _R3_INIT_H_
 
+#include <config.h>
+
 int r3_init(r3cube *);
 
 #endif /* _R3_INIT_H_ */

@@ -6,6 +6,8 @@
  * published by the Free Software Foundation.
  *
  */
+#include <config.h>
+#include <assert.h>
 #include <string.h>
 
 #include "r3cube.h"
@@ -29,6 +31,8 @@ int r3_init(r3cube *cube)
         R3_GREEN,
         R3_YELLOW,
     };
+
+    assert(NUM_SIDES == sizeof(colors)/sizeof(int));
 
     for(int i = 0; i < NUM_SIDES; ++i)
     {
