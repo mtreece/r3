@@ -6,18 +6,15 @@
  * published by the Free Software Foundation.
  *
  */
-#ifndef _R3CUBE_H_
-#define _R3CUBE_H_
+#ifndef _R3COLORS_H_
+#define _R3COLORS_H_
 
-#include "r3sides.h"
+#define R3_WHITE   0
+#define R3_RED     1
+#define R3_BLUE    2
+#define R3_ORANGE  3
+#define R3_GREEN   4
+#define R3_YELLOW  5
 
-typedef struct {
-    /// position/rotation when viewing and operating
-    int position;
-
-    /// the sides of this cube
-    r3side sides[NUM_SIDES];
-} r3cube;
-
-#endif /* _R3CUBE_H_ */
+#endif /* _R3COLORS_H_ */
 // vim: et ts=4 sw=4 sts=-1 :

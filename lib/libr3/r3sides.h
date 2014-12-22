@@ -6,18 +6,23 @@
  * published by the Free Software Foundation.
  *
  */
-#ifndef _R3CUBE_H_
-#define _R3CUBE_H_
+#ifndef _R3SIDES_H_
+#define _R3SIDES_H_
 
-#include "r3sides.h"
+#include "r3colors.h"
+
+// TODO: put in build system & generalize
+#define NUM_SIDES 6
+#define CUBE_WIDTH 3
+#define CUBE_HEIGHT 3
 
 typedef struct {
-    /// position/rotation when viewing and operating
-    int position;
+    int color;
+} r3cell;
 
-    /// the sides of this cube
-    r3side sides[NUM_SIDES];
-} r3cube;
+typedef struct {
+    r3cell cells[CUBE_WIDTH][CUBE_HEIGHT];
+} r3side;
 
-#endif /* _R3CUBE_H_ */
+#endif /* _R3SIDES_H_ */
 // vim: et ts=4 sw=4 sts=-1 :

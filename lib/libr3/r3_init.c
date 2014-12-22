@@ -6,7 +6,10 @@
  * published by the Free Software Foundation.
  *
  */
+#include <string.h>
+
 #include "r3cube.h"
+#include "r3sides.h"
 #include "r3_init.h"
 
 int r3_init(r3cube *cube)
@@ -14,7 +17,30 @@ int r3_init(r3cube *cube)
     if (!cube) {
         return -1;
     }
-    cube->initialized = 1;
+    memset(cube, 0x00, sizeof(r3cube));
+    cube->position = 0;
+
+    int color;
+    int colors[] = {
+        R3_WHITE,
+        R3_RED,
+        R3_BLUE,
+        R3_ORANGE,
+        R3_GREEN,
+        R3_YELLOW,
+    };
+
+    for(int i = 0; i < NUM_SIDES; ++i)
+    {
+        color = colors[i];
+        for(int j = 0; j < CUBE_HEIGHT; ++j)
+        {
+            for(int k = 0; k < CUBE_WIDTH; ++k)
+            {
+                cube->sides[i].cells[j][k].color = color;
+            }
+        }
+    }
     return 0;
 }
 
