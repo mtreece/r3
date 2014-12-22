@@ -13,6 +13,41 @@
 
 #include <stddef.h>
 
+/*
+ * Side to sides-number:
+ *
+ *      1
+ *   3  0  4  5
+ *      2
+ *
+ */
+#define R3_SPRINT_FORMAT \
+"         +-+-+-+\n" \
+"         |%c|%c|%c|\n" \
+"         +-+-+-+\n" \
+"         |%c|%c|%c|\n" \
+"         +-+-+-+\n" \
+"         |%c|%c|%c|\n" \
+"         +-+-+-+\n" \
+"\n" \
+"+-+-+-+  +-+-+-+  +-+-+-+  +-+-+-+\n" \
+"|%c|%c|%c|  |%c|%c|%c|  |%c|%c|%c|  |%c|%c|%c|\n" \
+"+-+-+-+  +-+-+-+  +-+-+-+  +-+-+-+\n" \
+"|%c|%c|%c|  |%c|%c|%c|  |%c|%c|%c|  |%c|%c|%c|\n" \
+"+-+-+-+  +-+-+-+  +-+-+-+  +-+-+-+\n" \
+"|%c|%c|%c|  |%c|%c|%c|  |%c|%c|%c|  |%c|%c|%c|\n" \
+"+-+-+-+  +-+-+-+  +-+-+-+  +-+-+-+\n" \
+"\n" \
+"         +-+-+-+\n" \
+"         |%c|%c|%c|\n" \
+"         +-+-+-+\n" \
+"         |%c|%c|%c|\n" \
+"         +-+-+-+\n" \
+"         |%c|%c|%c|\n" \
+"         +-+-+-+\n"
+
+#define R3_SPRINT_MINLENGTH sizeof(R3_SPRINT_FORMAT)
+
 /**
  * @brief
  * Print the state of the r3cube into `buffer`. This is similar to sprintf.
