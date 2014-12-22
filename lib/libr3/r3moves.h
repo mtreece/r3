@@ -6,21 +6,15 @@
  * published by the Free Software Foundation.
  *
  */
-#ifndef _R3_H_
-#define _R3_H_
+#ifndef _R3MOVES_H_
+#define _R3MOVES_H_
 
 #include <config.h>
 
-// common defines
-#include "r3colors.h"
-#include "r3moves.h"
+#define R3_UP     0
+#define R3_DOWN   1
+#define R3_LEFT   2
+#define R3_RIGHT  3
 
-// common structures
-#include "r3cube.h"
-
-// API
-#include "r3_init.h"
-#include "r3_move.h"
-
-#endif /* _R3_H_ */
+#endif /* _R3MOVES_H_ */
 // vim: et ts=4 sw=4 sts=-1 :

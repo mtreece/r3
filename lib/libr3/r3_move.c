@@ -10,8 +10,10 @@
 #include <assert.h>
 
 #include "r3cube.h"
+#include "r3moves.h"
+#include "r3_move.h"
 
-int r3_move(r3cube *cube, int direction, int selector);
+int r3_move(r3cube *cube, int direction, int selector)
 {
     return 0;
 }
