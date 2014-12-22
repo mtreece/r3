@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2014 Michael T. Reece.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ */
 bin_PROGRAMS = r3
 r3_SOURCES = main.c
 r3_LDADD = $(top_builddir)/lib/libr3/libr3.a
