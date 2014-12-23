@@ -15,6 +15,7 @@
 
 typedef struct {
     /// position/rotation when viewing and operating
+    /// (not yet supported)
     int position;
 
     /// the sides of this cube

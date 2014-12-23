@@ -23,4 +23,5 @@ include_HEADERS = \
 		  r3moves.h \
 		  r3sides.h
 
-AM_CFLAGS = -std=c99 -Wall -Wextra -Werror
+# TODO -ggdb only on ./configure option
+AM_CFLAGS = -std=c99 -Wall -Wextra -Werror -ggdb

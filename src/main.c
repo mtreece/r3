@@ -15,12 +15,20 @@
 int main(int __attribute__((unused)) argc, char __attribute__((unused)) *argv[])
 {
     r3cube cube;
+    char buffer[R3_SPRINT_MINLENGTH];
+    size_t buflen;
+
     r3_init(&cube);
-    char buffer[1024];
-    size_t buflen = sizeof(buffer);
+
+    buflen = sizeof(buffer);
     r3_sprint(buffer, &buflen, &cube);
     printf(buffer);
+
+    printf("==========================================\n");
+
     r3_move(&cube, R3_UP, 0);
+    r3_sprint(buffer, &buflen, &cube);
+    printf(buffer);
 
     return 0;
 }

@@ -17,6 +17,7 @@
 #define NUM_SIDES 6
 #define NUM_COLS 3
 #define NUM_ROWS 3
+#define MAX_ROW_COLS (NUM_COLS > NUM_ROWS ? NUM_COLS : NUM_ROWS)
 
 typedef struct {
     int color;
