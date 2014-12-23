@@ -49,6 +49,33 @@ static void link_neighbors(r3cell *a, r3cell *b, int is_brother)
 
     *next_an = b;
     *next_bn = a;
+
+    // transitive property
+    if (is_brother) {
+        // iterate over a brothers
+        for (r3cell **bro = &a->brothers[0]; *bro; ++bro) {
+            // ignore the one we just added
+            if (*bro == b) {
+                continue;
+            }
+
+            // ignore if already a known brother
+            int already_known = 0;
+            for (r3cell **knownbro = &b->brothers[0]; *knownbro; ++knownbro) {
+                if (*knownbro == *bro) {
+                    already_known = 1;
+                    break;
+                }
+            }
+
+            if (already_known) {
+                continue;
+            }
+
+            // link b with the found brother
+            link_neighbors(b, *bro, 1);
+        }
+    }
 }
 
 int r3_init(r3cube *cube)
@@ -117,7 +144,7 @@ int r3_init(r3cube *cube)
     // link side[5] bottom-right
     link_neighbors(&cube->sides[5].cells[2][2], &cube->sides[3].cells[2][0], 1);
     link_neighbors(&cube->sides[5].cells[2][2], &cube->sides[2].cells[2][0], 1);
-    //link_neighbors(&cube->sides[5].cells[2][2], &cube->sides[2].cells[2][2], 1);
+    //link_neighbors(&cube->sides[5].cells[2][2], &cube->sides[2].cells[2][2], 1); // for testing catching bad stuff
 
     cube->start = &cube->sides[0].cells[0][0];
 
