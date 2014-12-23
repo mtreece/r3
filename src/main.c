@@ -10,34 +10,59 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <r3.h>
+
+#define DO_CHECK_REPORT_END(check, xdo) \
+    do { \
+        int res; \
+        if (check (res = xdo)) { \
+            fprintf(stderr, "%s:%d- error, returned %d\n", __FUNCTION__, __LINE__, res); \
+            exit(-1); \
+        } \
+    } while(0)
+
+#define DO_MOVE_AND_PRINT(cube, direction, selector) \
+    do { \
+        buflen = sizeof(buffer); \
+        printf("Move %s(%d)\n", #direction, selector); \
+        DO_CHECK_REPORT_END(0 !=, r3_move(cube, direction, selector)); \
+        DO_CHECK_REPORT_END(0 !=, r3_sprint(buffer, &buflen, cube)); \
+        printf(buffer); \
+        printf("==========================================\n"); \
+    } while(0)
 
 int main(int __attribute__((unused)) argc, char __attribute__((unused)) *argv[])
 {
     r3cube cube;
-    int res;
+    //int res;
     char buffer[R3_SPRINT_MINLENGTH];
     size_t buflen;
 
-    if (0 != (res = r3_init(&cube))) {
-        fprintf(stderr, "%s:%d- error, returned %d\n", __FUNCTION__, __LINE__, res);
-    }
+    DO_CHECK_REPORT_END(0 !=, r3_init(&cube));
 
     buflen = sizeof(buffer);
-    if (-1 == (res = r3_sprint(buffer, &buflen, &cube))) {
-        fprintf(stderr, "%s:%d- error, returned %d\n", __FUNCTION__, __LINE__, res);
-    }
+    DO_CHECK_REPORT_END(0 !=, r3_sprint(buffer, &buflen, &cube));
+    printf("Identity:\n");
     printf(buffer);
-
     printf("==========================================\n");
 
-    r3_move(&cube, R3_UP, 0);
-    buflen = sizeof(buffer);
-    if (-1 == (res = r3_sprint(buffer, &buflen, &cube))) {
-        fprintf(stderr, "%s:%d- error, returned %d\n", __FUNCTION__, __LINE__, res);
-    }
-    printf(buffer);
+    DO_MOVE_AND_PRINT(&cube, R3_UP, 0);
+    DO_MOVE_AND_PRINT(&cube, R3_UP, 0);
+    DO_MOVE_AND_PRINT(&cube, R3_UP, 0);
+
+    DO_MOVE_AND_PRINT(&cube, R3_UP, 1);
+    DO_MOVE_AND_PRINT(&cube, R3_UP, 1);
+    DO_MOVE_AND_PRINT(&cube, R3_UP, 1);
+
+    DO_MOVE_AND_PRINT(&cube, R3_UP, 2);
+    DO_MOVE_AND_PRINT(&cube, R3_UP, 2);
+    DO_MOVE_AND_PRINT(&cube, R3_UP, 2);
+
+    DO_MOVE_AND_PRINT(&cube, R3_DOWN, 0);
+    DO_MOVE_AND_PRINT(&cube, R3_DOWN, 0);
+    DO_MOVE_AND_PRINT(&cube, R3_DOWN, 0);
 
     return 0;
 }
