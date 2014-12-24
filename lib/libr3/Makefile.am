@@ -11,6 +11,7 @@ libr3_a_SOURCES = \
 		  r3_init.c \
 		  r3_move.c \
 		  r3_sprint.c \
+		  r3_synclinks.c \
 		  util.h
 
 include_HEADERS = \
@@ -18,6 +19,7 @@ include_HEADERS = \
 		  r3_init.h \
 		  r3_move.h \
 		  r3_sprint.h \
+		  r3_synclinks.h \
 		  r3colors.h \
 		  r3cube.h \
 		  r3moves.h \
