@@ -112,7 +112,7 @@ int r3_init(r3cube *cube)
         }
     }
 
-    // link brothers ///////////////////////////////////////////////////////////
+    // link corner-brothers ////////////////////////////////////////////////////
     // link side[0] upper-left
     link_neighbors(&cube->sides[0].cells[0][0], &cube->sides[3].cells[0][2], 1);
     link_neighbors(&cube->sides[0].cells[0][0], &cube->sides[1].cells[2][0], 1);
@@ -144,7 +144,32 @@ int r3_init(r3cube *cube)
     // link side[5] bottom-right
     link_neighbors(&cube->sides[5].cells[2][2], &cube->sides[3].cells[2][0], 1);
     link_neighbors(&cube->sides[5].cells[2][2], &cube->sides[2].cells[2][0], 1);
-    //link_neighbors(&cube->sides[5].cells[2][2], &cube->sides[2].cells[2][2], 1); // for testing catching bad stuff
+
+    // link non-corner brothers ////////////////////////////////////////////////
+    // link side[0] non-corners
+    link_neighbors(&cube->sides[0].cells[1][0], &cube->sides[3].cells[1][2], 1);
+    link_neighbors(&cube->sides[0].cells[0][1], &cube->sides[1].cells[2][1], 1);
+    link_neighbors(&cube->sides[0].cells[1][2], &cube->sides[4].cells[1][0], 1);
+    link_neighbors(&cube->sides[0].cells[2][1], &cube->sides[2].cells[0][1], 1);
+
+    // link side[1] non-corners
+    link_neighbors(&cube->sides[1].cells[1][0], &cube->sides[3].cells[0][1], 1);
+    link_neighbors(&cube->sides[1].cells[0][1], &cube->sides[5].cells[0][1], 1);
+    link_neighbors(&cube->sides[1].cells[1][2], &cube->sides[4].cells[0][1], 1);
+
+    // link side[2] non-corners
+    link_neighbors(&cube->sides[2].cells[1][0], &cube->sides[3].cells[2][1], 1);
+    link_neighbors(&cube->sides[2].cells[1][2], &cube->sides[4].cells[2][1], 1);
+    link_neighbors(&cube->sides[2].cells[2][1], &cube->sides[5].cells[2][1], 1);
+
+    // link side[3] non-corners
+    link_neighbors(&cube->sides[3].cells[1][0], &cube->sides[5].cells[1][2], 1);
+
+    // link side[4] non-corners
+    link_neighbors(&cube->sides[4].cells[1][2], &cube->sides[5].cells[1][0], 1);
+
+    // link side[5] non-corners
+    /* none - all previous links, via transitive property, covered side[5] */
 
     cube->start = &cube->sides[0].cells[0][0];
 
