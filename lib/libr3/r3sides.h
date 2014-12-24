@@ -37,9 +37,12 @@ typedef struct r3cell {
     /// a neighbor r3cell is one which is adjacent, and on the same plane;
     /// ergo, these neighbors are frequently modified on move operations.
     struct r3cell *neighbors[MAX_NUM_NEIGHBORS + 1];
+
+    /// the side this cell is part of
+    struct r3side *side;
 } r3cell;
 
-typedef struct {
+typedef struct r3side {
     r3cell cells[NUM_ROWS][NUM_COLS];
 } r3side;
 
