@@ -171,6 +171,25 @@ int r3_init(r3cube *cube)
     // link side[5] non-corners
     /* none - all previous links, via transitive property, covered side[5] */
 
+    // link non-brother neighbors //////////////////////////////////////////////
+    for (int s = 0; s < NUM_SIDES; ++s) {
+        r3side *side = &cube->sides[s];
+
+        // link across cols for each row
+        for (int r = 0; r < NUM_ROWS; ++r) {
+            for (int c = 0; c < NUM_COLS - 1; ++c) {
+                link_neighbors(&side->cells[r][c], &side->cells[r][c + 1], 0);
+            }
+        }
+
+        // link across rows for each col
+        for (int c = 0; c < NUM_COLS; ++c) {
+            for (int r = 0; r < NUM_ROWS - 1; ++r) {
+                link_neighbors(&side->cells[r][c], &side->cells[r + 1][c], 0);
+            }
+        }
+    }
+
     cube->start = &cube->sides[0].cells[0][0];
 
     return 0;
