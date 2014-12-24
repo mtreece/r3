@@ -21,8 +21,8 @@ typedef struct {
     /// the sides of this cube
     r3side sides[NUM_SIDES];
 
-    /// a starting point for constructing the cube using ptrs
-    r3cell *start;
+    /// the side facing the user
+    r3side *facing;
 } r3cube;
 
 #endif /* _R3CUBE_H_ */

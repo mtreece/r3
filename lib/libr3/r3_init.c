@@ -190,7 +190,7 @@ int r3_init(r3cube *cube)
         }
     }
 
-    cube->start = &cube->sides[0].cells[0][0];
+    cube->facing = &cube->sides[0];
 
     return 0;
 }
