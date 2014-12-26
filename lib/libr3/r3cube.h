@@ -26,7 +26,8 @@ typedef struct {
 
     /// two adjacent cells, [0][0], [0][1], of the user-facing r3side. This
     /// information is used to help anchor the cube's orientation whenever
-    /// reconstructing sides from cell-links.
+    /// reconstructing sides from cell-links. These anchors should be updated
+    /// internally whenever an operation occurs which affect them.
     r3cell *anchors[2];
 } r3cube;
 
