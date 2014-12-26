@@ -13,10 +13,78 @@
 #include "r3cube.h"
 #include "r3_synclinks.h"
 
+#define abs(x) (x >= 0 ? x : -x)
+
+/**
+ * @brief
+ * Given two up/down, left/right adjacent edge r3cell structs, that are
+ * properly set on the grid, reconstruct the entire r3side.
+ *
+ * @param[in] cube The r3cube this operation is performed on.
+ * @param[in] side The r3side this operation is reconstructing.
+ * @param[in] c1 The 1st, good r3cell
+ * @param[in] c2 the 2nd, good r3cell
+ *
+ * @retval 0 success
+ */
 static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
 {
+    r3cell **n1, **n11, **n2/*, **n21*/;
+    int dvector[2];
+
     if (!cube || !side || !c1 || !c2) {
         return -1;
+    }
+
+    if ((c1->row != c2->row) && (c1->col != c2->col)) {
+        return -1;
+    }
+
+    if ((c1->row != 0 && c1->row != NUM_ROWS - 1)
+            && (c1->col != 0 && c2->col != NUM_COLS - 1)) {
+        return -1;
+    }
+
+    if (NUM_ROWS - 1 == c1->row && NUM_ROWS - 1 == c2->row) {
+        dvector[0] = -1;
+        dvector[1] = 0;
+    } else if (0 == c1->row && 0 == c2->row) {
+        dvector[0] = 1;
+        dvector[1] = 0;
+    } else if (NUM_COLS - 1 == c1->col && NUM_COLS - 1 == c2->col) {
+        dvector[0] = 0;
+        dvector[1] = -1;
+    } else {
+        assert(0 == c1->col && 0 == c2->col);
+        dvector[0] = 0;
+        dvector[1] = 1;
+    }
+
+    // take the first cell, look at its neighbors' neighbors compare each of
+    // these to the second cell's neighbors; if a match, then we've found a
+    // known location & can populate it
+    //
+    //
+    // thought process: find the two anchors, find their common dimension & set
+    // the direction perpendicular to their horizon & against the edge.
+    // Algorithmically set the next two anchors along that perpendicular
+    // trajectory. Repeat until next edge is hit. Rotate direction of
+    // perpendicularity & attempt to continue filling side.
+    for (n1 = c1->neighbors; *n1; ++n1) {
+        for (n11 = (*n1)->neighbors; *n11; ++n11) {
+            for (n2 = c2->neighbors; *n2; ++n2) {
+                if (*n2 == *n11) {
+                    // found a match; since this is a neighbor to c2, it must
+                    // share the same perpendicular dimension
+                    (*n2)->row = c2->row + dvector[0];
+                    (*n2)->col = c2->col + dvector[1];
+
+                    // we can also update (*n1)'s neighbor
+                    (*n1)->row = c1->row + dvector[0];
+                    (*n1)->col = c1->col + dvector[1];
+                }
+            }
+        }
     }
 
     return 0;
