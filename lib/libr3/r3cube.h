@@ -24,6 +24,9 @@ typedef struct {
     /// the side facing the user
     r3side *facing;
 
+    /// storage space for all cells that make up this cube
+    r3cell cellspace[NUM_SIDES * NUM_ROWS * NUM_COLS];
+
     /// two adjacent cells, [0][0], [0][1], of the user-facing r3side. This
     /// information is used to help anchor the cube's orientation whenever
     /// reconstructing sides from cell-links. These anchors should be updated

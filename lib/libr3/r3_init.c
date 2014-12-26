@@ -94,6 +94,7 @@ int r3_init(r3cube *cube)
         R3_GREEN,
         R3_YELLOW,
     };
+    int celln = 0;
 
     assert(NUM_SIDES == sizeof(colors)/sizeof(int));
 
@@ -103,11 +104,12 @@ int r3_init(r3cube *cube)
         {
             for(int k = 0; k < NUM_COLS; ++k)
             {
-                cube->sides[i].cells[j][k].color = colors[i];
-                cube->sides[i].cells[j][k].side = &cube->sides[i];
-                memset(cube->sides[i].cells[j][k].brothers, 0x00,
+                cube->sides[i].cells[j][k] = &cube->cellspace[celln++];
+                cube->sides[i].cells[j][k]->color = colors[i];
+                cube->sides[i].cells[j][k]->side = &cube->sides[i];
+                memset(cube->sides[i].cells[j][k]->brothers, 0x00,
                         sizeof(((r3cell *)NULL)->brothers));
-                memset(cube->sides[i].cells[j][k].neighbors, 0x00,
+                memset(cube->sides[i].cells[j][k]->neighbors, 0x00,
                         sizeof(((r3cell *)NULL)->neighbors));
             }
         }
@@ -115,59 +117,59 @@ int r3_init(r3cube *cube)
 
     // link corner-brothers ////////////////////////////////////////////////////
     // link side[0] upper-left
-    link_neighbors(&cube->sides[0].cells[0][0], &cube->sides[3].cells[0][2], 1);
-    link_neighbors(&cube->sides[0].cells[0][0], &cube->sides[1].cells[2][0], 1);
+    link_neighbors(cube->sides[0].cells[0][0], cube->sides[3].cells[0][2], 1);
+    link_neighbors(cube->sides[0].cells[0][0], cube->sides[1].cells[2][0], 1);
 
     // link side[0] upper-right
-    link_neighbors(&cube->sides[0].cells[0][2], &cube->sides[4].cells[0][0], 1);
-    link_neighbors(&cube->sides[0].cells[0][2], &cube->sides[1].cells[2][2], 1);
+    link_neighbors(cube->sides[0].cells[0][2], cube->sides[4].cells[0][0], 1);
+    link_neighbors(cube->sides[0].cells[0][2], cube->sides[1].cells[2][2], 1);
 
     // link side[0] bottom-left
-    link_neighbors(&cube->sides[0].cells[2][0], &cube->sides[3].cells[2][2], 1);
-    link_neighbors(&cube->sides[0].cells[2][0], &cube->sides[2].cells[0][0], 1);
+    link_neighbors(cube->sides[0].cells[2][0], cube->sides[3].cells[2][2], 1);
+    link_neighbors(cube->sides[0].cells[2][0], cube->sides[2].cells[0][0], 1);
 
     // link side[0] bottom-right
-    link_neighbors(&cube->sides[0].cells[2][2], &cube->sides[2].cells[0][2], 1);
-    link_neighbors(&cube->sides[0].cells[2][2], &cube->sides[4].cells[2][0], 1);
+    link_neighbors(cube->sides[0].cells[2][2], cube->sides[2].cells[0][2], 1);
+    link_neighbors(cube->sides[0].cells[2][2], cube->sides[4].cells[2][0], 1);
 
     // link side[5] upper-left
-    link_neighbors(&cube->sides[5].cells[0][0], &cube->sides[4].cells[0][2], 1);
-    link_neighbors(&cube->sides[5].cells[0][0], &cube->sides[1].cells[0][2], 1);
+    link_neighbors(cube->sides[5].cells[0][0], cube->sides[4].cells[0][2], 1);
+    link_neighbors(cube->sides[5].cells[0][0], cube->sides[1].cells[0][2], 1);
 
     // link side[5] upper-right
-    link_neighbors(&cube->sides[5].cells[0][2], &cube->sides[3].cells[0][0], 1);
-    link_neighbors(&cube->sides[5].cells[0][2], &cube->sides[1].cells[0][0], 1);
+    link_neighbors(cube->sides[5].cells[0][2], cube->sides[3].cells[0][0], 1);
+    link_neighbors(cube->sides[5].cells[0][2], cube->sides[1].cells[0][0], 1);
 
     // link side[5] bottom-left
-    link_neighbors(&cube->sides[5].cells[2][0], &cube->sides[4].cells[2][2], 1);
-    link_neighbors(&cube->sides[5].cells[2][0], &cube->sides[2].cells[2][2], 1);
+    link_neighbors(cube->sides[5].cells[2][0], cube->sides[4].cells[2][2], 1);
+    link_neighbors(cube->sides[5].cells[2][0], cube->sides[2].cells[2][2], 1);
 
     // link side[5] bottom-right
-    link_neighbors(&cube->sides[5].cells[2][2], &cube->sides[3].cells[2][0], 1);
-    link_neighbors(&cube->sides[5].cells[2][2], &cube->sides[2].cells[2][0], 1);
+    link_neighbors(cube->sides[5].cells[2][2], cube->sides[3].cells[2][0], 1);
+    link_neighbors(cube->sides[5].cells[2][2], cube->sides[2].cells[2][0], 1);
 
     // link non-corner brothers ////////////////////////////////////////////////
     // link side[0] non-corners
-    link_neighbors(&cube->sides[0].cells[1][0], &cube->sides[3].cells[1][2], 1);
-    link_neighbors(&cube->sides[0].cells[0][1], &cube->sides[1].cells[2][1], 1);
-    link_neighbors(&cube->sides[0].cells[1][2], &cube->sides[4].cells[1][0], 1);
-    link_neighbors(&cube->sides[0].cells[2][1], &cube->sides[2].cells[0][1], 1);
+    link_neighbors(cube->sides[0].cells[1][0], cube->sides[3].cells[1][2], 1);
+    link_neighbors(cube->sides[0].cells[0][1], cube->sides[1].cells[2][1], 1);
+    link_neighbors(cube->sides[0].cells[1][2], cube->sides[4].cells[1][0], 1);
+    link_neighbors(cube->sides[0].cells[2][1], cube->sides[2].cells[0][1], 1);
 
     // link side[1] non-corners
-    link_neighbors(&cube->sides[1].cells[1][0], &cube->sides[3].cells[0][1], 1);
-    link_neighbors(&cube->sides[1].cells[0][1], &cube->sides[5].cells[0][1], 1);
-    link_neighbors(&cube->sides[1].cells[1][2], &cube->sides[4].cells[0][1], 1);
+    link_neighbors(cube->sides[1].cells[1][0], cube->sides[3].cells[0][1], 1);
+    link_neighbors(cube->sides[1].cells[0][1], cube->sides[5].cells[0][1], 1);
+    link_neighbors(cube->sides[1].cells[1][2], cube->sides[4].cells[0][1], 1);
 
     // link side[2] non-corners
-    link_neighbors(&cube->sides[2].cells[1][0], &cube->sides[3].cells[2][1], 1);
-    link_neighbors(&cube->sides[2].cells[1][2], &cube->sides[4].cells[2][1], 1);
-    link_neighbors(&cube->sides[2].cells[2][1], &cube->sides[5].cells[2][1], 1);
+    link_neighbors(cube->sides[2].cells[1][0], cube->sides[3].cells[2][1], 1);
+    link_neighbors(cube->sides[2].cells[1][2], cube->sides[4].cells[2][1], 1);
+    link_neighbors(cube->sides[2].cells[2][1], cube->sides[5].cells[2][1], 1);
 
     // link side[3] non-corners
-    link_neighbors(&cube->sides[3].cells[1][0], &cube->sides[5].cells[1][2], 1);
+    link_neighbors(cube->sides[3].cells[1][0], cube->sides[5].cells[1][2], 1);
 
     // link side[4] non-corners
-    link_neighbors(&cube->sides[4].cells[1][2], &cube->sides[5].cells[1][0], 1);
+    link_neighbors(cube->sides[4].cells[1][2], cube->sides[5].cells[1][0], 1);
 
     // link side[5] non-corners
     /* none - all previous links, via transitive property, covered side[5] */
@@ -179,21 +181,21 @@ int r3_init(r3cube *cube)
         // link across cols for each row
         for (int r = 0; r < NUM_ROWS; ++r) {
             for (int c = 0; c < NUM_COLS - 1; ++c) {
-                link_neighbors(&side->cells[r][c], &side->cells[r][c + 1], 0);
+                link_neighbors(side->cells[r][c], side->cells[r][c + 1], 0);
             }
         }
 
         // link across rows for each col
         for (int c = 0; c < NUM_COLS; ++c) {
             for (int r = 0; r < NUM_ROWS - 1; ++r) {
-                link_neighbors(&side->cells[r][c], &side->cells[r + 1][c], 0);
+                link_neighbors(side->cells[r][c], side->cells[r + 1][c], 0);
             }
         }
     }
 
     cube->facing = &cube->sides[0];
-    cube->anchors[0] = &cube->facing->cells[0][0];
-    cube->anchors[1] = &cube->facing->cells[0][1];
+    cube->anchors[0] = cube->facing->cells[0][0];
+    cube->anchors[1] = cube->facing->cells[0][1];
 
     return 0;
 }

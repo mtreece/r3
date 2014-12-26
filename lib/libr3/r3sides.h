@@ -43,7 +43,7 @@ typedef struct r3cell {
 } r3cell;
 
 typedef struct r3side {
-    r3cell cells[NUM_ROWS][NUM_COLS];
+    r3cell *cells[NUM_ROWS][NUM_COLS];
 } r3side;
 
 #endif /* _R3SIDES_H_ */
