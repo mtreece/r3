@@ -16,6 +16,7 @@
 #include "r3sides.h"
 #include "r3moves.h"
 #include "r3_move.h"
+#include "r3_synclinks.h"
 
 #define VERTICAL_VECTOR_OF_FACES ((int []){0, 1, 5, 2})
 #define HORIZONTAL_VECTOR_OF_FACES ((int []){0, 4, 5, 3})
@@ -48,6 +49,8 @@ int r3_move(r3cube *cube, int direction, int selector)
     if (selector > (vertical ? NUM_COLS : NUM_ROWS) - 1) {
         return -1;
     }
+
+    r3_synclinks(cube);
 
     return 0;
 }

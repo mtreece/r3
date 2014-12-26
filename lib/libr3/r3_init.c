@@ -107,6 +107,8 @@ int r3_init(r3cube *cube)
                 cube->sides[i].cells[j][k] = &cube->cellspace[celln++];
                 cube->sides[i].cells[j][k]->color = colors[i];
                 cube->sides[i].cells[j][k]->side = &cube->sides[i];
+                cube->sides[i].cells[j][k]->row = j;
+                cube->sides[i].cells[j][k]->col = k;
                 memset(cube->sides[i].cells[j][k]->brothers, 0x00,
                         sizeof(((r3cell *)NULL)->brothers));
                 memset(cube->sides[i].cells[j][k]->neighbors, 0x00,

@@ -40,6 +40,9 @@ typedef struct r3cell {
 
     /// the side this cell is part of
     struct r3side *side;
+
+    /// the row & col on the .side this belongs to
+    int row, col;
 } r3cell;
 
 typedef struct r3side {
