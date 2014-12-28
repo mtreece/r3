@@ -72,8 +72,17 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
     // perpendicularity & attempt to continue filling side.
     for (int i = 0; i < NUM_ROWS * NUM_COLS; ++i) {
         for (n1 = c1->neighbors; *n1; ++n1) {
+            if (*n1 == c2) {
+                continue;
+            }
             for (n11 = (*n1)->neighbors; *n11; ++n11) {
+                if (*n11 == c1 || *n11 == c2) {
+                    continue;
+                }
                 for (n2 = c2->neighbors; *n2; ++n2) {
+                    if (*n2 == c1 || *n2 == c2) {
+                        continue;
+                    }
                     if (*n2 == *n11) {
                         // found a match; since this is a neighbor to c2, it must
                         // share the same perpendicular dimension
