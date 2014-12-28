@@ -70,61 +70,65 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
     // Algorithmically set the next two anchors along that perpendicular
     // trajectory. Repeat until next edge is hit. Rotate direction of
     // perpendicularity & attempt to continue filling side.
-bloop0:
-    for (n1 = c1->neighbors; *n1; ++n1) {
-        for (n11 = (*n1)->neighbors; *n11; ++n11) {
-            for (n2 = c2->neighbors; *n2; ++n2) {
-                if (*n2 == *n11) {
-                    // found a match; since this is a neighbor to c2, it must
-                    // share the same perpendicular dimension
-                    (*n2)->row = c2->row + dvector[0];
-                    (*n2)->col = c2->col + dvector[1];
+    for (int i = 0; i < NUM_ROWS * NUM_COLS; ++i) {
+        for (n1 = c1->neighbors; *n1; ++n1) {
+            for (n11 = (*n1)->neighbors; *n11; ++n11) {
+                for (n2 = c2->neighbors; *n2; ++n2) {
+                    if (*n2 == *n11) {
+                        // found a match; since this is a neighbor to c2, it must
+                        // share the same perpendicular dimension
+                        (*n2)->row = c2->row + dvector[0];
+                        (*n2)->col = c2->col + dvector[1];
 
-                    // we can also update (*n1)'s neighbor
-                    (*n1)->row = c1->row + dvector[0];
-                    (*n1)->col = c1->col + dvector[1];
+                        // we can also update (*n1)'s neighbor
+                        (*n1)->row = c1->row + dvector[0];
+                        (*n1)->col = c1->col + dvector[1];
 
-                    // check if we've hit the boundary
-                    if (dvector[0]) {
-                        if (-1 == dvector[0]) {
-                            if (0 == (*n1)->row) {
-                                // boundary; now need to shift direction
+                        // check if we've hit the boundary
+                        if (dvector[0]) {
+                            if (-1 == dvector[0]) {
+                                if (0 == (*n1)->row) {
+                                    // boundary; now need to shift direction
+                                }
+                            } else {
+                                assert(1 == dvector[0]);
+                                if (NUM_ROWS - 1 == (*n1)->row) {
+                                    // boundary; now need to shift direction
+                                }
                             }
                         } else {
-                            assert(1 == dvector[0]);
-                            if (NUM_ROWS - 1 == (*n1)->row) {
-                                // boundary; now need to shift direction
+                            assert(dvector[1]);
+                            if (-1 == dvector[1]) {
+                                if (0 == (*n1)->col) {
+                                    // boundary; now need to shift direction
+                                }
+                            } else {
+                                assert(1 == dvector[1]);
+                                if (NUM_COLS - 1 == (*n1)->col) {
+                                    // boundary; now need to shift direction
+                                }
                             }
                         }
-                    } else {
-                        assert(dvector[1]);
-                        if (-1 == dvector[1]) {
-                            if (0 == (*n1)->col) {
-                                // boundary; now need to shift direction
-                            }
-                        } else {
-                            assert(1 == dvector[1]);
-                            if (NUM_COLS - 1 == (*n1)->col) {
-                                // boundary; now need to shift direction
-                            }
-                        }
+
+                        // boundary not hit; update anchors & keep looping
+                        c1 = *n1;
+                        c2 = *n2;
+
+                        // assert that we will restart with semi-sane input
+                        // (this helps catch against update bugs)
+                        assert(0 <= c1->row);
+                        assert(NUM_ROWS - 1 >= c1->row);
+                        assert(0 <= c1->col);
+                        assert(NUM_COLS - 1 >= c1->col);
+
+                        goto eloop0;
                     }
-
-                    // boundary not hit; update anchors & keep looping
-                    c1 = *n1;
-                    c2 = *n2;
-
-                    // assert that we will restart with semi-sane input
-                    // (this helps catch against update bugs)
-                    assert(0 <= c1->row);
-                    assert(NUM_ROWS - 1 >= c1->row);
-                    assert(0 <= c1->col);
-                    assert(NUM_COLS - 1 >= c1->col);
-
-                    goto bloop0;
                 }
             }
         }
+eloop0:
+        // no-op, to make C happy with my label placement
+        /* no-op */;
     }
 
     return 0;
