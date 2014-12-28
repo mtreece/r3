@@ -89,11 +89,36 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
                             if (-1 == dvector[0]) {
                                 if (0 == (*n1)->row) {
                                     // boundary; now need to shift direction
+                                    // TODO: add dependency on input to this
+                                    // function, that the input cells be in a
+                                    // corner; i.e., their parallel-dimension
+                                    // indicies should be either [0] & [1], or
+                                    // [NUM_XXX - 1] & [NUM_XXX - 2]. This will
+                                    // make direction-updating logistics much
+                                    // easier.
+                                    if (0 == (*n1)->col || 0 == (*n2)->col) {
+                                        // cannot turn left, need to go right
+                                        dvector[0] = 0;
+                                        dvector[1] = 1;
+                                    } else {
+                                        // can turn left, so let's do it
+                                        dvector[0] = 0;
+                                        dvector[1] = -1;
+                                    }
                                 }
                             } else {
                                 assert(1 == dvector[0]);
                                 if (NUM_ROWS - 1 == (*n1)->row) {
                                     // boundary; now need to shift direction
+                                    if (0 == (*n1)->col || 0 == (*n2)->col) {
+                                        // cannot turn left, need to go right
+                                        dvector[0] = 0;
+                                        dvector[1] = 1;
+                                    } else {
+                                        // can turn left, so let's do it
+                                        dvector[0] = 0;
+                                        dvector[1] = -1;
+                                    }
                                 }
                             }
                         } else {
@@ -101,11 +126,29 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
                             if (-1 == dvector[1]) {
                                 if (0 == (*n1)->col) {
                                     // boundary; now need to shift direction
+                                    if (0 == (*n1)->row || 0 == (*n2)->row) {
+                                        // cannot go up, need to go down
+                                        dvector[0] = 1;
+                                        dvector[1] = 0;
+                                    } else {
+                                        // can go up, so let's do it
+                                        dvector[0] = -1;
+                                        dvector[1] = 0;
+                                    }
                                 }
                             } else {
                                 assert(1 == dvector[1]);
                                 if (NUM_COLS - 1 == (*n1)->col) {
                                     // boundary; now need to shift direction
+                                    if (0 == (*n1)->row || 0 == (*n2)->row) {
+                                        // cannot go up, need to go down
+                                        dvector[0] = 1;
+                                        dvector[1] = 0;
+                                    } else {
+                                        // can go up, so let's do it
+                                        dvector[0] = -1;
+                                        dvector[1] = 0;
+                                    }
                                 }
                             }
                         }
