@@ -75,6 +75,10 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
             if (*n1 == c2) {
                 continue;
             }
+            if (!(*n1)->dirty) {
+                // skip if we've already processed this cell
+                continue;
+            }
             for (n11 = (*n1)->neighbors; *n11; ++n11) {
                 if (*n11 == c1 || *n11 == c2) {
                     continue;
@@ -82,16 +86,25 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
                 for (n2 = c2->neighbors; *n2; ++n2) {
                     if (*n2 == c1 || *n2 == c2) {
                         continue;
+                }
+/* I think it's okay if this is clean ... we just need another anchor */
+#if 0
+                    if (!(*n2)->dirty) {
+                        // skip if we've already processed this cell
+                        continue;
                     }
+#endif
                     if (*n2 == *n11) {
                         // found a match; since this is a neighbor to c2, it must
                         // share the same perpendicular dimension
                         (*n2)->row = c2->row + dvector[0];
                         (*n2)->col = c2->col + dvector[1];
+                        (*n2)->dirty = 0;
 
                         // we can also update (*n1)'s neighbor
                         (*n1)->row = c1->row + dvector[0];
                         (*n1)->col = c1->col + dvector[1];
+                        (*n1)->dirty = 0;
 
                         // check if we've hit the boundary
                         if (dvector[0]) {
@@ -197,10 +210,17 @@ int r3_synclinks(r3cube *cube)
         return -1;
     }
 
+    // invalidate all the cells in the cube
+    for (unsigned int i = 0; i < sizeof(cube->cellspace) / sizeof(r3cell); ++i) {
+        cube->cellspace[i].dirty = 1;
+    }
+
     // start with the anchors on sides[0]; these should be synced already on
     // any operation
     side = &cube->sides[0];
     c = side->cells;
+    c[0][0]->dirty = 0;
+    c[0][1]->dirty = 0;
     syncside(cube, side, c[0][0], c[0][1]);
 
     // now tackle side[1]
