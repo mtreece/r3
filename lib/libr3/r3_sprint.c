@@ -144,4 +144,4 @@ int r3_sprint(char *buffer, size_t *buflen, r3cube *cube)
     return 0;
 }
 
-// vim: et ts=4 sw=4 sts=-1 :
+// vim: et ts=4 sw=4 :

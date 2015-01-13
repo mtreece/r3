@@ -28,4 +28,4 @@
 int r3_init(r3cube *cube);
 
 #endif /* _R3_INIT_H_ */
-// vim: et ts=4 sw=4 sts=-1 :
+// vim: et ts=4 sw=4 :

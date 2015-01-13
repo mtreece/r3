@@ -19,4 +19,4 @@
 #define R3_YELLOW  5
 
 #endif /* _R3COLORS_H_ */
-// vim: et ts=4 sw=4 sts=-1 :
+// vim: et ts=4 sw=4 :

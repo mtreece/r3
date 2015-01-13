@@ -17,4 +17,4 @@
 #define R3_RIGHT  3
 
 #endif /* _R3MOVES_H_ */
-// vim: et ts=4 sw=4 sts=-1 :
+// vim: et ts=4 sw=4 :

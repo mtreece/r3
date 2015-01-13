@@ -35,4 +35,4 @@ typedef struct {
 } r3cube;
 
 #endif /* _R3CUBE_H_ */
-// vim: et ts=4 sw=4 sts=-1 :
+// vim: et ts=4 sw=4 :
