@@ -8,6 +8,7 @@
 AC_INIT([r3], [0.0])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 AC_PROG_CC
+AM_PROG_CC_C_O
 AC_PROG_RANLIB
 AM_PROG_AR
 AC_CONFIG_HEADERS([config.h])
