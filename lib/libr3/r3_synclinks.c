@@ -29,6 +29,15 @@
  */
 static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
 {
+    /*
+     * Thought -- rewrite this algorithm, to use a new static function,
+     * find_next_pair, which will accept the two anchors (non-NULL), the
+     * previous two anchors from the reverse-direction (can be NULL if on a
+     * boundary), and will output the next two anchors. If the outputs are
+     * NULL, then it means a boundary was hit.
+     *
+     */
+
     r3cell **n1, **n11, **n2/*, **n21*/;
     int dvector[2];
 
