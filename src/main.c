@@ -29,7 +29,7 @@
         printf("Move %s(%d)\n", #direction, selector); \
         DO_CHECK_REPORT_END(0 !=, r3_move(cube, direction, selector)); \
         DO_CHECK_REPORT_END(0 !=, r3_sprint(buffer, &buflen, cube)); \
-        printf(buffer); \
+        printf("%s\n", buffer); \
         printf("==========================================\n"); \
     } while(0)
 
@@ -45,7 +45,7 @@ int main(int __attribute__((unused)) argc, char __attribute__((unused)) *argv[])
     buflen = sizeof(buffer);
     DO_CHECK_REPORT_END(0 !=, r3_sprint(buffer, &buflen, &cube));
     printf("Identity:\n");
-    printf(buffer);
+    printf("%s\n", buffer);
     printf("==========================================\n");
 
     DO_MOVE_AND_PRINT(&cube, R3_UP, 0);
