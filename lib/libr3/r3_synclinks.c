@@ -9,6 +9,7 @@
 #include <config.h>
 
 #include <assert.h>
+#include <stdlib.h>
 
 #include "r3cube.h"
 #include "r3_synclinks.h"
@@ -28,14 +29,14 @@
  * @return nonzero if next anchors found
  * @return zero if next anchors not found (i.e. hit side barrier)
  */
-static int next_anch(r3cell *a[], r3cell **n[])
+static int next_anch(r3cell *a[], r3cell *n[])
 {
     r3cell *a1 = a[0];   // first known anchor
     r3cell *a2 = a[1];   // second known anchor
     r3cell *p1 = a[2];   // first known previous anchor
     r3cell *p2 = a[3];   // second known previous anchor
-    r3cell **o1 = n[0];  // output for 1st new anchor
-    r3cell **o2 = n[1];  // output for 2nd new anchor
+    r3cell **o1 = &n[0]; // output for 1st new anchor
+    r3cell **o2 = &n[1]; // output for 2nd new anchor
     int pair_found;      // boolean flag if next pair was found
 
     for (r3cell **c = a1->neighbors; *c; ++c) {
@@ -72,6 +73,17 @@ done:
 static int syncside(r3cube __attribute__((unused)) *cube, r3side __attribute__((unused)) *side, r3cell __attribute__((unused)) *c1, r3cell __attribute__((unused)) *c2)
 {
     next_anch((void*) 0, (void*) 0);
+
+    r3cell *oanchors[4];   // old anchors
+    r3cell *nanchors[2];   // new anchors
+
+    oanchors[0] = c1;
+    oanchors[1] = c2;
+    oanchors[2] = NULL;
+    oanchors[3] = NULL;
+
+    next_anch(oanchors, nanchors);
+
     return 0;
 }
 
