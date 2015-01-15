@@ -17,6 +17,67 @@
 
 /**
  * @brief
+ * Given the previous two anchors, find the next two anchors along the same
+ * vector path.
+ *
+ * @param[in] a Array of four r3cell* - [0,1] = input two anchors, [2,3] =
+ *            input two anchors prior to that, alongside the same axis of
+ *            discovery
+ * @param[out] n Location to store array of two r3cell*, the output anchors
+ *
+ * @return nonzero if next anchors found
+ * @return zero if next anchors not found (i.e. hit side barrier)
+ */
+static int next_anch(r3cell *a[], r3cell **n[])
+{
+    r3cell *a1 = a[0];   // first known anchor
+    r3cell *a2 = a[1];   // second known anchor
+    r3cell *p1 = a[2];   // first known previous anchor
+    r3cell *p2 = a[3];   // second known previous anchor
+    r3cell **o1 = n[0];  // output for 1st new anchor
+    r3cell **o2 = n[1];  // output for 2nd new anchor
+    int pair_found;      // boolean flag if next pair was found
+
+    for (r3cell **c = a1->neighbors; *c; ++c) {
+        if (a2 == *c || p1 == *c || p2 == *c) {
+            // if either adj neighbor or prev 2 anchors, skip over
+            continue;
+        }
+
+        // iterate over this cell's neighbor
+        for (r3cell **cc = (*c)->neighbors; *cc; ++cc) {
+            if (*cc == *c) {
+                // ignore the neighbor we just came from
+                continue;
+            }
+
+            // for each of the 2nd anchor's neighbors...
+            for (r3cell **d = a2->neighbors; *d; ++d) {
+                // discovered the two next anchors...
+                if (*d == *cc) {
+                    *o1 = *c;
+                    *o2 = *d;
+                    pair_found = 1;
+                    goto done;
+                }
+            }
+        }
+    }
+
+    pair_found = 0;
+
+done:
+    return pair_found;
+}
+static int syncside(r3cube __attribute__((unused)) *cube, r3side __attribute__((unused)) *side, r3cell __attribute__((unused)) *c1, r3cell __attribute__((unused)) *c2)
+{
+    next_anch((void*) 0, (void*) 0);
+    return 0;
+}
+
+#if 0
+/**
+ * @brief
  * Given two up/down, left/right adjacent edge r3cell structs, that are
  * properly set on the grid, reconstruct the entire r3side.
  *
@@ -207,6 +268,7 @@ eloop0:
 
     return 0;
 }
+#endif /* 0 */
 
 int r3_synclinks(r3cube *cube)
 {
