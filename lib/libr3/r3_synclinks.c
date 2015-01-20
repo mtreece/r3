@@ -70,19 +70,66 @@ static int next_anch(r3cell *a[], r3cell *n[])
 done:
     return pair_found;
 }
-static int syncside(r3cube __attribute__((unused)) *cube, r3side __attribute__((unused)) *side, r3cell __attribute__((unused)) *c1, r3cell __attribute__((unused)) *c2)
-{
-    next_anch((void*) 0, (void*) 0);
 
-    r3cell *oanchors[4];   // old anchors
-    r3cell *nanchors[2];   // new anchors
+static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
+{
+    r3cell *oanchors[4]; // old anchors
+    r3cell *nanchors[2]; // new anchors
 
     oanchors[0] = c1;
     oanchors[1] = c2;
     oanchors[2] = NULL;
     oanchors[3] = NULL;
 
-    next_anch(oanchors, nanchors);
+    int north = 0;
+    while (1) {
+        next_anch(oanchors, nanchors);
+        if (!nanchors[0]) {
+            // re-orient perpendicular
+            r3cell *pa1 = oanchors[north? 2 : 1]; // perpendicular anch
+            r3cell *pa2 = oanchors[north? 0 : 3]; // perpendicular anch
+            r3cell *op1 = oanchors[north? 3 : 0]; // old perpendicular anch
+            r3cell *op2 = oanchors[north? 1 : 2]; // old perpendicular anch
+            oanchors[0] = pa1;
+            oanchors[1] = pa2;
+            oanchors[3] = op1;
+            oanchors[4] = op2;
+
+            next_anch(oanchors, nanchors);
+            assert(nanchors[0]);
+            assert(nanchors[1]);
+
+            // gridify these new-found anchors
+            // Note, when turning like this, the row will be shared, and the
+            // column will always be increasing in both north, south cases.
+            nanchors[0]->row = oanchors[0];
+            nanchors[0]->col = oanchors[0] + 1;
+            nanchors[1]->row = oanchors[1];
+            nanchors[1]->col = oanchors[1] + 1;
+            side->cells[nanchors[0]->row][nanchors[0]->col] = nanchors[0];
+            side->cells[nanchors[1]->row][nanchors[1]->col] = nanchors[1];
+
+            // now, reset direction
+            north = !north;
+
+            // and hook into the rest of this function (falling through)
+            // TODO: setup the oanchors to use the previous artifacts
+        }
+
+        // add these two new anchors into the grid
+        nanchors[0]->row = oanchors[0] + (north ? -1 : 1);
+        nanchors[0]->col = oanchors[0];
+        nanchors[1]->row = oanchors[1] + (north ? -1 : 1);
+        nanchors[1]->col = oanchors[1];
+        side->cells[nanchors[0]->row][nanchors[0]->col] = nanchors[0];
+        side->cells[nanchors[1]->row][nanchors[1]->col] = nanchors[1];
+
+        // reset for next iteration
+        oanchors[3] = oanchors[1];
+        oanchors[2] = oanchors[0];
+        oanchors[1] = nanchors[1];
+        oanchors[0] = nanchors[0];
+    }
 
     return 0;
 }
