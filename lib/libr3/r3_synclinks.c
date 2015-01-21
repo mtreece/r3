@@ -85,6 +85,12 @@ done:
  */
 static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
 {
+    /* TODO: make sure this function meets its requirements; when designing
+     * this algorithm, I foolishly made the assumption that the first two
+     * anchors will always be the [0][0],[0][1]-pair, & traveling south
+     * initially. This may not always be the case. How will it affect the
+     * algorithm? Is there some setup I will initially need to do?
+     */
     r3cell *oanchors[4]; // old anchors
     r3cell *nanchors[2]; // new anchors
 
