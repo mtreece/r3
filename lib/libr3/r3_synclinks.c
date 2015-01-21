@@ -109,8 +109,8 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
             r3cell *op2 = oanchors[north? 1 : 2]; // old perpendicular anch
             oanchors[0] = pa1;
             oanchors[1] = pa2;
-            oanchors[3] = op1;
-            oanchors[4] = op2;
+            oanchors[2] = op1;
+            oanchors[3] = op2;
 
             if (!next_anch(oanchors, nanchors)) {
                 // if we have NULL results after the turn, we have finished
@@ -147,8 +147,8 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
             }
             oanchors[0] = pa1;
             oanchors[1] = pa2;
-            oanchors[3] = op1;
-            oanchors[4] = op2;
+            oanchors[2] = op1;
+            oanchors[3] = op2;
 
             // populate nanchors for fall-through to rest of function
             if (!next_anch(oanchors, nanchors)) {
