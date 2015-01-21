@@ -123,10 +123,10 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
             // gridify these new-found anchors
             // Note, when turning like this, the row will be shared, and the
             // column will always be increasing in both north, south cases.
-            nanchors[0]->row = oanchors[0];
-            nanchors[0]->col = oanchors[0] + 1;
-            nanchors[1]->row = oanchors[1];
-            nanchors[1]->col = oanchors[1] + 1;
+            nanchors[0]->row = oanchors[0]->row;
+            nanchors[0]->col = oanchors[0]->col + 1;
+            nanchors[1]->row = oanchors[1]->row;
+            nanchors[1]->col = oanchors[1]->col + 1;
             side->cells[nanchors[0]->row][nanchors[0]->col] = nanchors[0];
             side->cells[nanchors[1]->row][nanchors[1]->col] = nanchors[1];
 
@@ -160,10 +160,10 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
         assert(nanchors[1]);
 
         // add these two new anchors into the grid
-        nanchors[0]->row = oanchors[0] + (north ? -1 : 1);
-        nanchors[0]->col = oanchors[0];
-        nanchors[1]->row = oanchors[1] + (north ? -1 : 1);
-        nanchors[1]->col = oanchors[1];
+        nanchors[0]->row = oanchors[0]->row + (north ? -1 : 1);
+        nanchors[0]->col = oanchors[0]->col;
+        nanchors[1]->row = oanchors[1]->row + (north ? -1 : 1);
+        nanchors[1]->col = oanchors[1]->col;
         side->cells[nanchors[0]->row][nanchors[0]->col] = nanchors[0];
         side->cells[nanchors[1]->row][nanchors[1]->col] = nanchors[1];
 
