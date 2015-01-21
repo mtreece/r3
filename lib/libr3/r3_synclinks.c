@@ -83,8 +83,10 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
 
     int north = 0;
     while (1) {
-        next_anch(oanchors, nanchors);
-        if (!nanchors[0]) {
+        if (!next_anch(oanchors, nanchors)) {
+            assert(!nanchors[0]);
+            assert(!nanchors[1]);
+
             // re-orient perpendicular
             r3cell *pa1 = oanchors[north? 2 : 1]; // perpendicular anch
             r3cell *pa2 = oanchors[north? 0 : 3]; // perpendicular anch
@@ -115,6 +117,8 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
             // and hook into the rest of this function (falling through)
             // TODO: setup the oanchors to use the previous artifacts
         }
+        assert(nanchors[0]);
+        assert(nanchors[1]);
 
         // add these two new anchors into the grid
         nanchors[0]->row = oanchors[0] + (north ? -1 : 1);
