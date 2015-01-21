@@ -115,7 +115,27 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
             north = !north;
 
             // and hook into the rest of this function (falling through)
-            // TODO: setup the oanchors to use the previous artifacts
+            if (north) {
+                pa1 = nanchors[1];
+                pa2 = oanchors[1];
+                op1 = nanchors[0];
+                op2 = oanchors[0];
+            } else {
+                pa1 = oanchors[0];
+                pa2 = nanchors[0];
+                op1 = oanchors[1];
+                op2 = nanchors[1];
+            }
+            oanchors[0] = pa1;
+            oanchors[1] = pa2;
+            oanchors[3] = op1;
+            oanchors[4] = op2;
+
+            // populate nanchors for fall-through to rest of function
+            if (!next_anch(oanchors, nanchors)) {
+                // we oughtn't reach this
+                assert(0);
+            }
         }
         assert(nanchors[0]);
         assert(nanchors[1]);
