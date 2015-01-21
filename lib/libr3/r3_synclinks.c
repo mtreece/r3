@@ -84,9 +84,6 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
     int north = 0;
     while (1) {
         if (!next_anch(oanchors, nanchors)) {
-            assert(!nanchors[0]);
-            assert(!nanchors[1]);
-
             // re-orient perpendicular
             r3cell *pa1 = oanchors[north? 2 : 1]; // perpendicular anch
             r3cell *pa2 = oanchors[north? 0 : 3]; // perpendicular anch
@@ -102,6 +99,8 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
                 // traversing the grid; this is our halting condition
                 break;
             }
+            assert(nanchors[0]);
+            assert(nanchors[1]);
 
             // gridify these new-found anchors
             // Note, when turning like this, the row will be shared, and the
