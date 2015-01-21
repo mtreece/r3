@@ -76,14 +76,13 @@ done:
  * Given two up/down, left/right adjacent edge r3cell structs, that are
  * properly set on the grid, reconstruct the entire r3side.
  *
- * @param[in] cube The r3cube this operation is performed on.
  * @param[in] side The r3side this operation is reconstructing.
  * @param[in] c1 The 1st, good r3cell
  * @param[in] c2 the 2nd, good r3cell
  *
  * @retval 0 success
  */
-static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
+static int syncside(r3side *side, r3cell *c1, r3cell *c2)
 {
     /* TODO: make sure this function meets its requirements; when designing
      * this algorithm, I foolishly made the assumption that the first two
@@ -199,7 +198,7 @@ int r3_synclinks(r3cube *cube)
     c = side->cells;
     c[0][0]->dirty = 0;
     c[0][1]->dirty = 0;
-    syncside(cube, side, c[0][0], c[0][1]);
+    syncside(side, c[0][0], c[0][1]);
 
     // now tackle side[1]
     // strategy: find sides[1].cells[2][0..1] by looking at
@@ -227,7 +226,7 @@ int r3_synclinks(r3cube *cube)
     /* should always skip over this ... */
     assert(0);
 eloop1:
-    syncside(cube, &cube->sides[1], *b1, *b2);
+    syncside(&cube->sides[1], *b1, *b2);
 
     // now tackle side[2]
     for (b1 = c[2][0]->brothers; *b1; ++b1) {
@@ -253,7 +252,7 @@ eloop1:
     /* should always skip over this ... */
     assert(0);
 eloop2:
-    syncside(cube, &cube->sides[2], *b1, *b2);
+    syncside(&cube->sides[2], *b1, *b2);
 
     // now tackle side[3]
     for (b1 = c[0][0]->brothers; *b1; ++b1) {
@@ -279,7 +278,7 @@ eloop2:
     /* should always skip over this ... */
     assert(0);
 eloop3:
-    syncside(cube, &cube->sides[3], *b1, *b2);
+    syncside(&cube->sides[3], *b1, *b2);
 
     // now tackle side[4]
     for (b1 = c[0][2]->brothers; *b1; ++b1) {
@@ -305,7 +304,7 @@ eloop3:
     /* should always skip over this ... */
     assert(0);
 eloop4:
-    syncside(cube, &cube->sides[4], *b1, *b2);
+    syncside(&cube->sides[4], *b1, *b2);
 
     // now tackle side[5]
     // reposition `side`, `c` to side[4] as a known-good starting point
@@ -334,7 +333,7 @@ eloop4:
     /* should always skip over this ... */
     assert(0);
 eloop5:
-    syncside(cube, &cube->sides[5], *b1, *b2);
+    syncside(&cube->sides[5], *b1, *b2);
 
     return 0;
 }
