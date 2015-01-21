@@ -97,9 +97,11 @@ static int syncside(r3cube *cube, r3side *side, r3cell *c1, r3cell *c2)
             oanchors[3] = op1;
             oanchors[4] = op2;
 
-            next_anch(oanchors, nanchors);
-            assert(nanchors[0]);
-            assert(nanchors[1]);
+            if (!next_anch(oanchors, nanchors)) {
+                // if we have NULL results after the turn, we have finished
+                // traversing the grid; this is our halting condition
+                break;
+            }
 
             // gridify these new-found anchors
             // Note, when turning like this, the row will be shared, and the
