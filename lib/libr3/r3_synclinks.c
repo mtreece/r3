@@ -47,7 +47,7 @@ static int next_anch(r3cell *a[], r3cell *n[])
 
         // iterate over this cell's neighbor
         for (r3cell **cc = (*c)->neighbors; *cc; ++cc) {
-            if (*cc == *c) {
+            if (*cc == a1) {
                 // ignore the neighbor we just came from
                 continue;
             }
