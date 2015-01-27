@@ -163,10 +163,6 @@ static void update_grid(r3side *side, r3cell *o[], r3cell *n[])
     side->cells[n[1]->row][n[1]->col] = n[1];
 }
 
-#define UP    0
-#define DOWN  1
-#define LEFT  2
-#define RIGHT 3
 /**
  * @brief
  * Given two up/down, left/right adjacent edge r3cell structs, that are
