@@ -131,6 +131,9 @@ static void update_grid(r3side *side, r3cell *o[], r3cell *n[])
             o3col = NUM_COLS;
         } else {
             assert(0);
+
+            // return to make the compiler happy in non-assert builds
+            return;
         }
     } else {
         o2row = o[2]->row;
@@ -242,7 +245,8 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
         // otherwise, invalid input
         assert(0);
 
-        // TODO: make sure compiler complains that vars may not be set
+        // return in error to make the compiler happy in non-assert builds
+        return -1;
     }
 
     while (1) {
@@ -345,6 +349,9 @@ int r3_synclinks(r3cube *cube)
     }
     /* should always skip over this ... */
     assert(0);
+
+    /* return in error to make the compiler happy in non-assert builds */
+    return -1;
 eloop1:
     syncside(&cube->sides[1], *b2, *b1);
 
@@ -371,6 +378,9 @@ eloop1:
     }
     /* should always skip over this ... */
     assert(0);
+
+    /* return in error to make the compiler happy in non-assert builds */
+    return -1;
 eloop2:
     syncside(&cube->sides[2], *b1, *b2);
 
@@ -397,6 +407,9 @@ eloop2:
     }
     /* should always skip over this ... */
     assert(0);
+
+    /* return in error to make the compiler happy in non-assert builds */
+    return -1;
 eloop3:
     syncside(&cube->sides[3], *b1, *b2);
 
@@ -423,6 +436,9 @@ eloop3:
     }
     /* should always skip over this ... */
     assert(0);
+
+    /* return in error to make the compiler happy in non-assert builds */
+    return -1;
 eloop4:
     syncside(&cube->sides[4], *b2, *b1);
 
@@ -452,6 +468,9 @@ eloop4:
     }
     /* should always skip over this ... */
     assert(0);
+
+    /* return in error to make the compiler happy in non-assert builds */
+    return -1;
 eloop5:
     syncside(&cube->sides[5], *b2, *b1);
 
