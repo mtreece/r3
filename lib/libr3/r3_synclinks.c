@@ -166,6 +166,23 @@ static void update_grid(r3side *side, r3cell *o[], r3cell *n[])
 
 /**
  * @brief
+ * Given the old anchors, and the 2 new anchors, advance the old anchors to
+ * encompass the two new anchors. Note, this only works in a linear
+ * advancement.
+ *
+ * @param[in,out] o The four old anchors
+ * @param[in,out] n The two new anchors
+ */
+static void advance_anchors(r3cell *o[], r3cell *n[])
+{
+    o[3] = o[1];
+    o[2] = o[0];
+    o[1] = n[1];
+    o[0] = n[0];
+}
+
+/**
+ * @brief
  * Given two up/down, left/right adjacent edge r3cell structs, that are
  * properly set on the grid, reconstruct the entire r3side. Note, the input
  * cells must fit the following criteria:
@@ -263,12 +280,8 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
 
             update_grid(side, oanchors, nanchors);
 
-            oanchors[3] = oanchors[1];
-            oanchors[2] = oanchors[0];
-            oanchors[1] = nanchors[1];
-            oanchors[0] = nanchors[0];
-
             // rotate again for zig-zag motion
+            advance_anchors(oanchors, nanchors);
             rotateblock(clockwise, oanchors);
 
             // now, reset direction
@@ -287,10 +300,7 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
         update_grid(side, oanchors, nanchors);
 
         // reset for next iteration
-        oanchors[3] = oanchors[1];
-        oanchors[2] = oanchors[0];
-        oanchors[1] = nanchors[1];
-        oanchors[0] = nanchors[0];
+        advance_anchors(oanchors, nanchors);
     }
 
     return 0;
