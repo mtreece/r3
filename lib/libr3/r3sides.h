@@ -43,11 +43,6 @@ typedef struct r3cell {
 
     /// the row & col on the .side this belongs to
     int row, col;
-
-    /// "dirty" => neighbors & brothers integrity in-check, but its
-    /// grid-alignment may be off. This is used internally with the r3_sync*
-    /// functions when updating grid-state off of operations.
-    int dirty;
 } r3cell;
 
 typedef struct r3side {

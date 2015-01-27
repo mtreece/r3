@@ -317,17 +317,10 @@ int r3_synclinks(r3cube *cube)
         return -1;
     }
 
-    // invalidate all the cells in the cube
-    for (unsigned int i = 0; i < sizeof(cube->cellspace) / sizeof(r3cell); ++i) {
-        cube->cellspace[i].dirty = 1;
-    }
-
     // start with the anchors on sides[0]; these should be synced already on
     // any operation
     side = &cube->sides[0];
     c = side->cells;
-    c[0][0]->dirty = 0;
-    c[0][1]->dirty = 0;
     syncside(side, c[0][0], c[0][1]);
 
     // now tackle side[1]
