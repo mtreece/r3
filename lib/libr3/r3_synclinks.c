@@ -263,9 +263,6 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
 
             update_grid(side, oanchors, nanchors);
 
-            // gridify these new-found anchors
-            // Note, when turning like this, the row will be shared, and the
-            // column will always be increasing in both north, south cases.
             oanchors[3] = oanchors[1];
             oanchors[2] = oanchors[0];
             oanchors[1] = nanchors[1];
@@ -275,7 +272,6 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
             rotateblock(clockwise, oanchors);
 
             // now, reset direction
-            //north = !north;
             clockwise = !clockwise;
 
             // populate nanchors for fall-through to rest of function
