@@ -10,6 +10,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "r3cube.h"
 #include "r3_synclinks.h"
@@ -73,8 +74,106 @@ done:
 
 /**
  * @brief
+ * Given 4 adj r3cell structs, rotate their vector-direction.
+ *
+ * @param[in] clockwise if true, clockwise, else counter-clockwise
+ * @param[in,out] a Array of the 4 r3cell pointers; re-arrange on output
+ */
+static void rotateblock(int clockwise, r3cell *a[])
+{
+    r3cell *old[4];
+
+    memcpy(old, a, sizeof(old));
+    a[0] = old[clockwise ? 2 : 1];
+    a[1] = old[clockwise ? 0 : 3];
+    a[2] = old[clockwise ? 3 : 0];
+    a[3] = old[clockwise ? 1 : 2];
+}
+
+/**
+ * @brief
+ * Given the 4 old anchors (for direction) & 2 new anchors, place the 2 new
+ * anchors on the given r3side.
+ *
+ * @param[in] side The r3side these cells will reside on
+ * @param[in] o Array of 4 r3cell*, from the old anchors
+ * @param[in] n Array of 2 new r3cell*
+ */
+static void update_grid(r3side *side, r3cell *o[], r3cell *n[])
+{
+    // FIXME: bug when referencing NULL o[2,3] ...
+
+    int o2row, o2col;
+    int o3row, o3col;
+
+    // fudge the numbers if we have NULL old values
+    if (NULL == o[2]) {
+        assert(NULL == o[3]);
+        if (0 == o[0]->row && 0 == o[1]->row) {
+            o2row = -1;
+            o3row = -1;
+            o2col = o[0]->col;
+            o3col = o[1]->col;
+        } else if ((NUM_ROWS - 1 == o[0]->row)
+                && (NUM_ROWS - 1 == o[1]->row)) {
+            o2row = NUM_ROWS;
+            o2col = o[0]->col;
+            o3row = NUM_ROWS;
+            o3col = o[1]->col;
+        } else if (0 == o[0]->col && 0 == o[1]->col) {
+            o2row = o[0]->row;
+            o2col = -1;
+            o3row = o[1]->row;
+            o3col = -1;
+        } else if ((NUM_COLS - 1 == o[0]->col)
+                && (NUM_COLS - 1 == o[1]->col)) {
+            o2row = o[0]->row;
+            o2col = NUM_COLS;
+            o3row = o[1]->row;
+            o3col = NUM_COLS;
+        } else {
+            assert(0);
+        }
+    } else {
+        o2row = o[2]->row;
+        o2col = o[2]->col;
+        o3row = o[3]->row;
+        o3col = o[3]->col;
+    }
+
+    if (o[0]->row == o2row) {
+        assert(o[1]->row == o3row);
+        n[0]->row = o[0]->row;
+        n[1]->row = o[1]->row;
+
+        n[0]->col = o[0]->col + (o[0]->col - o2col);
+        n[1]->col = o[1]->col + (o[1]->col - o3col);
+    } else {
+        assert(o[0]->col == o2col);
+        assert(o[1]->col == o3col);
+
+        n[0]->col = o[0]->col;
+        n[1]->col = o[1]->col;
+
+        n[0]->row = o[0]->row + (o[0]->row - o2row);
+        n[1]->row = o[1]->row + (o[1]->row - o3row);
+    }
+
+    side->cells[n[0]->row][n[0]->col] = n[0];
+    side->cells[n[1]->row][n[1]->col] = n[1];
+}
+
+#define UP    0
+#define DOWN  1
+#define LEFT  2
+#define RIGHT 3
+/**
+ * @brief
  * Given two up/down, left/right adjacent edge r3cell structs, that are
- * properly set on the grid, reconstruct the entire r3side.
+ * properly set on the grid, reconstruct the entire r3side. Note, the input
+ * cells must fit the following criteria:
+ *   1) adjacent by row or col
+ *   2) one cell is a corner cell
  *
  * @param[in] side The r3side this operation is reconstructing.
  * @param[in] c1 The 1st, good r3cell
@@ -84,12 +183,6 @@ done:
  */
 static int syncside(r3side *side, r3cell *c1, r3cell *c2)
 {
-    /* TODO: make sure this function meets its requirements; when designing
-     * this algorithm, I foolishly made the assumption that the first two
-     * anchors will always be the [0][0],[0][1]-pair, & traveling south
-     * initially. This may not always be the case. How will it affect the
-     * algorithm? Is there some setup I will initially need to do?
-     */
     r3cell *oanchors[4]; // old anchors
     r3cell *nanchors[2]; // new anchors
 
@@ -98,19 +191,54 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
     oanchors[2] = NULL;
     oanchors[3] = NULL;
 
-    int north = 0;
+    int clockwise; // counter/clockwise alternator flag
+
+    // assert the cells are adjacent
+    assert(1 >= abs(c1->row - c2->row) && 1 >= abs(c1->col - c2->col));
+
+    if (0 == c1->row && 0 == c2->row) {
+        // assert we're on the edge
+        assert(0 == c1->col || 0 == c2->col
+                || NUM_COLS - 1 == c1->col || NUM_COLS - 1 == c2->col);
+
+        // if the two anchors are upper-right, they will move down, and then
+        // need to turn clockwise
+        clockwise = (NUM_COLS - 1 == c1->col) || (NUM_COLS - 1 == c2->col);
+    } else if (0 == c1->col && 0 == c2->col) {
+        // assert we're on the edge
+        assert(0 == c1->row || 0 == c2->row
+                || NUM_ROWS - 1 == c1->row || NUM_ROWS - 1 == c2->row);
+
+        // if the two anchors are upper-left, they will move right, and then
+        // need to turn clockwise
+        clockwise = (0 == c1->row) || (0 == c2->row);
+    } else if (NUM_ROWS - 1 == c1->row && NUM_ROWS - 1 == c2->row) {
+        // assert we're on the edge
+        assert(0 == c1->col || 0 == c2->col
+                || NUM_COLS - 1 == c1->col || NUM_COLS - 1 == c2->col);
+
+        // if the anchors are lower-left, they will move up, & then need to
+        // turn clockwise
+        clockwise = (0 == c1->col) || (0 == c2->col);
+    } else if (NUM_COLS - 1 == c1->col && NUM_COLS - 1 == c2->col) {
+        // assert we're on the edge
+        assert(0 == c1->row || 0 == c2->row
+                || NUM_ROWS - 1 == c1->row || NUM_ROWS - 1 == c2->row);
+
+        // if the two anchors are lower-right, they will move left, and then
+        // need to turn clockwise
+        clockwise = (NUM_ROWS - 1 == c1->row) || (NUM_ROWS - 1 == c2->col);
+    } else {
+        // otherwise, invalid input
+        assert(0);
+
+        // TODO: make sure compiler complains that vars may not be set
+    }
+
     while (1) {
         if (!next_anch(oanchors, nanchors)) {
             // re-orient perpendicular
-            r3cell *pa1 = oanchors[north? 2 : 1]; // perpendicular anch
-            r3cell *pa2 = oanchors[north? 0 : 3]; // perpendicular anch
-            r3cell *op1 = oanchors[north? 3 : 0]; // old perpendicular anch
-            r3cell *op2 = oanchors[north? 1 : 2]; // old perpendicular anch
-            oanchors[0] = pa1;
-            oanchors[1] = pa2;
-            oanchors[2] = op1;
-            oanchors[3] = op2;
-
+            rotateblock(clockwise, oanchors);
             if (!next_anch(oanchors, nanchors)) {
                 // if we have NULL results after the turn, we have finished
                 // traversing the grid; this is our halting condition
@@ -119,35 +247,22 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
             assert(nanchors[0]);
             assert(nanchors[1]);
 
+            update_grid(side, oanchors, nanchors);
+
             // gridify these new-found anchors
             // Note, when turning like this, the row will be shared, and the
             // column will always be increasing in both north, south cases.
-            nanchors[0]->row = oanchors[0]->row;
-            nanchors[0]->col = oanchors[0]->col + 1;
-            nanchors[1]->row = oanchors[1]->row;
-            nanchors[1]->col = oanchors[1]->col + 1;
-            side->cells[nanchors[0]->row][nanchors[0]->col] = nanchors[0];
-            side->cells[nanchors[1]->row][nanchors[1]->col] = nanchors[1];
+            oanchors[3] = oanchors[1];
+            oanchors[2] = oanchors[0];
+            oanchors[1] = nanchors[1];
+            oanchors[0] = nanchors[0];
+
+            // rotate again for zig-zag motion
+            rotateblock(clockwise, oanchors);
 
             // now, reset direction
-            north = !north;
-
-            // and hook into the rest of this function (falling through)
-            if (north) {
-                pa1 = nanchors[1];
-                pa2 = oanchors[1];
-                op1 = nanchors[0];
-                op2 = oanchors[0];
-            } else {
-                pa1 = oanchors[0];
-                pa2 = nanchors[0];
-                op1 = oanchors[1];
-                op2 = nanchors[1];
-            }
-            oanchors[0] = pa1;
-            oanchors[1] = pa2;
-            oanchors[2] = op1;
-            oanchors[3] = op2;
+            //north = !north;
+            clockwise = !clockwise;
 
             // populate nanchors for fall-through to rest of function
             if (!next_anch(oanchors, nanchors)) {
@@ -159,12 +274,7 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
         assert(nanchors[1]);
 
         // add these two new anchors into the grid
-        nanchors[0]->row = oanchors[0]->row + (north ? -1 : 1);
-        nanchors[0]->col = oanchors[0]->col;
-        nanchors[1]->row = oanchors[1]->row + (north ? -1 : 1);
-        nanchors[1]->col = oanchors[1]->col;
-        side->cells[nanchors[0]->row][nanchors[0]->col] = nanchors[0];
-        side->cells[nanchors[1]->row][nanchors[1]->col] = nanchors[1];
+        update_grid(side, oanchors, nanchors);
 
         // reset for next iteration
         oanchors[3] = oanchors[1];
