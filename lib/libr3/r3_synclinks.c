@@ -352,7 +352,7 @@ int r3_synclinks(r3cube *cube)
     /* should always skip over this ... */
     assert(0);
 eloop1:
-    syncside(&cube->sides[1], *b1, *b2);
+    syncside(&cube->sides[1], *b2, *b1);
 
     // now tackle side[2]
     for (b1 = c[2][0]->brothers; *b1; ++b1) {
@@ -430,7 +430,7 @@ eloop3:
     /* should always skip over this ... */
     assert(0);
 eloop4:
-    syncside(&cube->sides[4], *b1, *b2);
+    syncside(&cube->sides[4], *b2, *b1);
 
     // now tackle side[5]
     // reposition `side`, `c` to side[4] as a known-good starting point
@@ -459,7 +459,7 @@ eloop4:
     /* should always skip over this ... */
     assert(0);
 eloop5:
-    syncside(&cube->sides[5], *b1, *b2);
+    syncside(&cube->sides[5], *b2, *b1);
 
     return 0;
 }
