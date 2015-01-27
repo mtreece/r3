@@ -240,7 +240,7 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
 
         // if the two anchors are lower-right, they will move left, and then
         // need to turn clockwise
-        clockwise = (NUM_ROWS - 1 == c1->row) || (NUM_ROWS - 1 == c2->col);
+        clockwise = (NUM_ROWS - 1 == c1->row) || (NUM_ROWS - 1 == c2->row);
 
         // assert params in necessary order (TODO: generalize the algorithm)
         assert(c1->row < c2->row);
