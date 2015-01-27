@@ -101,8 +101,6 @@ static void rotateblock(int clockwise, r3cell *a[])
  */
 static void update_grid(r3side *side, r3cell *o[], r3cell *n[])
 {
-    // FIXME: bug when referencing NULL o[2,3] ...
-
     int o2row, o2col;
     int o3row, o3col;
 
