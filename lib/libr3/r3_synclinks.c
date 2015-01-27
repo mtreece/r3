@@ -174,6 +174,10 @@ static void update_grid(r3side *side, r3cell *o[], r3cell *n[])
  * cells must fit the following criteria:
  *   1) adjacent by row or col
  *   2) one cell is a corner cell
+ *   3) the c* order is important; they must be passed in such that c1 is to
+ *      the left of c2, when oriented in such a way that advancement is
+ *      downward. If you don't know what this means, compile with assertions
+ *      enabled, and it will crash if you have them backwards.
  *
  * @param[in] side The r3side this operation is reconstructing.
  * @param[in] c1 The 1st, good r3cell
@@ -204,6 +208,9 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
         // if the two anchors are upper-right, they will move down, and then
         // need to turn clockwise
         clockwise = (NUM_COLS - 1 == c1->col) || (NUM_COLS - 1 == c2->col);
+
+        // assert params in necessary order (TODO: generalize the algorithm)
+        assert(c1->col < c2->col);
     } else if (0 == c1->col && 0 == c2->col) {
         // assert we're on the edge
         assert(0 == c1->row || 0 == c2->row
@@ -212,6 +219,9 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
         // if the two anchors are upper-left, they will move right, and then
         // need to turn clockwise
         clockwise = (0 == c1->row) || (0 == c2->row);
+
+        // assert params in necessary order (TODO: generalize the algorithm)
+        assert(c1->row > c2->row);
     } else if (NUM_ROWS - 1 == c1->row && NUM_ROWS - 1 == c2->row) {
         // assert we're on the edge
         assert(0 == c1->col || 0 == c2->col
@@ -220,6 +230,9 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
         // if the anchors are lower-left, they will move up, & then need to
         // turn clockwise
         clockwise = (0 == c1->col) || (0 == c2->col);
+
+        // assert params in necessary order (TODO: generalize the algorithm)
+        assert(c1->col > c2->col);
     } else if (NUM_COLS - 1 == c1->col && NUM_COLS - 1 == c2->col) {
         // assert we're on the edge
         assert(0 == c1->row || 0 == c2->row
@@ -228,6 +241,9 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
         // if the two anchors are lower-right, they will move left, and then
         // need to turn clockwise
         clockwise = (NUM_ROWS - 1 == c1->row) || (NUM_ROWS - 1 == c2->col);
+
+        // assert params in necessary order (TODO: generalize the algorithm)
+        assert(c1->row < c2->row);
     } else {
         // otherwise, invalid input
         assert(0);
