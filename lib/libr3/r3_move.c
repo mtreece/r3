@@ -21,26 +21,96 @@
 #define VERTICAL_VECTOR_OF_FACES ((int []){0, 1, 5, 2})
 #define HORIZONTAL_VECTOR_OF_FACES ((int []){0, 4, 5, 3})
 
+typedef struct {
+    /// the r3cube object to operate on
+    r3cube *cube;
+
+    /// the amount (+/- 1) to increment
+    int increment;
+
+    /// the next cell to return for get_next operation
+    r3cell *cur_cell;
+} ctx_t;
+
+static r3cell *get_next_horiz(ctx_t *ctx)
+{
+    assert(ctx);
+    r3cell *out = ctx->cur_cell;
+    return out;
+}
+
+static r3cell *get_next_vert(ctx_t *ctx)
+{
+    if (!ctx) {
+        return NULL;
+    }
+    return NULL;
+}
+
+// TODO: optimize this; should store off this information with cells
+static int get_side(r3cube *cube, r3cell *c)
+{
+    for (int i = 0; i < NUM_SIDES; ++i) {
+        if (&cube->sides[i] == c->side) {
+            return i;
+        }
+    }
+
+    assert(0);
+    return -1;
+}
+
 int r3_move(r3cube *cube, int direction, int selector)
 {
-    int vertical;                       // direction is vertical? else, horizontal
+    ctx_t ctx;                       // context
+    int vertical;                    // direction vertical? else, horizontal
+    unsigned int iterations;         // number of r3cells to traverse
+    int *sidelist;                   // ordered list of sides
+    int nsides;                      // number of sides to iterate
+    r3cell *(*get_next)(ctx_t *ctx); // iterator
 
-    if (!cube) {
+    if (!cube || 0 > selector) {
         return -1;
     }
 
-    if (0 > selector) {
-        return -1;
-    }
-
+    ctx.cube = cube;
     switch (direction) {
         case R3_UP:
+            vertical = 1;
+            iterations = NUM_SIDES * NUM_ROWS;
+            get_next = get_next_vert;
+            ctx.increment = -1;
+            ctx.cur_cell = cube->sides[0].cells[0][selector];
+            sidelist = (int []){0,1,5,2};
+            nsides = 4;
+            break;
         case R3_DOWN:
             vertical = 1;
+            iterations = NUM_SIDES * NUM_ROWS;
+            get_next = get_next_vert;
+            ctx.increment = 1;
+            ctx.cur_cell = cube->sides[0].cells[0][selector];
+            sidelist = (int []){0,2,5,1};
+            nsides = 4;
             break;
+
         case R3_LEFT:
+            vertical = 0;
+            iterations = NUM_SIDES * NUM_COLS;
+            get_next = get_next_horiz;
+            ctx.increment = -1;
+            ctx.cur_cell = cube->sides[0].cells[selector][0];
+            sidelist = (int []){0,3,5,4};
+            nsides = 4;
+            break;
         case R3_RIGHT:
             vertical = 0;
+            iterations = NUM_SIDES * NUM_COLS;
+            get_next = get_next_horiz;
+            ctx.increment = 1;
+            ctx.cur_cell = cube->sides[0].cells[selector][0];
+            sidelist = (int []){0,4,5,3};
+            nsides = 4;
             break;
         default:
             return -1;
@@ -49,6 +119,29 @@ int r3_move(r3cube *cube, int direction, int selector)
     if (selector > (vertical ? NUM_COLS : NUM_ROWS) - 1) {
         return -1;
     }
+
+    for (int i = 0; i < nsides; ++i) {
+        r3cell *c = get_next(&ctx);
+        int row = c->row;
+        int col = c->col;
+        int side = get_side(cube, c);
+        int nside = sidelist[++i];
+        r3cell *cn = cube->sides[nside].cells[row][col];
+
+        if(!row){return -1;}
+        if(!col){return -1;}
+        if(!side){ return -1; }
+        if(!nside){return -1;}
+        if(!cn){ return -1; }
+        if(!iterations){ return -1; }
+    }
+
+#if 0
+    for (unsigned int i = 0; i < iterations; ++i) {
+        r3cell *c;
+
+    }
+#endif
 
     r3_synclinks(cube);
 
