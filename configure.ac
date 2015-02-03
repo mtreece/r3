@@ -7,6 +7,7 @@
 #
 AC_INIT([r3], [0.0])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
+AM_SILENT_RULES([yes])
 AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_RANLIB
