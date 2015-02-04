@@ -20,6 +20,7 @@
 
 #define VERTICAL_VECTOR_OF_FACES ((int []){0, 1, 5, 2})
 #define HORIZONTAL_VECTOR_OF_FACES ((int []){0, 4, 5, 3})
+#define ADJSIZE (sizeof(((r3cell *)0)->neighbors))
 
 typedef struct {
     /// the r3cube object to operate on
@@ -47,6 +48,7 @@ static r3cell *get_next_vert(ctx_t *ctx)
     return NULL;
 }
 
+#if 0
 // TODO: optimize this; should store off this information with cells
 static int get_side(r3cube *cube, r3cell *c)
 {
@@ -59,6 +61,7 @@ static int get_side(r3cube *cube, r3cell *c)
     assert(0);
     return -1;
 }
+#endif /* 0 */
 
 int r3_move(r3cube *cube, int direction, int selector)
 {
@@ -120,19 +123,43 @@ int r3_move(r3cube *cube, int direction, int selector)
         return -1;
     }
 
-    for (int i = 0; i < nsides; ++i) {
-        r3cell *c = get_next(&ctx);
-        int row = c->row;
-        int col = c->col;
-        int side = get_side(cube, c);
-        int nside = sidelist[++i];
-        r3cell *cn = cube->sides[nside].cells[row][col];
+    r3cell *c0 = cube->sides[0].cells[0][0];
+    r3cell adj0[ADJSIZE];
+    memcpy(&adj0, c0->neighbors, ADJSIZE);
 
-        if(!row){return -1;}
-        if(!col){return -1;}
-        if(!side){ return -1; }
-        if(!nside){return -1;}
-        if(!cn){ return -1; }
+    // iterate over all sides, sans last; the last side will operate on the
+    // saved-off adjacency list from the first
+    for (int i = 0; i < nsides - 1; ++i) {
+        r3cell *c = get_next(&ctx);
+        assert(&cube->sides[sidelist[i]] == c->side);
+
+        int nside = sidelist[i + 1];
+        r3cell *cn = cube->sides[nside].cells[c->row][c->col];
+
+        // unlink old non-parallel neighbors
+        for (r3cell **n = &c->neighbors; *n; ++n) {
+            if (!parallel_cell(c, *n)) {
+                // <c, *n> are adj, but not along direction vector; need to
+                // remove this link
+                if (!unlink_cell(c, *n)) {
+                    // shouldn't fail
+                    assert(0);
+                }
+            }
+        }
+
+        // link with new non-parallel neighbors
+        for (r3cell **n = &cn->neighbors; *n; ++n) {
+            if (!parallel_cell(c, *n)) {
+                // <cn, *n> are adj, but not along direction vector; need to
+                // link this with its new neighbor
+                if (!link_cell(c, *n)) {
+                    // shouldn't fail
+                    assert(0);
+                }
+            }
+        }
+
         if(!iterations){ return -1; }
     }
 
