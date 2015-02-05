@@ -265,7 +265,7 @@ int r3_move(r3cube *cube, int direction, int selector)
 
         // link with new non-parallel neighbors
         for (r3cell **n = cn->neighbors; *n; ++n) {
-            if (!parallel_cell(c, *n)) {
+            if (!parallel_cell(cn, *n)) {
                 // <cn, *n> are adj, but not along direction vector; need to
                 // link this with its new neighbor
                 if (!link_cell(c, *n, 0)) {
