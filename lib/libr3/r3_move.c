@@ -63,6 +63,87 @@ static int get_side(r3cube *cube, r3cell *c)
 }
 #endif /* 0 */
 
+static int parallel_cell_horiz(r3cell *c1, r3cell *c2)
+{
+#if !defined(NDEBUG)
+    for (r3cell **n = c1->neighbors; *n; ++n) {
+        if (*n == c2) {
+            goto cont;
+        }
+    }
+    assert(0);
+
+cont:
+#endif
+
+    // assume c1 & c2 are actually neighbors
+    return c1->row == c2->row;
+}
+
+static int parallel_cell_vert(r3cell *c1, r3cell *c2)
+{
+#if !defined(NDEBUG)
+    for (r3cell **n = c1->neighbors; *n; ++n) {
+        if (*n == c2) {
+            goto cont;
+        }
+    }
+    assert(0);
+
+cont:
+#endif
+
+    // assume c1 & c2 are actually neighbors
+    return c1->col == c2->col;
+}
+
+// TODO: factor this *link_cell functionality into a common location; see
+// r3_init::link_neighbors
+static int unlink_cell(r3cell *a, r3cell *b, int iteration)
+{
+    r3cell **ptr = a->neighbors;
+    for (r3cell **n = a->neighbors; *n; ++n) {
+        if (*n != b) {
+            *ptr++ = *n;
+        }
+    }
+
+    // finally, cap it off with a NULL
+    *ptr = NULL;
+
+    if (0 == iteration) {
+        if (!unlink_cell(b, a, 1)) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+static int link_cell(r3cell *a, r3cell *b, int iteration)
+{
+    r3cell **ptr = a->neighbors;
+
+    // find our first free spot
+    while (*++ptr);
+
+    // space available to link the cell?
+    if (NULL != ptr[1]) {
+        return 0;
+    }
+
+    // link the cell from this direction...
+    *ptr = b;
+
+    // now do the other direction, if need be
+    if (0 == iteration) {
+        if (!link_cell(b, a, 1)) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
 int r3_move(r3cube *cube, int direction, int selector)
 {
     ctx_t ctx;                       // context
@@ -71,6 +152,7 @@ int r3_move(r3cube *cube, int direction, int selector)
     int *sidelist;                   // ordered list of sides
     int nsides;                      // number of sides to iterate
     r3cell *(*get_next)(ctx_t *ctx); // iterator
+    int (*parallel_cell)(r3cell*, r3cell*); // cells along the same line?
 
     if (!cube || 0 > selector) {
         return -1;
@@ -82,6 +164,7 @@ int r3_move(r3cube *cube, int direction, int selector)
             vertical = 1;
             iterations = NUM_SIDES * NUM_ROWS;
             get_next = get_next_vert;
+            parallel_cell = parallel_cell_vert;
             ctx.increment = -1;
             ctx.cur_cell = cube->sides[0].cells[0][selector];
             sidelist = (int []){0,1,5,2};
@@ -91,6 +174,7 @@ int r3_move(r3cube *cube, int direction, int selector)
             vertical = 1;
             iterations = NUM_SIDES * NUM_ROWS;
             get_next = get_next_vert;
+            parallel_cell = parallel_cell_vert;
             ctx.increment = 1;
             ctx.cur_cell = cube->sides[0].cells[0][selector];
             sidelist = (int []){0,2,5,1};
@@ -101,6 +185,7 @@ int r3_move(r3cube *cube, int direction, int selector)
             vertical = 0;
             iterations = NUM_SIDES * NUM_COLS;
             get_next = get_next_horiz;
+            parallel_cell = parallel_cell_horiz;
             ctx.increment = -1;
             ctx.cur_cell = cube->sides[0].cells[selector][0];
             sidelist = (int []){0,3,5,4};
@@ -110,6 +195,7 @@ int r3_move(r3cube *cube, int direction, int selector)
             vertical = 0;
             iterations = NUM_SIDES * NUM_COLS;
             get_next = get_next_horiz;
+            parallel_cell = parallel_cell_horiz;
             ctx.increment = 1;
             ctx.cur_cell = cube->sides[0].cells[selector][0];
             sidelist = (int []){0,4,5,3};
@@ -137,11 +223,11 @@ int r3_move(r3cube *cube, int direction, int selector)
         r3cell *cn = cube->sides[nside].cells[c->row][c->col];
 
         // unlink old non-parallel neighbors
-        for (r3cell **n = &c->neighbors; *n; ++n) {
+        for (r3cell **n = c->neighbors; *n; ++n) {
             if (!parallel_cell(c, *n)) {
                 // <c, *n> are adj, but not along direction vector; need to
                 // remove this link
-                if (!unlink_cell(c, *n)) {
+                if (!unlink_cell(c, *n, 0)) {
                     // shouldn't fail
                     assert(0);
                 }
@@ -149,11 +235,11 @@ int r3_move(r3cube *cube, int direction, int selector)
         }
 
         // link with new non-parallel neighbors
-        for (r3cell **n = &cn->neighbors; *n; ++n) {
+        for (r3cell **n = cn->neighbors; *n; ++n) {
             if (!parallel_cell(c, *n)) {
                 // <cn, *n> are adj, but not along direction vector; need to
                 // link this with its new neighbor
-                if (!link_cell(c, *n)) {
+                if (!link_cell(c, *n, 0)) {
                     // shouldn't fail
                     assert(0);
                 }
