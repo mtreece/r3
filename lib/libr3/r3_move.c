@@ -177,7 +177,6 @@ int r3_move(r3cube *cube, int direction, int selector)
 {
     ctx_t ctx;                       // context
     int vertical;                    // direction vertical? else, horizontal
-    unsigned int iterations;         // number of r3cells to traverse
     int *sidelist;                   // ordered list of sides
     int nsides;                      // number of sides to iterate
     r3cell *(*get_next)(ctx_t *ctx); // iterator
@@ -191,7 +190,6 @@ int r3_move(r3cube *cube, int direction, int selector)
     switch (direction) {
         case R3_UP:
             vertical = 1;
-            iterations = NUM_SIDES * NUM_ROWS;
             get_next = get_next_vert;
             parallel_cell = parallel_cell_vert;
             ctx.increment = -1;
@@ -201,7 +199,6 @@ int r3_move(r3cube *cube, int direction, int selector)
             break;
         case R3_DOWN:
             vertical = 1;
-            iterations = NUM_SIDES * NUM_ROWS;
             get_next = get_next_vert;
             parallel_cell = parallel_cell_vert;
             ctx.increment = 1;
@@ -212,7 +209,6 @@ int r3_move(r3cube *cube, int direction, int selector)
 
         case R3_LEFT:
             vertical = 0;
-            iterations = NUM_SIDES * NUM_COLS;
             get_next = get_next_horiz;
             parallel_cell = parallel_cell_horiz;
             ctx.increment = -1;
@@ -222,7 +218,6 @@ int r3_move(r3cube *cube, int direction, int selector)
             break;
         case R3_RIGHT:
             vertical = 0;
-            iterations = NUM_SIDES * NUM_COLS;
             get_next = get_next_horiz;
             parallel_cell = parallel_cell_horiz;
             ctx.increment = 1;
@@ -242,8 +237,19 @@ int r3_move(r3cube *cube, int direction, int selector)
     r3cell adj0[ADJSIZE];
     memcpy(&adj0, c0->neighbors, ADJSIZE);
 
+    /* sign off notes:
+     * need to redesign the per-side algorithm. Copy off the first side's
+     * data... and then reference that inside the outermost for loop when
+     * appropriate. I hate to have a constant if() check inside the for loop,
+     * but the alternative is copy/pasting a lot of logic, or creating another
+     * function. Check to see if the compiler does reasonable optimizations
+     * about this. Also, the entire algorithm needs to account
+     * for-each-cell-per-side + for-each-side, which it currently does not do.
+     */
+
     // iterate over all sides, sans last; the last side will operate on the
     // saved-off adjacency list from the first
+    // TODO: do the last side!!!
     for (int i = 0; i < nsides - 1; ++i) {
         r3cell *c = get_next(&ctx);
         assert(&cube->sides[sidelist[i]] == c->side);
@@ -274,16 +280,7 @@ int r3_move(r3cube *cube, int direction, int selector)
                 }
             }
         }
-
-        if(!iterations){ return -1; }
     }
-
-#if 0
-    for (unsigned int i = 0; i < iterations; ++i) {
-        r3cell *c;
-
-    }
-#endif
 
     r3_synclinks(cube);
 
