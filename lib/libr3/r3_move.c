@@ -37,15 +37,44 @@ static r3cell *get_next_horiz(ctx_t *ctx)
 {
     assert(ctx);
     r3cell *out = ctx->cur_cell;
+    if (NULL == out) {
+        return NULL;
+    }
+
+    int row = ctx->cur_cell->row;
+    int col = ctx->cur_cell->col;
+    int inc = ctx->increment;
+    int newcol = col + inc;
+
+    if (0 > newcol || NUM_COLS - 1 < newcol) {
+        ctx->cur_cell = NULL;
+    } else {
+        ctx->cur_cell = ctx->cur_cell->side->cells[row][newcol];
+    }
+
     return out;
 }
 
 static r3cell *get_next_vert(ctx_t *ctx)
 {
-    if (!ctx) {
+    assert(ctx);
+    r3cell *out = ctx->cur_cell;
+    if (NULL == out) {
         return NULL;
     }
-    return NULL;
+
+    int row = ctx->cur_cell->row;
+    int col = ctx->cur_cell->col;
+    int inc = ctx->increment;
+    int newrow = row + inc;
+
+    if (0 > newrow || NUM_ROWS - 1 < newrow) {
+        ctx->cur_cell = NULL;
+    } else {
+        ctx->cur_cell = ctx->cur_cell->side->cells[newrow][col];
+    }
+
+    return out;
 }
 
 #if 0
