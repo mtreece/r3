@@ -26,9 +26,6 @@ typedef struct {
     /// the r3cube object to operate on
     r3cube *cube;
 
-    /// the amount (+/- 1) to increment
-    int increment;
-
     /// the next cell to return for get_next operation
     r3cell *cur_cell;
 
@@ -49,8 +46,7 @@ static r3cell *get_next_horiz(ctx_t *ctx)
 
     int row = ctx->cur_cell->row;
     int col = ctx->cur_cell->col;
-    int inc = ctx->increment;
-    int newcol = col + inc;
+    int newcol = col + 1;
 
     if (0 > newcol || NUM_COLS - 1 < newcol) {
         ctx->cur_cell = NULL;
@@ -71,8 +67,7 @@ static r3cell *get_next_vert(ctx_t *ctx)
 
     int row = ctx->cur_cell->row;
     int col = ctx->cur_cell->col;
-    int inc = ctx->increment;
-    int newrow = row + inc;
+    int newrow = row + 1;
 
     if (0 > newrow || NUM_ROWS - 1 < newrow) {
         ctx->cur_cell = NULL;
@@ -198,7 +193,6 @@ int r3_move(r3cube *cube, int direction, int selector)
             vertical = 1;
             get_next = get_next_vert;
             parallel_cell = parallel_cell_vert;
-            ctx.increment = -1;
             ctx.row0 = 0;
             ctx.col0 = selector;
             sidelist = (int []){0,1,5,2};
@@ -208,7 +202,6 @@ int r3_move(r3cube *cube, int direction, int selector)
             vertical = 1;
             get_next = get_next_vert;
             parallel_cell = parallel_cell_vert;
-            ctx.increment = 1;
             ctx.row0 = 0;
             ctx.col0 = selector;
             sidelist = (int []){0,2,5,1};
@@ -219,7 +212,6 @@ int r3_move(r3cube *cube, int direction, int selector)
             vertical = 0;
             get_next = get_next_horiz;
             parallel_cell = parallel_cell_horiz;
-            ctx.increment = -1;
             ctx.row0 = selector;
             ctx.col0 = 0;
             sidelist = (int []){0,3,5,4};
@@ -229,7 +221,6 @@ int r3_move(r3cube *cube, int direction, int selector)
             vertical = 0;
             get_next = get_next_horiz;
             parallel_cell = parallel_cell_horiz;
-            ctx.increment = 1;
             ctx.row0 = selector;
             ctx.col0 = 0;
             sidelist = (int []){0,4,5,3};
