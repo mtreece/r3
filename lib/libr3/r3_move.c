@@ -31,6 +31,12 @@ typedef struct {
 
     /// the next cell to return for get_next operation
     r3cell *cur_cell;
+
+    /// the initial row for the side
+    int row0;
+
+    /// the initial col for the side
+    int col0;
 } ctx_t;
 
 static r3cell *get_next_horiz(ctx_t *ctx)
@@ -193,7 +199,8 @@ int r3_move(r3cube *cube, int direction, int selector)
             get_next = get_next_vert;
             parallel_cell = parallel_cell_vert;
             ctx.increment = -1;
-            ctx.cur_cell = cube->sides[0].cells[0][selector];
+            ctx.row0 = 0;
+            ctx.col0 = selector;
             sidelist = (int []){0,1,5,2};
             nsides = 4;
             break;
@@ -202,7 +209,8 @@ int r3_move(r3cube *cube, int direction, int selector)
             get_next = get_next_vert;
             parallel_cell = parallel_cell_vert;
             ctx.increment = 1;
-            ctx.cur_cell = cube->sides[0].cells[0][selector];
+            ctx.row0 = 0;
+            ctx.col0 = selector;
             sidelist = (int []){0,2,5,1};
             nsides = 4;
             break;
@@ -212,7 +220,8 @@ int r3_move(r3cube *cube, int direction, int selector)
             get_next = get_next_horiz;
             parallel_cell = parallel_cell_horiz;
             ctx.increment = -1;
-            ctx.cur_cell = cube->sides[0].cells[selector][0];
+            ctx.row0 = selector;
+            ctx.col0 = 0;
             sidelist = (int []){0,3,5,4};
             nsides = 4;
             break;
@@ -221,7 +230,8 @@ int r3_move(r3cube *cube, int direction, int selector)
             get_next = get_next_horiz;
             parallel_cell = parallel_cell_horiz;
             ctx.increment = 1;
-            ctx.cur_cell = cube->sides[0].cells[selector][0];
+            ctx.row0 = selector;
+            ctx.col0 = 0;
             sidelist = (int []){0,4,5,3};
             nsides = 4;
             break;
@@ -233,58 +243,62 @@ int r3_move(r3cube *cube, int direction, int selector)
         return -1;
     }
 
-    r3cell *c0 = cube->sides[0].cells[0][0];
-    r3cell adj0[ADJSIZE];
-    memcpy(&adj0, c0->neighbors, ADJSIZE);
-
-    /* sign off notes:
-     * need to redesign the per-side algorithm. Copy off the first side's
-     * data... and then reference that inside the outermost for loop when
-     * appropriate. I hate to have a constant if() check inside the for loop,
-     * but the alternative is copy/pasting a lot of logic, or creating another
-     * function. Check to see if the compiler does reasonable optimizations
-     * about this. Also, the entire algorithm needs to account
-     * for-each-cell-per-side + for-each-side, which it currently does not do.
+    /* TODO: make more efficient.
+     * This is unneeded overhead, but simplifies the algorithm.
      */
+    r3side side0;
+    memcpy(&side0, &cube->sides[0], sizeof(side0));
+    r3side *sides[NUM_SIDES + 1];
+    for (int i = 0; i < nsides; ++i) {
+        sides[i] = &cube->sides[sidelist[i]];
+    }
+    sides[nsides] = &side0;
+    sides[nsides + 1] = NULL;
 
-    // iterate over all sides, sans last; the last side will operate on the
-    // saved-off adjacency list from the first
-    // TODO: do the last side!!!
-    for (int i = 0; i < nsides - 1; ++i) {
-        r3cell *c = get_next(&ctx);
-        assert(&cube->sides[sidelist[i]] == c->side);
+    for (r3side **s = sides; *(s+1); ++s) {
+        ctx.cur_cell = (*s)->cells[ctx.row0][ctx.col0];
+        r3cell *c;
+        while ((c = get_next(&ctx))) {
+            assert(c->side == *s);
+            r3cell *cn = (*(s+1))->cells[c->row][c->col];
 
-        int nside = sidelist[i + 1];
-        r3cell *cn = cube->sides[nside].cells[c->row][c->col];
-
-        // unlink old non-parallel neighbors
-        for (r3cell **n = c->neighbors; *n; ++n) {
-            if (!parallel_cell(c, *n)) {
-                // <c, *n> are adj, but not along direction vector; need to
-                // remove this link
-                if (!unlink_cell(c, *n, 0)) {
-                    // shouldn't fail
-                    assert(0);
+            // unlink old, non-parallel neighbors
+            for (r3cell **n = c->neighbors; *n; ++n) {
+                if (!parallel_cell(c, *n)) {
+                    // <c, *n> are adj, but not along direction vector; need to
+                    // remove this link
+                    if (!unlink_cell(c, *n, 0)) {
+                        // shouldn't fail
+                        assert(0);
+                    }
                 }
             }
-        }
 
-        // link with new non-parallel neighbors
-        for (r3cell **n = cn->neighbors; *n; ++n) {
-            if (!parallel_cell(cn, *n)) {
-                // <cn, *n> are adj, but not along direction vector; need to
-                // link this with its new neighbor
-                if (!link_cell(c, *n, 0)) {
-                    // shouldn't fail
-                    assert(0);
+            // link with new, non-parallel neighbors
+            for (r3cell **n = cn->neighbors; *n; ++n) {
+                if (!parallel_cell(cn, *n)) {
+                    // <cn, *n> are adj, but not along direction vector; need to
+                    // link this with its new neighbor
+                    if (!link_cell(c, *n, 0)) {
+                        // shouldn't fail
+                        assert(0);
+                    }
+                }
+            }
+
+            // TODO: optimize! Shouldn't do this check each iteration...
+            if (0 == cn->side) {
+                if (0 == cn->row && (0 == cn->col || 1 == cn->col)) {
+                    c->row = cn->row;
+                    c->col = cn->col;
+                    c->side = cn->side;
+                    cn->side->cells[c->row][c->col] = c;
                 }
             }
         }
     }
 
-    r3_synclinks(cube);
-
-    return 0;
+    return r3_synclinks(cube);
 }
 
 int xr3_move(r3cube *cube, int direction, int selector)
