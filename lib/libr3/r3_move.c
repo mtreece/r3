@@ -253,27 +253,52 @@ int r3_move(r3cube *cube, int direction, int selector)
             assert(c->side == *s);
             r3cell *cn = (*(s+1))->cells[c->row][c->col];
 
-            // unlink old, non-parallel neighbors
+            // step 1 //////////////////////////////////////////////////////////
+
+            // need to store off ptrs & re-visit them; cannot operate on a list
+            // while traversing it!
+            r3cell *to_unlink[MAX_NUM_NEIGHBORS + 1];
+            r3cell **unlinkptr = to_unlink;
+
+            // find old, non-parallel neighbors
             for (r3cell **n = c->neighbors; *n; ++n) {
                 if (!parallel_cell(c, *n)) {
-                    // <c, *n> are adj, but not along direction vector; need to
-                    // remove this link
-                    if (!unlink_cell(c, *n, 0)) {
-                        // shouldn't fail
-                        assert(0);
-                    }
+                    *unlinkptr++ = *n;
                 }
             }
+            *unlinkptr = NULL;
+
+            // unlink old, non-parallel neighbors
+            for (r3cell **n = to_unlink; *n; ++n) {
+                // <c, *n> are adj, but not along direction vector; need to
+                // remove this link
+                if (!unlink_cell(c, *n, 0)) {
+                    // shouldn't fail
+                    assert(0);
+                }
+            }
+
+            // step 2 //////////////////////////////////////////////////////////
+
+            // need to store off ptrs & re-visit them; cannot operate on a list
+            // while traversing it!
+            r3cell *to_link[MAX_NUM_NEIGHBORS + 1];
+            r3cell **linkptr = to_link;
 
             // link with new, non-parallel neighbors
             for (r3cell **n = cn->neighbors; *n; ++n) {
                 if (!parallel_cell(cn, *n)) {
-                    // <cn, *n> are adj, but not along direction vector; need to
-                    // link this with its new neighbor
-                    if (!link_cell(c, *n, 0)) {
-                        // shouldn't fail
-                        assert(0);
-                    }
+                    *linkptr++ = *n;
+                }
+            }
+            *linkptr = NULL;
+
+            for (r3cell **n = to_link; *n; ++n) {
+                // <cn, *n> are adj, but not along direction vector; need to
+                // link this with its new neighbor
+                if (!link_cell(c, *n, 0)) {
+                    // shouldn't fail
+                    assert(0);
                 }
             }
 
