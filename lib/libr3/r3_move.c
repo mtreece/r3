@@ -154,6 +154,7 @@ static int unlink_cell(r3cell *a, r3cell *b, int iteration)
  * Link a and b together, at the expense (replacement) of old as a previous
  * neighbor to b.
  */
+__attribute__((unused))
 static int swap_cell(r3cell *a, r3cell *b, r3cell *old)
 {
     r3cell **ptr;
@@ -269,6 +270,78 @@ int r3_move(r3cube *cube, int direction, int selector)
         return -1;
     }
 
+    typedef struct {
+        r3cell *a;
+        r3cell *b;
+    } link_record;
+
+    link_record links[NUM_SIDES * MAX_ROW_COLS * MAX_NUM_NEIGHBORS];
+    link_record unlinks[NUM_SIDES * MAX_ROW_COLS * MAX_NUM_NEIGHBORS];
+
+    link_record *linkptr = links;
+    link_record *unlinkptr = unlinks;
+
+    r3side *sides[NUM_SIDES + 1 + 1];
+    for (int i = 0; i < nsides; ++i) {
+        sides[i] = &cube->sides[sidelist[i]];
+    }
+    sides[nsides] = &cube->sides[0];
+    sides[nsides + 1] = NULL;
+
+    for (r3side **s = sides; *(s+1); ++s) {
+        ctx.cur_cell = (*s)->cells[ctx.row0][ctx.col0];
+        r3cell *c;
+        while ((c = get_next(&ctx))) {
+            assert(c->side == *s);
+            r3cell *cn = (*(s+1))->cells[c->row][c->col];
+
+            // record old, non-parallel neighbors
+            for (r3cell **n = c->neighbors; *n; ++n) {
+                if (!parallel_cell(c, *n)) {
+                    unlinkptr->a = c;
+                    unlinkptr->b = *n;
+                    ++unlinkptr;
+                }
+            }
+
+            // record new, non-parallel neighbors
+            for (r3cell **n = cn->neighbors; *n; ++n) {
+                if (!parallel_cell(cn, *n)) {
+                    linkptr->a = c;
+                    linkptr->b = *n;
+                    ++linkptr;
+                }
+            }
+
+            // TODO: optimize! Shouldn't do this check each iteration...
+            if (&cube->sides[0] == cn->side) {
+                if (0 == cn->row && (0 == cn->col || 1 == cn->col)) {
+                    c->row = cn->row;
+                    c->col = cn->col;
+                    c->side = cn->side;
+                    cn->side->cells[c->row][c->col] = c;
+                }
+            }
+        }
+    }
+
+    for (link_record *r = unlinks; r < unlinkptr; ++r) {
+        if (!unlink_cell(r->a, r->b, 0)) {
+            // shouldn't fail
+            assert(0);
+        }
+    }
+
+    for (link_record *r = links; r < linkptr; ++r) {
+        if (!link_cell(r->a, r->b, 0)) {
+            // shouldn't fail
+            assert(0);
+        }
+    }
+
+    return r3_synclinks(cube);
+
+#if 0
     /* TODO: make more efficient.
      * This is unneeded overhead, but simplifies the algorithm.
      */
@@ -352,6 +425,7 @@ int r3_move(r3cube *cube, int direction, int selector)
     }
 
     return r3_synclinks(cube);
+#endif
 }
 
 int xr3_move(r3cube *cube, int direction, int selector)
