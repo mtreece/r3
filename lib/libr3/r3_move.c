@@ -340,7 +340,7 @@ int r3_move(r3cube *cube, int direction, int selector)
             }
 
             // TODO: optimize! Shouldn't do this check each iteration...
-            if (0 == cn->side) {
+            if (&cube->sides[0] == cn->side) {
                 if (0 == cn->row && (0 == cn->col || 1 == cn->col)) {
                     c->row = cn->row;
                     c->col = cn->col;
