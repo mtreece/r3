@@ -149,6 +149,37 @@ static int unlink_cell(r3cell *a, r3cell *b, int iteration)
 
     return 1;
 }
+/**
+ * @brief
+ * This is a strange one. Link a and b together, at the expense (replacement)
+ * of old.
+ */
+static int swap_cell(r3cell *a, r3cell *b, r3cell *old, int iteration)
+{
+    // find our replacement
+    while (rcell **ptr = a->neighbors; *ptr; ++ptr) {
+        if (*ptr == old) {
+            break;
+        }
+    }
+
+    // error if old wasn't found in list
+    if (old && !*ptr) {
+        return 0;
+    }
+
+    // link the cell from this direction...
+    *ptr = b;
+
+    // now do the other direction, if need be
+    if (0 == iteration) {
+        if (!swap_cell(b, a, old, 1)) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
 static int link_cell(r3cell *a, r3cell *b, int iteration)
 {
     r3cell **ptr = a->neighbors;
@@ -296,7 +327,9 @@ int r3_move(r3cube *cube, int direction, int selector)
             for (r3cell **n = to_link; *n; ++n) {
                 // <cn, *n> are adj, but not along direction vector; need to
                 // link this with its new neighbor
-                if (!link_cell(c, *n, 0)) {
+                // TODO: document what I'm doing here...
+                //if (!link_cell(c, *n, 0)) {
+                if (!swap_cell(c, *n, cn, 0)) {
                     // shouldn't fail
                     assert(0);
                 }
