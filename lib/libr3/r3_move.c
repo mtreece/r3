@@ -151,13 +151,15 @@ static int unlink_cell(r3cell *a, r3cell *b, int iteration)
 }
 /**
  * @brief
- * This is a strange one. Link a and b together, at the expense (replacement)
- * of old.
+ * Link a and b together, at the expense (replacement) of old as a previous
+ * neighbor to b.
  */
-static int swap_cell(r3cell *a, r3cell *b, r3cell *old, int iteration)
+static int swap_cell(r3cell *a, r3cell *b, r3cell *old)
 {
+    r3cell **ptr;
+
     // find our replacement
-    while (rcell **ptr = a->neighbors; *ptr; ++ptr) {
+    for (ptr = b->neighbors; *ptr; ++ptr) {
         if (*ptr == old) {
             break;
         }
@@ -169,17 +171,19 @@ static int swap_cell(r3cell *a, r3cell *b, r3cell *old, int iteration)
     }
 
     // link the cell from this direction...
-    *ptr = b;
+    *ptr = a;
 
-    // now do the other direction, if need be
-    if (0 == iteration) {
-        if (!swap_cell(b, a, old, 1)) {
-            return 0;
-        }
-    }
+    // now do the other direction
+    for (ptr = a->neighbors; *ptr; ++ptr);
+
+    // there ought to always be space for a terminating NULL
+    assert(!ptr[1]);
+
+    *ptr = a;
 
     return 1;
 }
+__attribute__((unused))
 static int link_cell(r3cell *a, r3cell *b, int iteration)
 {
     r3cell **ptr = a->neighbors;
@@ -329,7 +333,7 @@ int r3_move(r3cube *cube, int direction, int selector)
                 // link this with its new neighbor
                 // TODO: document what I'm doing here...
                 //if (!link_cell(c, *n, 0)) {
-                if (!swap_cell(c, *n, cn, 0)) {
+                if (!swap_cell(c, *n, cn)) {
                     // shouldn't fail
                     assert(0);
                 }
