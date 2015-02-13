@@ -34,6 +34,9 @@ typedef struct {
 
     /// the initial col for the side
     int col0;
+
+    int (*srt)(int);
+    int (*sct)(int);
 } ctx_t;
 
 static r3cell *get_next_horiz(ctx_t *ctx)
@@ -44,9 +47,15 @@ static r3cell *get_next_horiz(ctx_t *ctx)
         return NULL;
     }
 
-    int row = ctx->cur_cell->row;
-    int col = ctx->cur_cell->col;
+    int (*srt)(int) = ctx->srt;
+    int (*sct)(int) = ctx->sct;
+
+    int row = srt(ctx->cur_cell->row);
+    int col = sct(ctx->cur_cell->col);
     int newcol = col + 1;
+
+    row = srt(row);
+    newcol = sct(newcol);
 
     if (0 > newcol || NUM_COLS - 1 < newcol) {
         ctx->cur_cell = NULL;
@@ -65,9 +74,15 @@ static r3cell *get_next_vert(ctx_t *ctx)
         return NULL;
     }
 
-    int row = ctx->cur_cell->row;
-    int col = ctx->cur_cell->col;
+    int (*srt)(int) = ctx->srt;
+    int (*sct)(int) = ctx->sct;
+
+    int row = srt(ctx->cur_cell->row);
+    int col = sct(ctx->cur_cell->col);
     int newrow = row + 1;
+
+    col = sct(col);
+    newrow = srt(newrow);
 
     if (0 > newrow || NUM_ROWS - 1 < newrow) {
         ctx->cur_cell = NULL;
@@ -210,6 +225,26 @@ static int link_cell(r3cell *a, r3cell *b, int iteration)
     return 1;
 }
 
+static int r3_row_reverse(int r)
+{
+    return NUM_ROWS - 1 - r;
+}
+
+static int r3_col_reverse(int c)
+{
+    return NUM_COLS - 1 - c;
+}
+
+static int r3_row_direct(int r)
+{
+    return r;
+}
+
+static int r3_col_direct(int c)
+{
+    return c;
+}
+
 int r3_move(r3cube *cube, int direction, int selector)
 {
     ctx_t ctx;                       // context
@@ -218,6 +253,8 @@ int r3_move(r3cube *cube, int direction, int selector)
     int nsides;                      // number of sides to iterate
     r3cell *(*get_next)(ctx_t *ctx); // iterator
     int (*parallel_cell)(r3cell*, r3cell*); // cells along the same line?
+    int (**rowtrans)(int);           // row translator, per side
+    int (**coltrans)(int);           // col translator, per side
 
     if (!cube || 0 > selector) {
         return -1;
@@ -233,6 +270,12 @@ int r3_move(r3cube *cube, int direction, int selector)
             ctx.col0 = selector;
             sidelist = (int []){0,1,5,2};
             nsides = 4;
+            rowtrans = (int (*[])(int)){r3_row_direct, r3_row_direct,
+                                        r3_row_reverse, r3_row_direct,
+                                        r3_row_direct, NULL};
+            coltrans = (int (*[])(int)){r3_col_direct, r3_col_direct,
+                                        r3_col_reverse, r3_col_direct,
+                                        r3_col_direct, NULL};
             break;
         case R3_DOWN:
             vertical = 1;
@@ -242,6 +285,12 @@ int r3_move(r3cube *cube, int direction, int selector)
             ctx.col0 = selector;
             sidelist = (int []){0,2,5,1};
             nsides = 4;
+            rowtrans = (int (*[])(int)){r3_row_direct, r3_row_direct,
+                                        r3_row_reverse, r3_row_direct,
+                                        r3_row_direct, NULL};
+            coltrans = (int (*[])(int)){r3_col_direct, r3_col_direct,
+                                        r3_col_reverse, r3_col_direct,
+                                        r3_col_direct, NULL};
             break;
 
         case R3_LEFT:
@@ -252,6 +301,12 @@ int r3_move(r3cube *cube, int direction, int selector)
             ctx.col0 = 0;
             sidelist = (int []){0,3,5,4};
             nsides = 4;
+            rowtrans = (int (*[])(int)){r3_row_direct, r3_row_direct,
+                                        r3_row_direct, r3_row_direct,
+                                        r3_row_direct, NULL};
+            coltrans = (int (*[])(int)){r3_col_direct, r3_col_direct,
+                                        r3_col_direct, r3_col_direct,
+                                        r3_col_direct, NULL};
             break;
         case R3_RIGHT:
             vertical = 0;
@@ -261,6 +316,12 @@ int r3_move(r3cube *cube, int direction, int selector)
             ctx.col0 = 0;
             sidelist = (int []){0,4,5,3};
             nsides = 4;
+            rowtrans = (int (*[])(int)){r3_row_direct, r3_row_direct,
+                                        r3_row_direct, r3_row_direct,
+                                        r3_row_direct, NULL};
+            coltrans = (int (*[])(int)){r3_col_direct, r3_col_direct,
+                                        r3_col_direct, r3_col_direct,
+                                        r3_col_direct, NULL};
             break;
         default:
             return -1;
@@ -288,12 +349,26 @@ int r3_move(r3cube *cube, int direction, int selector)
     sides[nsides] = &cube->sides[0];
     sides[nsides + 1] = NULL;
 
+    int (**srtptr)(int) = rowtrans;
+    int (**sctptr)(int) = coltrans;
+
     for (r3side **s = sides; *(s+1); ++s) {
-        ctx.cur_cell = (*s)->cells[ctx.row0][ctx.col0];
         r3cell *c;
+
+        // s row,col translate
+        int (*srt)(int) = *srtptr++;
+        int (*sct)(int) = *sctptr++;
+
+        // s1 row,col translate
+        int (*s1rt)(int) = *srtptr;
+        int (*s1ct)(int) = *sctptr;
+
+        ctx.srt = srt;
+        ctx.sct = srt;
+        ctx.cur_cell = (*s)->cells[srt(ctx.row0)][sct(ctx.col0)];
         while ((c = get_next(&ctx))) {
             assert(c->side == *s);
-            r3cell *cn = (*(s+1))->cells[c->row][c->col];
+            r3cell *cn = (*(s+1))->cells[s1rt(c->row)][s1ct(c->col)];
 
             // record old, non-parallel neighbors
             for (r3cell **n = c->neighbors; *n; ++n) {
@@ -314,6 +389,8 @@ int r3_move(r3cube *cube, int direction, int selector)
             }
 
             // TODO: optimize! Shouldn't do this check each iteration...
+            // Not updating to use s*t() functions here for performance
+            // reasons; we already know neither c, nor cn will be the last face
             if (&cube->sides[0] == cn->side) {
                 if (0 == cn->row && (0 == cn->col || 1 == cn->col)) {
                     c->row = cn->row;
