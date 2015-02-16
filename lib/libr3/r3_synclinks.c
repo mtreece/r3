@@ -162,6 +162,9 @@ static void update_grid(r3side *side, r3cell *o[], r3cell *n[])
 
     side->cells[n[0]->row][n[0]->col] = n[0];
     side->cells[n[1]->row][n[1]->col] = n[1];
+
+    n[0]->side = side;
+    n[1]->side = side;
 }
 
 /**
