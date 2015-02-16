@@ -368,7 +368,9 @@ int r3_move(r3cube *cube, int direction, int selector)
         ctx.cur_cell = (*s)->cells[srt(ctx.row0)][sct(ctx.col0)];
         while ((c = get_next(&ctx))) {
             assert(c->side == *s);
-            r3cell *cn = (*(s+1))->cells[s1rt(c->row)][s1ct(c->col)];
+
+            // TODO: optimize, vs. calling s1rt * srt.
+            r3cell *cn = (*(s+1))->cells[s1rt(srt(c->row))][s1ct(sct(c->col))];
 
             // record old, non-parallel neighbors
             for (r3cell **n = c->neighbors; *n; ++n) {
