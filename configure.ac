@@ -6,6 +6,7 @@
 # published by the Free Software Foundation.
 #
 AC_INIT([r3], [0.0])
+AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([foreign -Wall -Werror])
 AM_SILENT_RULES([yes])
 AC_PROG_CC
