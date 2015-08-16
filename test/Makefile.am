@@ -6,10 +6,13 @@
 # published by the Free Software Foundation.
 #
 
-TESTS = check_libr3
+if BUILD_TESTS
+TESTS = $(check_PROGRAMS)
 check_PROGRAMS = check_libr3
+endif
 
 check_libr3_SOURCES = check_libr3.c \
+                      check_libr3.h \
                       check_libr3-core.c \
                       check_libr3.map
 check_libr3_CFLAGS = @CHECK_CFLAGS@

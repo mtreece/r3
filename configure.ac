@@ -33,12 +33,12 @@ AC_ARG_ENABLE([build-tests],
 AC_MSG_RESULT([$BUILD_TESTS])
 if test "x$BUILD_TESTS" = "xyes"; then
 	PKG_CHECK_MODULES([CHECK], [check >= 0.9.14])
-	AC_CONFIG_FILES([test/Makefile])
 fi
 AM_CONDITIONAL([BUILD_TESTS], [test "x$BUILD_TESTS" == "xyes"])
 
 AC_CONFIG_FILES([Makefile
 		 lib/libr3/Makefile
-		 src/Makefile])
+		 src/Makefile
+		 test/Makefile])
 
 AC_OUTPUT

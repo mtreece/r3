@@ -6,8 +6,4 @@
 # published by the Free Software Foundation.
 #
 
-if BUILD_TESTS
-  MAYBE_TESTS = test/
-endif
-
-SUBDIRS = lib/libr3 src/ $(MAYBE_TESTS)
+SUBDIRS = lib/libr3 src/ test/
