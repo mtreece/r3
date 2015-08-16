@@ -10,10 +10,11 @@ TESTS = check_libr3
 check_PROGRAMS = check_libr3
 
 check_libr3_SOURCES = check_libr3.c \
-                      check_libr3-core.c
+                      check_libr3-core.c \
+                      check_libr3.map
 check_libr3_CFLAGS = @CHECK_CFLAGS@
 check_libr3_LDADD = @CHECK_LIBS@
-check_libr3_LDFLAGS = -Wl,check_libr3.map
+check_libr3_LDFLAGS = -Wl,$(top_srcdir)/test/check_libr3.map
 
 EXTRA_DIST = $(TESTS)
 
