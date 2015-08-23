@@ -27,15 +27,21 @@ if test "x$COMMONDEVOPTS" == "xyes"; then
 	AC_MSG_RESULT([yes])
 	ASSERTIONS=yes
 	BUILD_TESTS=yes
+else
+	AC_MSG_RESULT([no])
 fi
 
+AC_MSG_CHECKING([whether or not to turn on assertions])
 AC_ARG_ENABLE([assertions],
 	    AS_HELP_STRING([--enable-assertions],
 			   [turn on assert() for development]),
 	   [ASSERTIONS=$enableval], [])
 if test "x$ASSERTIONS" != "xyes"; then
+	AC_MSG_RESULT([no])
 	AC_SUBST(WITH_ASSERTIONS)
 	AC_DEFINE([NDEBUG], , [If defined, assertions do nothing])
+else
+	AC_MSG_RESULT([yes])
 fi
 
 AC_MSG_CHECKING([whether or not to build tests])
@@ -43,9 +49,11 @@ AC_ARG_ENABLE([build-tests],
 	    AS_HELP_STRING([--enable-build-tests],
 			   [build the 'make check' functionality]),
 	   [BUILD_TESTS=$enableval], [])
-AC_MSG_RESULT([$BUILD_TESTS])
 if test "x$BUILD_TESTS" = "xyes"; then
+	AC_MSG_RESULT([yes])
 	PKG_CHECK_MODULES([CHECK], [check >= 0.9.14])
+else
+	AC_MSG_RESULT([no])
 fi
 AM_CONDITIONAL([BUILD_TESTS], [test "x$BUILD_TESTS" == "xyes"])
 
