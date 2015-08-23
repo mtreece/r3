@@ -38,7 +38,7 @@ AC_ARG_ENABLE([assertions],
 	   [ASSERTIONS=$enableval], [])
 if test "x$ASSERTIONS" != "xyes"; then
 	AC_MSG_RESULT([no])
-	AC_DEFINE([NDEBUG], , [If defined, assertions do nothing])
+	AC_DEFINE([NDEBUG], , [if defined, assertions do nothing])
 else
 	AC_MSG_RESULT([yes])
 fi
