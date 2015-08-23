@@ -16,8 +16,7 @@ AC_PROG_RANLIB
 AM_PROG_AR
 AC_CONFIG_HEADERS([config.h])
 
-dnl These are options which probably ought to be turned on if you're doing
-dnl development
+dnl options which probably ought to be turned on if you're doing development
 AC_MSG_CHECKING([whether or not to build with common developer options])
 AC_ARG_ENABLE([common-dev-opts],
 	    AS_HELP_STRING([--enable-common-dev-opts],
