@@ -13,6 +13,14 @@
 
 #include "check_libr3.h"
 
+/**
+ * @brief
+ * Test that we can "test ourselves".
+ *
+ * @details
+ * This test just ensures we can create a passing test. It is a simple, dummy
+ * test, for sake of having a test.
+ */
 START_TEST(test_null)
 {
     ck_assert(1);
