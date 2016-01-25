@@ -36,6 +36,7 @@ static Suite *builder()
 
     tc = tcase_create("null");
     tcase_add_test(tc, test_null);
+    suite_add_tcase(s, tc);
 
     return s;
 }
