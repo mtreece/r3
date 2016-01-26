@@ -32,6 +32,8 @@ int main(int argc, char *argv[])
         srunner_set_tap(sr, "-");
         srunner_run_all(sr, CK_ENV);
         nfailed += srunner_ntests_failed(sr);
+
+        srunner_free(sr);
     }
 
     return (0 == nfailed) ? EXIT_SUCCESS : EXIT_FAILURE;
