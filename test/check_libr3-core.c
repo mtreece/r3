@@ -12,6 +12,7 @@
 #include <stdlib.h>
 
 #include <r3.h>
+#include <r3_synclinks.h>
 
 #include "check_libr3.h"
 
@@ -39,8 +40,27 @@ END_TEST
  */
 START_TEST(test_basics)
 {
+    const int directions[] = {
+        R3_UP,
+        R3_DOWN,
+        R3_LEFT,
+        R3_RIGHT,
+    };
     r3cube cube;
+
+    // can I init a cube?
     ck_assert_int_eq(0, r3_init(&cube));
+
+    // can I move it in every direction?
+    // FIXME: update test to dynamically handle selector max idx
+    for (int i = 0; i < sizeof(directions)/sizeof(directions[0]); ++i) {
+        for (int selector = 0; selector < MAX_ROW_COLS; ++selector) {
+            ck_assert_int_eq(0, r3_move(&cube, directions[i], selector));
+        }
+    }
+
+    // can I manually call synclinks?
+    ck_assert_int_eq(0, r3_synclinks(&cube));
 }
 END_TEST
 
