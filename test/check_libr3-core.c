@@ -61,6 +61,9 @@ START_TEST(test_basics)
 
     // can I manually call synclinks?
     ck_assert_int_eq(0, r3_synclinks(&cube));
+
+    // can I get the facing side?
+    ck_assert(r3_cube_get_face(&cube));
 }
 END_TEST
 
