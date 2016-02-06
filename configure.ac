@@ -56,6 +56,20 @@ else
 fi
 AM_CONDITIONAL([BUILD_TESTS], [test "x$BUILD_TESTS" == "xyes"])
 
+AC_MSG_CHECKING([whether or not to build with profiling support (gcov)])
+AC_ARG_ENABLE([gcov-support],
+	      AS_HELP_STRING([--enable-gcov-support],
+			     [compile with support for gcov]),
+	     [GCOV_SUPPORT=$enableval], [])
+if test "x$GCOV_SUPPORT" = "xyes"; then
+	AC_MSG_RESULT([yes])
+	proj_cflags="$proj_cflags -O0 -ggdb3 -fprofile-arcs -ftest-coverage"
+else
+	AC_MSG_RESULT([no])
+fi
+
+AC_SUBST([PROJ_CFLAGS], [$proj_cflags])
+
 AC_CONFIG_FILES([Makefile
 		 lib/libr3/Makefile
 		 src/Makefile

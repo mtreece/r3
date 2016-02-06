@@ -15,7 +15,7 @@ check_libr3_SOURCES = check_libr3.c \
                       check_libr3.h \
                       check_libr3-core.c \
                       check_libr3.map
-check_libr3_CFLAGS = @CHECK_CFLAGS@
+check_libr3_CFLAGS = @PROJ_CFLAGS@ @CHECK_CFLAGS@
 check_libr3_CPPFLAGS = -I$(top_srcdir)/lib/libr3
 check_libr3_LDADD = @CHECK_LIBS@
 check_libr3_LDADD += $(top_builddir)/lib/libr3/libr3.a

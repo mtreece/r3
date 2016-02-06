@@ -28,4 +28,4 @@ include_HEADERS = \
 		  r3sides.h
 
 # TODO -ggdb only on ./configure option
-AM_CFLAGS = -std=c99 -Wall -Wextra -Werror -ggdb
+AM_CFLAGS = @PROJ_CFLAGS@ -std=c99 -Wall -Wextra -Werror -ggdb
