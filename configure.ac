@@ -27,6 +27,7 @@ if test "x$COMMONDEVOPTS" == "xyes"; then
 	AC_MSG_RESULT([yes])
 	ASSERTIONS=yes
 	BUILD_TESTS=yes
+	GCOV_SUPPORT=yes
 else
 	AC_MSG_RESULT([no])
 fi
