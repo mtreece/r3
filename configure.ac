@@ -48,7 +48,7 @@ AC_ARG_ENABLE([build-tests],
 	    AS_HELP_STRING([--enable-build-tests],
 			   [build the 'make check' functionality]),
 	   [BUILD_TESTS=$enableval], [])
-if test "x$BUILD_TESTS" = "xyes"; then
+if test "x$BUILD_TESTS" == "xyes"; then
 	AC_MSG_RESULT([yes])
 	PKG_CHECK_MODULES([CHECK], [check >= 0.9.14])
 else
@@ -61,7 +61,7 @@ AC_ARG_ENABLE([gcov-support],
 	      AS_HELP_STRING([--enable-gcov-support],
 			     [compile with support for gcov]),
 	     [GCOV_SUPPORT=$enableval], [])
-if test "x$GCOV_SUPPORT" = "xyes"; then
+if test "x$GCOV_SUPPORT" == "xyes"; then
 	AC_MSG_RESULT([yes])
 	proj_cflags="$proj_cflags -O0 -ggdb3 -fprofile-arcs -ftest-coverage"
 else
