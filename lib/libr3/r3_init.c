@@ -30,8 +30,8 @@ static void link_neighbors(r3cell *a, r3cell *b, int is_brother)
     }
 
     // find first non-NULL slot for each
-    while(*next_an && b != *next_an) ++next_an;
-    while(*next_bn && a != *next_bn) ++next_bn;
+    while (*next_an && b != *next_an) ++next_an;
+    while (*next_bn && a != *next_bn) ++next_bn;
 
     // ensure we're not re-performing an already linked pair
     // NOTE: the 1st "&&-clause" is redundant from the 2nd; I'm listing it as-is
@@ -98,12 +98,9 @@ int r3_init(r3cube *cube)
 
     assert(NUM_SIDES == sizeof(colors)/sizeof(int));
 
-    for(int i = 0; i < NUM_SIDES; ++i)
-    {
-        for(int j = 0; j < NUM_ROWS; ++j)
-        {
-            for(int k = 0; k < NUM_COLS; ++k)
-            {
+    for (int i = 0; i < NUM_SIDES; ++i) {
+        for (int j = 0; j < NUM_ROWS; ++j) {
+            for (int k = 0; k < NUM_COLS; ++k) {
                 r3cell **c = &cube->sides[i].cells[j][k];
                 *c = &cube->cellspace[celln++];
 

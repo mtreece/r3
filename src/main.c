@@ -21,7 +21,7 @@
             fprintf(stderr, "%s:%d- error, returned %d\n", __FUNCTION__, __LINE__, res); \
             exit(-1); \
         } \
-    } while(0)
+    } while (0)
 
 #define DO_MOVE_AND_PRINT(cube, direction, selector) \
     do { \
@@ -31,7 +31,7 @@
         DO_CHECK_REPORT_END(0 !=, r3_sprint(buffer, &buflen, cube)); \
         printf("%s\n", buffer); \
         printf("==========================================\n"); \
-    } while(0)
+    } while (0)
 
 int main(int __attribute__((unused)) argc, char __attribute__((unused)) *argv[])
 {
