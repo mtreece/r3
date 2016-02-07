@@ -7,7 +7,9 @@
  *
  */
 #include <config.h>
+
 #include <assert.h>
+#include <stdlib.h>
 
 #include "r3cube.h"
 #include "r3sides.h"
@@ -15,7 +17,10 @@
 
 r3side *r3_cube_get_face(r3cube *cube)
 {
-    assert(cube);
+    if (!cube) {
+        return NULL;
+    }
+
     assert(cube->facing);
 
 #if !defined(NDEBUG)

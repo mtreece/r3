@@ -18,7 +18,7 @@
  *
  * @param cube The r3cube to perform this operation on.
  *
- * @return The facing r3side of this r3cube.
+ * @return The facing r3side of this r3cube, or NULL on error.
  */
 r3side *r3_cube_get_face(r3cube *cube);
 
