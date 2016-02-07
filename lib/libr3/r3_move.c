@@ -35,7 +35,49 @@ typedef struct {
     /// the initial col for the side
     int col0;
 
+    /**
+     * Side Row/Column Translators:
+     *
+     * This is a confusing concept, so bear with me.
+     *
+     * The r3 model fundamentally uses the orientation of the cube for how
+     * sides and cells are structured. For every side but one (the rear face),
+     * the row,col layout is symmetric; i.e, given any <row,col> pair, <r,c>,
+     * when a selector moves/rotates that column (c) either up or down, the new
+     * cell's <row,col> pair will be the same, _except_ for transactions that
+     * involve a cell "from" or "to" the rear face.
+     *
+     * When picking the <row,col> dimensional layout, it was arbitrai... I
+     * mean, intelligently decided the <row,col> meaning would be symmetric in
+     * the left/right direction. By geometric nature, however, this has an
+     * unfortunate consequence in how UP/DOWN translations occurr.
+     *
+     * To put it another way...
+     *
+     * Imagine a normal Rubik's cube, but with faces labeled similar to the
+     * layout described in /doc/cube-layout.txt. Imagine now that you're facing
+     * the cube in some given orientation, and you decide to rotate the top row
+     * to the right by a distance of 2 sides -- causing the front-facing cells
+     * to relocate to the rear facing side. Focus on the upper-left cell. In
+     * this scenario, the original <r,c> is <0,0>, and after relocation, it
+     * will continue to be <0,0> (when "glancing" at the rear face).
+     *
+     * Now, instead of rotating twice "right", imagine you instead rotated the
+     * first _column_ UP by one. Same situation: the upper-left cell retains
+     * the <0,0> location.
+     *
+     * Now, instead of rotating UP only once, do it twice. The upper-left cell
+     * of the front face will now relocate to the rear-side of the cube. But
+     * that upper-left cell is now curiously at the bottom of the rear-side.
+     * Indeed, on careful inspection, one will find that the new <r,c> of this
+     * cell will be <2,2>. This very phenomenon is why the srt and sct mappings
+     * exist.
+     */
+
+    /// Side Row Translator. See above for how this is used.
     int (*srt)(int);
+
+    /// Side Column Translator. See above for how this is used.
     int (*sct)(int);
 } ctx_t;
 
