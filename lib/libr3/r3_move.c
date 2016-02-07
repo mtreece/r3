@@ -135,21 +135,6 @@ static r3cell *get_next_vert(ctx_t *ctx)
     return out;
 }
 
-#if 0
-// TODO: optimize this; should store off this information with cells
-static int get_side(r3cube *cube, r3cell *c)
-{
-    for (int i = 0; i < NUM_SIDES; ++i) {
-        if (&cube->sides[i] == c->side) {
-            return i;
-        }
-    }
-
-    assert(0);
-    return -1;
-}
-#endif /* 0 */
-
 static int parallel_cell_horiz(r3cell *c1, r3cell *c2)
 {
 #if !defined(NDEBUG)
