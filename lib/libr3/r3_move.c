@@ -277,6 +277,7 @@ int r3_move(r3cube *cube, int direction, int selector)
                                         r3_col_reverse, r3_col_direct,
                                         r3_col_direct, NULL};
             break;
+
         case R3_DOWN:
             vertical = 1;
             get_next = get_next_vert;
@@ -308,6 +309,7 @@ int r3_move(r3cube *cube, int direction, int selector)
                                         r3_col_direct, r3_col_direct,
                                         r3_col_direct, NULL};
             break;
+
         case R3_RIGHT:
             vertical = 0;
             get_next = get_next_horiz;
@@ -323,6 +325,7 @@ int r3_move(r3cube *cube, int direction, int selector)
                                         r3_col_direct, r3_col_direct,
                                         r3_col_direct, NULL};
             break;
+
         default:
             return -1;
     }
