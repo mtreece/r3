@@ -210,42 +210,7 @@ cont:
 
     return 1;
 }
-/**
- * @brief
- * Link a and b together, at the expense (replacement) of old as a previous
- * neighbor to b.
- */
-__attribute__((unused))
-static int swap_cell(r3cell *a, r3cell *b, r3cell *old)
-{
-    r3cell **ptr;
 
-    // find our replacement
-    for (ptr = b->neighbors; *ptr; ++ptr) {
-        if (*ptr == old) {
-            break;
-        }
-    }
-
-    // error if old wasn't found in list
-    if (old && !*ptr) {
-        return 0;
-    }
-
-    // link the cell from this direction...
-    *ptr = a;
-
-    // now do the other direction
-    for (ptr = a->neighbors; *ptr; ++ptr);
-
-    // there ought to always be space for a terminating NULL
-    assert(!ptr[1]);
-
-    *ptr = a;
-
-    return 1;
-}
-__attribute__((unused))
 static int link_cell(r3cell *a, r3cell *b, int iteration)
 {
     r3cell **ptr = a->neighbors;
