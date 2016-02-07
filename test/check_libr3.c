@@ -15,7 +15,7 @@
 #include <check.h>
 #include <check_libr3.h>
 
-int main(int argc, char *argv[])
+int main(void)
 {
     suite_getter *sg;
     unsigned int nfailed = 0;
