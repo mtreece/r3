@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2015 Michael T. Reece.
+ * Copyright (C) 2014-2016 Michael T. Reece.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -104,15 +104,15 @@ int r3_init(r3cube *cube)
         {
             for(int k = 0; k < NUM_COLS; ++k)
             {
-                cube->sides[i].cells[j][k] = &cube->cellspace[celln++];
-                cube->sides[i].cells[j][k]->color = colors[i];
-                cube->sides[i].cells[j][k]->side = &cube->sides[i];
-                cube->sides[i].cells[j][k]->row = j;
-                cube->sides[i].cells[j][k]->col = k;
-                memset(cube->sides[i].cells[j][k]->brothers, 0x00,
-                        sizeof(((r3cell *)NULL)->brothers));
-                memset(cube->sides[i].cells[j][k]->neighbors, 0x00,
-                        sizeof(((r3cell *)NULL)->neighbors));
+                r3cell **c = &cube->sides[i].cells[j][k];
+                *c = &cube->cellspace[celln++];
+
+                (*c)->color = colors[i];
+                (*c)->side = &cube->sides[i];
+                (*c)->row = j;
+                (*c)->col = k;
+                memset((*c)->brothers, 0x00, sizeof((*c)->brothers));
+                memset((*c)->neighbors, 0x00, sizeof((*c)->neighbors));
             }
         }
     }
