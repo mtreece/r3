@@ -28,6 +28,7 @@ if test "x$COMMONDEVOPTS" == "xyes"; then
 	ASSERTIONS=yes
 	BUILD_TESTS=yes
 	GCOV_SUPPORT=yes
+	proj_cflags="$proj_cflags -O0 -Wall -Wextra -Werror"
 else
 	AC_MSG_RESULT([no])
 fi

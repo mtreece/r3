@@ -11,4 +11,4 @@ r3_SOURCES = main.c
 r3_LDADD = $(top_builddir)/lib/libr3/libr3.a
 r3_CPPFLAGS = -I$(top_srcdir)/lib/libr3
 
-AM_CFLAGS = @PROJ_CFLAGS@ -Wall -Wextra -Werror
+AM_CFLAGS = @PROJ_CFLAGS@
