@@ -173,8 +173,21 @@ cont:
 // r3_init::link_neighbors
 static int unlink_cell(r3cell *a, r3cell *b, int iteration)
 {
-    // (re-)write each of a's neighbors, sans b
     r3cell **ptr = a->neighbors;
+
+#if !defined(NDEBUG)
+    // ensure that a, b are really neighbors
+    for (r3cell **n = a->neighbors; *n; ++n) {
+        if (*n == b) {
+            goto cont;
+        }
+    }
+    assert(0);
+
+cont:
+#endif
+
+    // (re-)write each of a's neighbors, sans b
     for (r3cell **n = a->neighbors; *n; ++n) {
         // if this neighbor isn't b, go ahead and proceed to (re-)write it;
         // otherwise, skip over
