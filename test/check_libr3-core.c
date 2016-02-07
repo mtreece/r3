@@ -53,7 +53,7 @@ START_TEST(test_basics)
 
     // can I move it in every direction?
     // FIXME: update test to dynamically handle selector max idx
-    for (int i = 0; i < sizeof(directions)/sizeof(directions[0]); ++i) {
+    for (size_t i = 0; i < sizeof(directions)/sizeof(directions[0]); ++i) {
         for (int selector = 0; selector < MAX_ROW_COLS; ++selector) {
             ck_assert_int_eq(0, r3_move(&cube, directions[i], selector));
         }
