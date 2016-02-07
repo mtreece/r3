@@ -334,6 +334,10 @@ int r3_move(r3cube *cube, int direction, int selector)
         return -1;
     }
 
+    /**
+     * This structure notes a "todo"-like record for how to either link or
+     * unlink a pair of r3cell structs.
+     */
     typedef struct {
         r3cell *a;
         r3cell *b;
