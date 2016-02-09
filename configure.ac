@@ -18,9 +18,9 @@ AM_PROG_AR
 AC_CONFIG_HEADERS([config.h])
 
 dnl options which probably ought to be turned on if you're doing development
-AC_MSG_CHECKING([whether or not to build with common developer options])
-AC_ARG_ENABLE([common-dev-opts],
-	    AS_HELP_STRING([--enable-common-dev-opts],
+AC_MSG_CHECKING([whether or not to enable developer mode])
+AC_ARG_ENABLE([developer-mode],
+	    AS_HELP_STRING([--enable-developer-mode],
 			   [turn on common options for development]),
 	   [COMMONDEVOPTS=$enableval], [])
 if test "x$COMMONDEVOPTS" == "xyes"; then
