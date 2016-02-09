@@ -18,10 +18,6 @@
 #include "r3_move.h"
 #include "r3_synclinks.h"
 
-#define VERTICAL_VECTOR_OF_FACES ((int []){0, 1, 5, 2})
-#define HORIZONTAL_VECTOR_OF_FACES ((int []){0, 4, 5, 3})
-#define ADJSIZE (sizeof(((r3cell *)0)->neighbors))
-
 typedef struct {
     /// the r3cube object to operate on
     r3cube *cube;
