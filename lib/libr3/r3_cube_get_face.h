@@ -13,12 +13,15 @@
 
 /**
  * @brief
- * Return the facing r3side of `cube`.
+ * Return the specified r3side, `side`, of `cube`. The number `side` should
+ * adhere to the numbering scheme specified in /doc/cube-layout.txt. (e.g., the
+ * facing side will be on side = 0).
  *
  * @param cube The r3cube to perform this operation on.
+ * @param side The side-number of the side to return.
  *
- * @return The facing r3side of this r3cube, or NULL on error.
+ * @return The specified r3side of this r3cube, or NULL on error.
  */
-r3side *r3_cube_get_face(r3cube *cube);
+const r3side *r3_cube_get_face(r3cube *cube, unsigned side);
 
 // vim: et ts=4 sw=4 :
