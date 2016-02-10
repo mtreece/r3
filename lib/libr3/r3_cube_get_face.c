@@ -25,6 +25,10 @@ const r3side *r3_cube_get_face(r3cube *cube, unsigned side)
         return NULL;
     }
 
+#if !defined(NDEBUG)
+    _r3_cube_check_integrity(cube);
+#endif
+
     return &cube->sides[side];
 }
 

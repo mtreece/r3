@@ -476,6 +476,10 @@ eloop4:
 eloop5:
     syncside(&cube->sides[5], *b2, *b1);
 
+#if !defined(NDEBUG)
+    _r3_cube_check_integrity(cube);
+#endif
+
     return 0;
 }
 

@@ -432,7 +432,13 @@ int r3_move(r3cube *cube, int direction, int selector)
         }
     }
 
-    return r3_synclinks(cube);
+    int res = r3_synclinks(cube);
+
+#if !defined(NDEBUG)
+    _r3_cube_check_integrity(cube);
+#endif
+
+    return res;
 }
 
 // vim: et ts=4 sw=4 :

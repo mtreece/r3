@@ -25,6 +25,10 @@ const r3cell *r3_get_facing_cell(r3cube *cube, int row, int col)
         return NULL;
     }
 
+#if !defined(NDEBUG)
+    _r3_cube_check_integrity(cube);
+#endif
+
     return cube->facing->cells[row][col];
 }
 

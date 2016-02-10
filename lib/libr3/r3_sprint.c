@@ -141,6 +141,10 @@ int r3_sprint(char *buffer, size_t *buflen, r3cube *cube)
     assert(*buflen == (sizeof(R3_SPRINT_FORMAT)
                 - NUM_SIDES * NUM_ROWS * NUM_COLS) - 1);
 
+#if !defined(NDEBUG)
+    _r3_cube_check_integrity(cube);
+#endif
+
     return 0;
 }
 
