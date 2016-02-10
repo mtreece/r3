@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2015 Michael T. Reece.
+ * Copyright (C) 2014-2016 Michael T. Reece.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -22,7 +22,6 @@
  * `selector` will be moved appropriately; if `direction` is one of R3_{LEFT,
  * RIGHT}, then `selector` will be a r3cube row index, and the row `selector`
  * will be moved appropriately.
- *
  *
  * @param cube The r3 cube to transform
  * @param direction R3_UP, R3_DOWN, R3_LEFT, R3_RIGHT

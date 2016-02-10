@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2015 Michael T. Reece.
+ * Copyright (C) 2014-2016 Michael T. Reece.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -52,12 +52,10 @@
  * @brief
  * Print the state of the r3cube into `buffer`. This is similar to sprintf.
  *
- *
  * @param[in] buffer The buffer to output the r3cube to
  * @param[in,out] buflen On input, the maximum length supported; on output, the
  *                       length written
  * @param[in] cube The r3cube to sprint.
- *
  *
  * @retval 0 success
  */

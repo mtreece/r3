@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2015 Michael T. Reece.
+ * Copyright (C) 2014-2016 Michael T. Reece.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -20,9 +20,7 @@
  * This function is used internally by libr3, and shouldn't need to be used by
  * end-users.
  *
- *
  * @param[in] cube The r3cube to operate on.
- *
  *
  * @retval 0 Success
  */

@@ -15,7 +15,6 @@
  * @brief
  * Return the facing r3side of `cube`.
  *
- *
  * @param cube The r3cube to perform this operation on.
  *
  * @return The facing r3side of this r3cube, or NULL on error.
