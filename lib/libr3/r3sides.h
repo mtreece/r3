@@ -19,7 +19,7 @@
 #define NUM_ROWS 3
 #define MAX_ROW_COLS (NUM_COLS > NUM_ROWS ? NUM_COLS : NUM_ROWS)
 
-/// current impl - max of 2 brothers, in the corder-edge case
+/// current impl - max of 2 brothers, in the corner-edge case
 #define MAX_NUM_BROTHERS 2
 
 /// current impl - max of 4 neighbors, in the center-of-face case

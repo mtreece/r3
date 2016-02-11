@@ -46,7 +46,7 @@ typedef struct {
      * When picking the <row,col> dimensional layout, it was arbitrai... I
      * mean, intelligently decided the <row,col> meaning would be symmetric in
      * the left/right direction. By geometric nature, however, this has an
-     * unfortunate consequence in how UP/DOWN translations occurr.
+     * unfortunate consequence in how UP/DOWN translations occur.
      *
      * To put it another way...
      *
