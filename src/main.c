@@ -14,6 +14,14 @@
 
 #include <r3.h>
 
+/*
+ * NOTE: this file is NOT the real "main" of this software! This is currently
+ * only a very basic "program" for exercising some of the functionality being
+ * developed in the library. Later, I will try to document long-term plans for
+ * what real applications will be developed alongside the r3 library.
+ *
+ */
+
 #define DO_CHECK_REPORT_END(check, xdo) \
     do { \
         int res; \
