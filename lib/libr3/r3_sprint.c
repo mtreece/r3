@@ -124,7 +124,7 @@ int r3_sprint(char *buffer, size_t *buflen, r3cube *cube)
             _r3_sprint_to_char(cube->sides[5].cells[2][1]->color),
             _r3_sprint_to_char(cube->sides[5].cells[2][2]->color),
 
-            /* bottommost face => side 2 */
+            /* bottom-most face => side 2 */
             _r3_sprint_to_char(cube->sides[2].cells[0][0]->color),
             _r3_sprint_to_char(cube->sides[2].cells[0][1]->color),
             _r3_sprint_to_char(cube->sides[2].cells[0][2]->color),
