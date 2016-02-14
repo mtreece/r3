@@ -23,9 +23,6 @@ typedef struct {
     /// the sides of this cube
     r3side sides[NUM_SIDES];
 
-    /// the side facing the user
-    r3side *facing;
-
     /// storage space for all cells that make up this cube
     r3cell cellspace[NUM_SIDES * NUM_ROWS * NUM_COLS];
 
@@ -39,17 +36,6 @@ typedef struct {
 static inline void _r3_cube_check_integrity(const r3cube *cube)
 {
 #if !defined(NDEBUG)
-    unsigned checks = 0;
-
-    assert(cube->facing);
-
-    for (unsigned i = 0; i < NUM_SIDES; ++i) {
-        if (&cube->sides[i] == cube->facing) {
-            ++checks;
-        }
-    }
-    assert(1 == checks);
-
     const r3cell (*cs)[sizeof(cube->cellspace) / sizeof(cube->cellspace[0])]
         = &cube->cellspace;
 
@@ -60,7 +46,7 @@ static inline void _r3_cube_check_integrity(const r3cube *cube)
         assert(row < NUM_ROWS);
         assert(col < NUM_COLS);
 
-        checks = 0;
+        unsigned checks = 0;
         for (int s = 0; s < NUM_SIDES; ++s) {
             if (&cube->sides[s] == c->side) {
                 ++checks;

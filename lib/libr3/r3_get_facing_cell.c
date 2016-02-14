@@ -29,7 +29,7 @@ const r3cell *r3_get_facing_cell(r3cube *cube, unsigned row, unsigned col)
     _r3_cube_check_integrity(cube);
 #endif
 
-    return cube->facing->cells[row][col];
+    return cube->sides[0].cells[row][col];
 }
 
 // vim: et ts=4 sw=4 :

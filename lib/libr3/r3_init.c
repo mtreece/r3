@@ -192,9 +192,8 @@ int r3_init(r3cube *cube)
         }
     }
 
-    cube->facing = &cube->sides[0];
-    cube->anchors[0] = cube->facing->cells[0][0];
-    cube->anchors[1] = cube->facing->cells[0][1];
+    cube->anchors[0] = cube->sides[0].cells[0][0];
+    cube->anchors[1] = cube->sides[0].cells[0][1];
 
 #if !defined(NDEBUG)
     _r3_cube_check_integrity(cube);
