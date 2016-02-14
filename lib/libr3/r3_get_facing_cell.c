@@ -15,13 +15,13 @@
 
 #include "r3_get_facing_cell.h"
 
-const r3cell *r3_get_facing_cell(r3cube *cube, int row, int col)
+const r3cell *r3_get_facing_cell(r3cube *cube, unsigned row, unsigned col)
 {
     if (!cube) {
         return NULL;
     }
 
-    if ((row < 0 || row >= NUM_ROWS) || (col < 0 || col >= NUM_COLS)) {
+    if (row >= NUM_ROWS || col >= NUM_COLS) {
         return NULL;
     }
 

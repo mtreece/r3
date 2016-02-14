@@ -15,7 +15,14 @@
 #include "r3cube.h"
 #include "r3_synclinks.h"
 
-#define abs(x) (x >= 0 ? x : -x)
+/// simple macro to find max of two values
+#define max(x,y) (x >= y ? x : y)
+
+/// simple macro to find min of two values
+#define min(x,y) (x <= y ? x : y)
+
+/// simple macro to find difference of two values
+#define diff(x,y) (max(x,y) - min(x,y))
 
 /**
  * @brief
@@ -101,8 +108,8 @@ static void rotateblock(int clockwise, r3cell *a[])
  */
 static void update_grid(r3side *side, r3cell *o[], r3cell *n[])
 {
-    int o2row, o2col;
-    int o3row, o3col;
+    unsigned o2row, o2col;
+    unsigned o3row, o3col;
 
     // fudge the numbers if we have NULL old values
     if (NULL == o[2]) {
@@ -215,7 +222,7 @@ static int syncside(r3side *side, r3cell *c1, r3cell *c2)
     int clockwise; // counter/clockwise alternator flag
 
     // assert the cells are adjacent
-    assert(1 >= abs(c1->row - c2->row) && 1 >= abs(c1->col - c2->col));
+    assert(1 >= diff(c1->row, c2->row) && 1 >= diff(c1->col, c2->col));
 
     if (0 == c1->row && 0 == c2->row) {
         // assert we're on the edge

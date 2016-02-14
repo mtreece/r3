@@ -57,6 +57,8 @@ static inline void _r3_cube_check_integrity(const r3cube *cube)
         const r3cell *c = &(*cs)[i];
         int row = c->row;
         int col = c->col;
+        assert(row < NUM_ROWS);
+        assert(col < NUM_COLS);
 
         checks = 0;
         for (int s = 0; s < NUM_SIDES; ++s) {

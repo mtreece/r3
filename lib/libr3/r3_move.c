@@ -252,7 +252,7 @@ static int r3_col_direct(int c)
     return c;
 }
 
-int r3_move(r3cube *cube, int direction, int selector)
+int r3_move(r3cube *cube, unsigned direction, unsigned selector)
 {
     ctx_t ctx;                       // context
     int vertical;                    // direction vertical? else, horizontal
@@ -263,7 +263,7 @@ int r3_move(r3cube *cube, int direction, int selector)
     int (**rowtrans)(int);           // row translator, per side
     int (**coltrans)(int);           // col translator, per side
 
-    if (!cube || 0 > selector) {
+    if (!cube) {
         return -1;
     }
 

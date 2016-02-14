@@ -42,7 +42,7 @@ typedef struct r3cell {
     struct r3side *side;
 
     /// the row & col on the .side this belongs to
-    int row, col;
+    unsigned row, col;
 } r3cell;
 
 typedef struct r3side {

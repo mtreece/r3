@@ -25,7 +25,7 @@
  *
  * @return The facing cell at the specified row, col; NULL on error.
  */
-const r3cell *r3_get_facing_cell(r3cube *cube, int row, int col);
+const r3cell *r3_get_facing_cell(r3cube *cube, unsigned row, unsigned col);
 
 #endif /* _R3_GET_FACING_CELL_ */
 // vim: et ts=4 sw=4 :
