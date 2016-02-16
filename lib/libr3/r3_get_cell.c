@@ -13,15 +13,15 @@
 #include "r3cube.h"
 #include "r3sides.h"
 
-#include "r3_get_facing_cell.h"
+#include "r3_get_cell.h"
 
-const r3cell *r3_get_facing_cell(r3cube *cube, unsigned row, unsigned col)
+const r3cell *r3_get_cell(r3cube *cube, unsigned side, unsigned row, unsigned col)
 {
     if (!cube) {
         return NULL;
     }
 
-    if (row >= NUM_ROWS || col >= NUM_COLS) {
+    if (row >= NUM_ROWS || col >= NUM_COLS || side >= NUM_SIDES) {
         return NULL;
     }
 
@@ -29,7 +29,7 @@ const r3cell *r3_get_facing_cell(r3cube *cube, unsigned row, unsigned col)
     _r3_cube_check_integrity(cube);
 #endif
 
-    return cube->sides[0].cells[row][col];
+    return cube->sides[side].cells[row][col];
 }
 
 // vim: et ts=4 sw=4 :
