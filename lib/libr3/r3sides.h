@@ -13,17 +13,7 @@
 
 #include "r3colors.h"
 
-// TODO: put in build system & generalize
-#define NUM_SIDES 6
-#define NUM_COLS 3
-#define NUM_ROWS 3
 #define MAX_ROW_COLS (NUM_COLS > NUM_ROWS ? NUM_COLS : NUM_ROWS)
-
-/// current impl - max of 2 brothers, in the corner-edge case
-#define MAX_NUM_BROTHERS 2
-
-/// current impl - max of 4 neighbors, in the center-of-face case
-#define MAX_NUM_NEIGHBORS 4
 
 typedef struct r3cell {
     /// the color of this cell

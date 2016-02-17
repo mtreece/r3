@@ -70,6 +70,20 @@ else
 	AC_MSG_RESULT([no])
 fi
 
+dnl currently "hard coded" configuration options
+AC_DEFINE([NUM_SIDES], 6, [number of faces on an r3cube; currently only
+			   supports hard-coded 6])
+AC_DEFINE([NUM_COLS], 3, [number of columns on a r3side; currently only
+			  supports hard-coded 3])
+AC_DEFINE([NUM_ROWS], 3, [number of rows on a r3side; currently only supports
+			  hard-coded 3])
+AC_DEFINE([MAX_NUM_BROTHERS], 2, [max number of possible brothers; currently
+				  only supports hard-coded 2 (in the
+				  corner-edge case)])
+AC_DEFINE([MAX_NUM_NEIGHBORS], 4, [max number of possible neighbors; currently
+				   only supports hard-coded 4 (in the
+				   center-of-face case)])
+
 AC_SUBST([PROJ_CFLAGS], [$proj_cflags])
 
 AC_CONFIG_FILES([Makefile
