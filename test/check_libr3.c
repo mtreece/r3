@@ -29,7 +29,11 @@ int main(void)
 
         s = (*sg)();
         sr = srunner_create(s);
+
+#if defined(CHECK_SUPPORTS_TAP)
         srunner_set_tap(sr, "-");
+#endif /* defined(CHECK_SUPPORTS_TAP) */
+
         srunner_run_all(sr, CK_ENV);
         nfailed += srunner_ntests_failed(sr);
 

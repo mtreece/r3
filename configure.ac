@@ -52,7 +52,22 @@ AC_ARG_ENABLE([build-tests],
 	   [BUILD_TESTS=$enableval], [])
 if test "x$BUILD_TESTS" == "xyes"; then
 	AC_MSG_RESULT([yes])
-	PKG_CHECK_MODULES([CHECK], [check >= 0.9.14])
+
+	dnl Tests require basic libcheck functionality, but we also want to
+	dnl support libcheck TAP, if it's available. TAP requires libcheck
+	dnl 0.9.12 or higher; so let's check for that, but not bail if it's
+	dnl unavailable.
+	PKG_CHECK_MODULES([CHECK], [check >= 0.9.8],
+			  [libcheck_support_tap="`$PKG_CONFIG --atleast-version 0.9.12 check && echo 1`"],
+			  [libcheck_support_tap=""])
+	AC_MSG_CHECKING([whether or not libcheck supports TAP])
+	if test "x$libcheck_support_tap" != "x"; then
+		AC_MSG_RESULT([suppored])
+		AC_DEFINE([CHECK_SUPPORTS_TAP], ,
+			  [if defined, libcheck TAP calls will be compiled in])
+	else
+		AC_MSG_RESULT([not suppored])
+	fi
 else
 	AC_MSG_RESULT([no])
 fi
