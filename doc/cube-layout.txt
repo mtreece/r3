@@ -6,6 +6,11 @@
 # published by the Free Software Foundation.
 #
 
+The following diagram details the layout of a 6-sided r3cube with 3x3 r3cell.
+For a given (small) cell, the bottom-most number represents the r3side number;
+the top-left number represents the row, and the top-right number represents
+the column.
+
                     +----++----++----+
                     | 00 || 01 || 02 |
                     | 1  || 1  || 1  |
