@@ -63,10 +63,10 @@ START_TEST(test_basics)
     ck_assert_int_eq(0, r3_synclinks(&cube));
 
     // can I get the facing side?
-    ck_assert(r3_cube_get_face(&cube, 0));
+    ck_assert(NULL != r3_cube_get_face(&cube, 0));
 
     // can I get a cell?
-    ck_assert(r3_get_cell(&cube, 0, 0, 0));
+    ck_assert(NULL != r3_get_cell(&cube, 0, 0, 0));
 }
 END_TEST
 
