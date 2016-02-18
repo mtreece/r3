@@ -8,7 +8,6 @@
 lib_LIBRARIES = libr3.a
 
 libr3_a_SOURCES = \
-		  r3_cube_get_face.c \
 		  r3_get_cell.c \
 		  r3_init.c \
 		  r3_move.c \
@@ -18,7 +17,6 @@ libr3_a_SOURCES = \
 
 include_HEADERS = \
 		  r3.h \
-		  r3_cube_get_face.h \
 		  r3_get_cell.h \
 		  r3_init.h \
 		  r3_move.h \
