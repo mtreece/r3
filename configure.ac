@@ -62,7 +62,7 @@ if test "x$BUILD_TESTS" == "xyes"; then
 			  [libcheck_support_tap=""])
 	AC_MSG_CHECKING([whether or not libcheck supports TAP])
 	if test "x$libcheck_support_tap" != "x"; then
-		AC_MSG_RESULT([suppored])
+		AC_MSG_RESULT([supported])
 		AC_DEFINE([CHECK_SUPPORTS_TAP], ,
 			  [if defined, libcheck TAP calls will be compiled in])
 	else
