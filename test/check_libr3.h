@@ -23,7 +23,7 @@ extern suite_getter *_suite_getters;
 extern suite_getter *_esuite_getters;
 
 #define EXPORT_SUITE(name) \
-   static Suite __attribute__((unused, section(".suite_getters"))) \
+   static Suite __attribute__((used, section(".suite_getters"))) \
    * (*__suite_getters__##name)(void) = name;
 
 
