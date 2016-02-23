@@ -7,3 +7,11 @@
 #
 
 SUBDIRS = lib/libr3 src/ test/
+
+# clean gcov-related files from the codebase
+clean-gcov:
+	find \( \
+	       -name '*.gcov' \
+	       -or -name '*.gcno' \
+	       -or -name '*.gcda' \
+	     \) -print -delete
