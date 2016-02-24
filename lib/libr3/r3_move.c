@@ -373,9 +373,25 @@ int r3_move(r3cube *cube, unsigned direction, unsigned selector)
         int (*srt)(int) = *srtptr++;
         int (*sct)(int) = *sctptr++;
 
-        // s1 row,col translate
+        /*
+         * NOTE: s1ct may not be needed for translation. Current unit tests
+         * continue to pass (several thousand pseudorandom iterations) with
+         * s1ct removed.
+         *
+         * Need to continue investigating this and logically reason about why
+         * it isn't needed...
+         *
+         * It may be a special case for 6x3x3 that's allowing this to pass
+         * without issue. If future unit tests that better / more extensively
+         * test expected state (vs simple assertions) appear to fail, consider
+         * reverting this patch to see if it helps in any way.
+         *
+         * TODO: investigate & either remove this TODO or fix the issue.
+         *
+         */
+
+        // s1 row translate
         int (*s1rt)(int) = *srtptr;
-        int (*s1ct)(int) = *sctptr;
 
         ctx.srt = srt;
         ctx.sct = srt;
@@ -383,8 +399,7 @@ int r3_move(r3cube *cube, unsigned direction, unsigned selector)
         while ((c = get_next(&ctx))) {
             assert(c->side == *s);
 
-            // TODO: optimize, vs. calling s1rt * srt.
-            r3cell *cn = (*(s+1))->cells[s1rt(srt(c->row))][s1ct(sct(c->col))];
+            r3cell *cn = (*(s+1))->cells[s1rt(srt(c->row))][c->col];
 
             // record old, non-parallel neighbors
             for (r3cell **n = c->neighbors; *n; ++n) {
