@@ -98,7 +98,22 @@ START_TEST(prng_move)
 
     for (unsigned i = 0; i < 1024; ++i) {
         unsigned direction = directions[rand() % sizeof(directions)/sizeof(directions[0])];
-        unsigned selector = rand() % MAX_ROW_COLS; // TODO: accommodate for nrows != ncols
+        unsigned modulus;
+
+        switch (direction) {
+            case R3_UP:
+            case R3_DOWN:
+                modulus = NUM_COLS;
+                break;
+            case R3_LEFT:
+            case R3_RIGHT:
+                modulus = NUM_ROWS;
+                break;
+            default:
+                ck_abort_msg("should never reach this case");
+        }
+
+        unsigned selector = rand() % modulus;
         ck_assert_int_eq(0, r3_move(&cube, direction, selector));
     }
 }
