@@ -41,7 +41,7 @@ END_TEST
  */
 START_TEST(test_basics)
 {
-    const int directions[] = {
+    const int dirs[] = {
         R3_UP,
         R3_DOWN,
         R3_LEFT,
@@ -54,9 +54,9 @@ START_TEST(test_basics)
 
     // can I move it in every direction?
     // FIXME: update test to dynamically handle selector max idx
-    for (size_t i = 0; i < sizeof(directions)/sizeof(directions[0]); ++i) {
+    for (size_t i = 0; i < sizeof(dirs)/sizeof(dirs[0]); ++i) {
         for (int selector = 0; selector < MAX_ROW_COLS; ++selector) {
-            ck_assert_int_eq(0, r3_move(&cube, directions[i], selector));
+            ck_assert_int_eq(0, r3_move(&cube, dirs[i], selector));
         }
     }
 
@@ -84,7 +84,7 @@ END_TEST
  */
 START_TEST(prng_move)
 {
-    const int directions[] = {
+    const int dirs[] = {
         R3_UP,
         R3_DOWN,
         R3_LEFT,
@@ -96,11 +96,11 @@ START_TEST(prng_move)
 
     srand(0);
 
-    for (unsigned i = 0; i < 1024; ++i) {
-        unsigned direction = directions[rand() % sizeof(directions)/sizeof(directions[0])];
+    for (unsigned i = 0; i < 30 * 1024; ++i) {
+        unsigned dir = dirs[rand() % sizeof(dirs)/sizeof(dirs[0])];
         unsigned modulus;
 
-        switch (direction) {
+        switch (dir) {
             case R3_UP:
             case R3_DOWN:
                 modulus = NUM_COLS;
@@ -114,7 +114,7 @@ START_TEST(prng_move)
         }
 
         unsigned selector = rand() % modulus;
-        ck_assert_int_eq(0, r3_move(&cube, direction, selector));
+        ck_assert_int_eq(0, r3_move(&cube, dir, selector));
     }
 }
 END_TEST
