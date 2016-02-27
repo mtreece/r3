@@ -41,7 +41,7 @@ END_TEST
  */
 START_TEST(test_basics)
 {
-    const int dirs[] = {
+    const unsigned dirs[] = {
         R3_UP,
         R3_DOWN,
         R3_LEFT,
@@ -53,10 +53,26 @@ START_TEST(test_basics)
     ck_assert_int_eq(0, r3_init(&cube));
 
     // can I move it in every direction?
-    // FIXME: update test to dynamically handle selector max idx
     for (size_t i = 0; i < sizeof(dirs)/sizeof(dirs[0]); ++i) {
-        for (int selector = 0; selector < MAX_ROW_COLS; ++selector) {
-            ck_assert_int_eq(0, r3_move(&cube, dirs[i], selector));
+        unsigned nselectors = 0;
+        unsigned dir = dirs[i];
+
+        switch (dir) {
+            case R3_UP:
+            case R3_DOWN:
+                nselectors = NUM_COLS;
+                break;
+            case R3_LEFT:
+            case R3_RIGHT:
+                nselectors = NUM_ROWS;
+                break;
+            default:
+                ck_abort_msg("should never reach this case");
+                break;
+        }
+
+        for (unsigned selector = 0; selector < nselectors; ++selector) {
+            ck_assert_int_eq(0, r3_move(&cube, dir, selector));
         }
     }
 
