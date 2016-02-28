@@ -99,13 +99,15 @@ int r3_init(r3cube *cube)
     assert(NUM_SIDES == sizeof(colors)/sizeof(int));
 
     for (int i = 0; i < NUM_SIDES; ++i) {
+        r3side *side = &cube->sides[i];
+        side->cube = cube;
         for (int j = 0; j < NUM_ROWS; ++j) {
             for (int k = 0; k < NUM_COLS; ++k) {
-                r3cell **c = &cube->sides[i].cells[j][k];
+                r3cell **c = &side->cells[j][k];
                 *c = &cube->cellspace[celln++];
 
                 (*c)->color = colors[i];
-                (*c)->side = &cube->sides[i];
+                (*c)->side = side;
                 (*c)->row = j;
                 (*c)->col = k;
                 memset((*c)->brothers, 0x00, sizeof((*c)->brothers));

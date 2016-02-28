@@ -12,6 +12,7 @@
 #include <config.h>
 
 #include "r3colors.h"
+#include "r3cube.h"
 
 #define MAX_ROW_COLS (NUM_COLS > NUM_ROWS ? NUM_COLS : NUM_ROWS)
 
@@ -38,6 +39,9 @@ typedef struct r3cell {
 typedef struct r3side {
     /// the arrangement of r3cell elements on this side
     struct r3cell *cells[NUM_ROWS][NUM_COLS];
+
+    /// the cube this side is part of
+    struct r3cube *cube;
 } r3side;
 
 #endif /* _R3SIDES_H_ */
