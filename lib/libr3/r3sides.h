@@ -36,6 +36,7 @@ typedef struct r3cell {
 } r3cell;
 
 typedef struct r3side {
+    /// the arrangement of r3cell elements on this side
     r3cell *cells[NUM_ROWS][NUM_COLS];
 } r3side;
 
