@@ -13,9 +13,12 @@
 
 #include <assert.h>
 
+struct r3cube;
+typedef struct r3cube r3cube;
+
 #include "r3sides.h"
 
-typedef struct {
+struct r3cube {
     /// position/rotation when viewing and operating
     /// (not yet supported)
     int position;
@@ -31,7 +34,7 @@ typedef struct {
     /// reconstructing sides from cell-links. These anchors should be updated
     /// internally whenever an operation occurs which affect them.
     r3cell *anchors[2];
-} r3cube;
+};
 
 static inline void _r3_cube_check_integrity(const r3cube *cube)
 {
