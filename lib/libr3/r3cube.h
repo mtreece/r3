@@ -58,6 +58,10 @@ static inline void _r3_cube_check_integrity(const r3cube *cube)
         assert(1 == checks);
         assert(c->side->cells[row][col] == c);
     }
+
+    for (unsigned i = 0; i < sizeof(cube->sides)/sizeof(cube->sides[0]); ++i) {
+        assert(cube->sides[i].cube == cube);
+    }
 #endif
 }
 
