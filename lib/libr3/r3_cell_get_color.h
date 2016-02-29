@@ -13,8 +13,6 @@
 
 #include "r3sides.h"
 
-// TODO: add tests for this
-
 /**
  * @brief
  * Return the color of the given r3cell.

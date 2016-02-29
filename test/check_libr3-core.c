@@ -48,6 +48,7 @@ START_TEST(test_basics)
         R3_RIGHT,
     };
     r3cube cube;
+    r3cell *cell;
 
     // can I init a cube?
     ck_assert_int_eq(0, r3_init(&cube));
@@ -83,7 +84,10 @@ START_TEST(test_basics)
     ck_assert(NULL != r3_cube_get_face(&cube, 0));
 
     // can I get a cell?
-    ck_assert(NULL != r3_get_cell(&cube, 0, 0, 0));
+    ck_assert(NULL != (cell = r3_get_cell(&cube, 0, 0, 0)));
+
+    // can I get a color from the cell?
+    ck_assert(0 <= r3_cell_get_color(cell));
 }
 END_TEST
 
