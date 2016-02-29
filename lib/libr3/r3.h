@@ -19,6 +19,7 @@
 #include "r3cube.h"
 
 // API
+#include "r3_cell_get_color.h"
 #include "r3_cube_get_face.h"
 #include "r3_get_cell.h"
 #include "r3_init.h"
