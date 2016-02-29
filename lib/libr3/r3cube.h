@@ -36,9 +36,9 @@ struct r3cube {
     r3cell *anchors[2];
 };
 
+#if !defined(NDEBUG)
 static inline void _r3_cube_check_integrity(const r3cube *cube)
 {
-#if !defined(NDEBUG)
     const r3cell (*cs)[sizeof(cube->cellspace) / sizeof(cube->cellspace[0])]
         = &cube->cellspace;
 
@@ -62,8 +62,8 @@ static inline void _r3_cube_check_integrity(const r3cube *cube)
     for (unsigned i = 0; i < sizeof(cube->sides)/sizeof(cube->sides[0]); ++i) {
         assert(cube->sides[i].cube == cube);
     }
-#endif
 }
+#endif
 
 #endif /* _R3CUBE_H_ */
 // vim: et ts=4 sw=4 :
