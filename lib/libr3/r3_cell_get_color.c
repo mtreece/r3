@@ -14,7 +14,7 @@
 
 #include "r3_cell_get_color.h"
 
-int r3_cell_get_color(r3cell *cell)
+int r3_cell_get_color(const r3cell *cell)
 {
     if (!cell) {
         return -1;
