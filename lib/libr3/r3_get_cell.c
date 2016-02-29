@@ -15,7 +15,7 @@
 
 #include "r3_get_cell.h"
 
-const r3cell *r3_get_cell(r3cube *cube, unsigned side, unsigned row, unsigned col)
+r3cell *r3_get_cell(r3cube *cube, unsigned side, unsigned row, unsigned col)
 {
     if (!cube) {
         return NULL;

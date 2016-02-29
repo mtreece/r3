@@ -29,7 +29,7 @@
  *
  * @return The cell at the specified row, col, side; NULL on error.
  */
-const r3cell *r3_get_cell(r3cube *cube, unsigned side, unsigned row, unsigned col);
+r3cell *r3_get_cell(r3cube *cube, unsigned side, unsigned row, unsigned col);
 
 #endif /* _R3_GET_CELL_ */
 // vim: et ts=4 sw=4 :
