@@ -22,6 +22,6 @@
  *
  * @return The specified r3side of this r3cube, or NULL on error.
  */
-const r3side *r3_cube_get_face(r3cube *cube, unsigned side);
+const r3side *r3_cube_get_face(const r3cube *cube, unsigned side);
 
 // vim: et ts=4 sw=4 :

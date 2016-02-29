@@ -15,7 +15,7 @@
 #include "r3sides.h"
 #include "r3_cube_get_face.h"
 
-const r3side *r3_cube_get_face(r3cube *cube, unsigned side)
+const r3side *r3_cube_get_face(const r3cube *cube, unsigned side)
 {
     if (!cube) {
         return NULL;

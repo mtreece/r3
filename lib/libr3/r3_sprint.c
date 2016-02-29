@@ -53,7 +53,7 @@ static char _r3_sprint_to_char(int color)
     return out;
 }
 
-int r3_sprint(char *buffer, size_t *buflen, r3cube *cube)
+int r3_sprint(char *buffer, size_t *buflen, const r3cube *cube)
 {
     if (!buffer || !buflen || !cube) {
         return -1;

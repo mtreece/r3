@@ -23,7 +23,7 @@
  *
  * @return The color of this r3cell; negative on error.
  */
-int r3_cell_get_color(r3cell *cell);
+int r3_cell_get_color(const r3cell *cell);
 
 #endif /* _R3_CELL_GET_COLOR_ */
 // vim: et ts=4 sw=4 :
