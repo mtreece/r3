@@ -31,48 +31,30 @@ START_TEST(test_identity)
     r3cell *cell;
 
     const int colors[NUM_SIDES][NUM_ROWS][NUM_COLS] = {
-        /* side 0 */
-        {
-            /*  col 0     col 1      col 2  */
+        {/* s0: col 0     col 1      col 2  */
             {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 0 */
             {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 1 */
-            {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 2 */
-        },
-        /* side 1 */
-        {
-            /*  col 0     col 1      col 2  */
+            {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 2 */  },
+        {/* s1: col 0     col 1      col 2  */
             {R3_RED,    R3_RED,    R3_RED},    /* row 0 */
             {R3_RED,    R3_RED,    R3_RED},    /* row 1 */
-            {R3_RED,    R3_RED,    R3_RED},    /* row 2 */
-        },
-        /* side 2 */
-        {
-            /*  col 0     col 1      col 2  */
+            {R3_RED,    R3_RED,    R3_RED},    /* row 2 */  },
+        {/* s2: col 0     col 1      col 2  */
             {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 0 */
             {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 1 */
-            {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 2 */
-        },
-        /* side 3 */
-        {
-            /*  col 0     col 1      col 2  */
+            {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 2 */  },
+        {/* s3: col 0     col 1      col 2  */
             {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 0 */
             {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 1 */
-            {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 2 */
-        },
-        /* side 4 */
-        {
-            /*  col 0     col 1      col 2  */
+            {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 2 */  },
+        {/* s4: col 0     col 1      col 2  */
             {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 0 */
             {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 1 */
-            {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 2 */
-        },
-        /* side 5 */
-        {
-            /*  col 0     col 1      col 2  */
+            {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 2 */  },
+        {/* s5: col 0     col 1      col 2  */
             {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 0 */
             {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 1 */
-            {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 2 */
-        },
+            {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 2 */  },
     };
 
     // can I init a cube?
