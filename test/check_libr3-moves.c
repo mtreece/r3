@@ -30,7 +30,7 @@ START_TEST(test_identity)
     r3cube cube;
     r3cell *cell;
 
-    const int colors[NUM_SIDES][NUM_ROWS][NUM_COLS] = {
+    const int identity[NUM_SIDES][NUM_ROWS][NUM_COLS] = {
         {/* s0: col 0     col 1      col 2  */
             {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 0 */
             {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 1 */
@@ -65,7 +65,7 @@ START_TEST(test_identity)
             for (unsigned col = 0; col < NUM_COLS; ++col) {
                 ck_assert(NULL != (cell = r3_get_cell(&cube, side, row, col)));
                 ck_assert_int_eq(r3_cell_get_color(cell),
-                                 colors[side][row][col]);
+                                 identity[side][row][col]);
             }
         }
     }
