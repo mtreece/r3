@@ -145,6 +145,55 @@ START_TEST(test_identity)
 }
 END_TEST
 
+/**
+ * @brief
+ * Test that the idempotence property upholds in "basic" cases: rotating a row
+ * or column "360 degrees" returns the cube to identity. This also exhaustively
+ * iterates this test across all directions and selectors, and ensures that the
+ * cube does not report identity inbetween rotation.
+ */
+START_TEST(test_idempotence_01)
+{
+    r3cube cube;
+
+    const unsigned dirs[] = {
+        R3_UP,
+        R3_DOWN,
+        R3_LEFT,
+        R3_RIGHT,
+    };
+
+    // can I init a cube?
+    ck_assert_int_eq(0, r3_init(&cube));
+
+    // assert that a freshly init'ed cube is set to identity
+    assert_identity(&cube);
+
+    /*
+     * assert that, for every direction and every selector, each move is
+     * successful, AND after each move the cube is not identity -- until the
+     * end of each <dir, sel> move set when idempotence takes effect.
+     */
+    for (unsigned i = 0; i < sizeof(dirs)/sizeof(dirs[0]); ++i) {
+        unsigned dir = dirs[i];
+        for (unsigned sel = 0; sel < MAX_ROW_COLS; ++sel) {
+            ck_assert(0 == r3_move(&cube, dir, sel));
+            assert_non_identity(&cube);
+
+            ck_assert(0 == r3_move(&cube, dir, sel));
+            assert_non_identity(&cube);
+
+            ck_assert(0 == r3_move(&cube, dir, sel));
+            assert_non_identity(&cube);
+
+            // assert that cube once more becomes identity
+            ck_assert(0 == r3_move(&cube, dir, sel));
+            assert_identity(&cube);
+        }
+    }
+}
+END_TEST
+
 static Suite *builder()
 {
     Suite *s;
@@ -154,6 +203,10 @@ static Suite *builder()
 
     tc = tcase_create("identity");
     tcase_add_test(tc, test_identity);
+    suite_add_tcase(s, tc);
+
+    tc = tcase_create("idempotence01");
+    tcase_add_test(tc, test_idempotence_01);
     suite_add_tcase(s, tc);
 
     return s;
