@@ -21,6 +21,36 @@
 #include "check_libr3.h"
 
 /**
+ * The projection of cube colors from the identity cube.
+ */
+static const int identity[NUM_SIDES][NUM_ROWS][NUM_COLS] = {
+    {/* s0: col 0     col 1      col 2  */
+        {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 0 */
+        {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 1 */
+        {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 2 */  },
+    {/* s1: col 0     col 1      col 2  */
+        {R3_RED,    R3_RED,    R3_RED},    /* row 0 */
+        {R3_RED,    R3_RED,    R3_RED},    /* row 1 */
+        {R3_RED,    R3_RED,    R3_RED},    /* row 2 */  },
+    {/* s2: col 0     col 1      col 2  */
+        {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 0 */
+        {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 1 */
+        {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 2 */  },
+    {/* s3: col 0     col 1      col 2  */
+        {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 0 */
+        {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 1 */
+        {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 2 */  },
+    {/* s4: col 0     col 1      col 2  */
+        {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 0 */
+        {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 1 */
+        {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 2 */  },
+    {/* s5: col 0     col 1      col 2  */
+        {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 0 */
+        {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 1 */
+        {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 2 */  },
+};
+
+/**
  * @brief
  * Test that the "identity" property upholds: on a freshly init'ed cube, does
  * each cell report its proper color?
@@ -29,33 +59,6 @@ START_TEST(test_identity)
 {
     r3cube cube;
     r3cell *cell;
-
-    const int identity[NUM_SIDES][NUM_ROWS][NUM_COLS] = {
-        {/* s0: col 0     col 1      col 2  */
-            {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 0 */
-            {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 1 */
-            {R3_WHITE,  R3_WHITE,  R3_WHITE},  /* row 2 */  },
-        {/* s1: col 0     col 1      col 2  */
-            {R3_RED,    R3_RED,    R3_RED},    /* row 0 */
-            {R3_RED,    R3_RED,    R3_RED},    /* row 1 */
-            {R3_RED,    R3_RED,    R3_RED},    /* row 2 */  },
-        {/* s2: col 0     col 1      col 2  */
-            {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 0 */
-            {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 1 */
-            {R3_BLUE,   R3_BLUE,   R3_BLUE},   /* row 2 */  },
-        {/* s3: col 0     col 1      col 2  */
-            {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 0 */
-            {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 1 */
-            {R3_ORANGE, R3_ORANGE, R3_ORANGE}, /* row 2 */  },
-        {/* s4: col 0     col 1      col 2  */
-            {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 0 */
-            {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 1 */
-            {R3_GREEN,  R3_GREEN,  R3_GREEN},  /* row 2 */  },
-        {/* s5: col 0     col 1      col 2  */
-            {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 0 */
-            {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 1 */
-            {R3_YELLOW, R3_YELLOW, R3_YELLOW}, /* row 2 */  },
-    };
 
     // can I init a cube?
     ck_assert_int_eq(0, r3_init(&cube));
