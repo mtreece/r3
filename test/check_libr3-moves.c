@@ -52,26 +52,43 @@ static const int identity[NUM_SIDES][NUM_ROWS][NUM_COLS] = {
 
 /**
  * @brief
+ * Check if a cube is set to identity.
+ *
+ * @param[in] cube The cube to check for identity
+ *
+ * @retval 0 The cube is NOT set to identity.
+ * @retval 1 The cube IS set to identity.
+ */
+static int is_identity(const r3cube *cube)
+{
+    r3cell *cell;
+    for (unsigned side = 0; side < NUM_SIDES; ++side) {
+        for (unsigned row = 0; row < NUM_ROWS; ++row) {
+            for (unsigned col = 0; col < NUM_COLS; ++col) {
+                ck_assert(NULL != (cell = r3_get_cell(cube, side, row, col)));
+                if (r3_cell_get_color(cell) != identity[side][row][col]) {
+                    return 0;
+                }
+            }
+        }
+    }
+    return 1;
+}
+
+/**
+ * @brief
  * Test that the "identity" property upholds: on a freshly init'ed cube, does
  * each cell report its proper color?
  */
 START_TEST(test_identity)
 {
     r3cube cube;
-    r3cell *cell;
 
     // can I init a cube?
     ck_assert_int_eq(0, r3_init(&cube));
 
-    for (unsigned side = 0; side < NUM_SIDES; ++side) {
-        for (unsigned row = 0; row < NUM_ROWS; ++row) {
-            for (unsigned col = 0; col < NUM_COLS; ++col) {
-                ck_assert(NULL != (cell = r3_get_cell(&cube, side, row, col)));
-                ck_assert_int_eq(r3_cell_get_color(cell),
-                                 identity[side][row][col]);
-            }
-        }
-    }
+    // is a freshly init'ed cube set to identity?
+    ck_assert(is_identity(&cube));
 }
 END_TEST
 
