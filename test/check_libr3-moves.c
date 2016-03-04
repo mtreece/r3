@@ -77,6 +77,58 @@ static int is_identity(const r3cube *cube)
 
 /**
  * @brief
+ * Assert that an r3cube is at identity state.
+ *
+ * This function calls into check to assert that every color matches the
+ * identity projection. This has the advantage of, on failure, printing the
+ * discrepancy.
+ *
+ * @param[in] cube The cube to check for identity
+ */
+__attribute__((used))
+static void assert_identity(const r3cube *cube)
+{
+    r3cell *cell;
+    for (unsigned side = 0; side < NUM_SIDES; ++side) {
+        for (unsigned row = 0; row < NUM_ROWS; ++row) {
+            for (unsigned col = 0; col < NUM_COLS; ++col) {
+                ck_assert(NULL != (cell = r3_get_cell(cube, side, row, col)));
+                ck_assert_int_eq(r3_cell_get_color(cell),
+                                 identity[side][row][col]);
+            }
+        }
+    }
+}
+
+/**
+ * @brief
+ * Assert that an r3cube is NOT at identity state.
+ *
+ * This function calls into check to assert that at least one color fails to
+ * match the identity projection.
+ *
+ * @param[in] cube The cube to check for non-identity
+ */
+__attribute__((used))
+static void assert_non_identity(const r3cube *cube)
+{
+    r3cell *cell;
+    for (unsigned side = 0; side < NUM_SIDES; ++side) {
+        for (unsigned row = 0; row < NUM_ROWS; ++row) {
+            for (unsigned col = 0; col < NUM_COLS; ++col) {
+                ck_assert(NULL != (cell = r3_get_cell(cube, side, row, col)));
+                if (r3_cell_get_color(cell) != identity[side][row][col]) {
+                    /* cube fails an identity requirement; return w/o abort */
+                    return;
+                }
+            }
+        }
+    }
+    ck_abort_msg("cube is set to identity when it ought not be");
+}
+
+/**
+ * @brief
  * Test that the "identity" property upholds: on a freshly init'ed cube, does
  * each cell report its proper color?
  */
