@@ -59,6 +59,7 @@ static const int identity[NUM_SIDES][NUM_ROWS][NUM_COLS] = {
  * @retval 0 The cube is NOT set to identity.
  * @retval 1 The cube IS set to identity.
  */
+__attribute__((used))
 static int is_identity(const r3cube *cube)
 {
     r3cell *cell;
@@ -139,8 +140,8 @@ START_TEST(test_identity)
     // can I init a cube?
     ck_assert_int_eq(0, r3_init(&cube));
 
-    // is a freshly init'ed cube set to identity?
-    ck_assert(is_identity(&cube));
+    // assert that a freshly init'ed cube is set to identity
+    assert_identity(&cube);
 }
 END_TEST
 
