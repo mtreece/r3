@@ -194,6 +194,63 @@ START_TEST(test_idempotence_01)
 }
 END_TEST
 
+/**
+ * @brief
+ * Test that a cube can be reversed back to identity: after performing several
+ * moves on a cube, reverse those moves, and then check that the cube has
+ * returned to identity.
+ */
+START_TEST(test_reverse_01)
+{
+    r3cube cube;
+
+    // these dirs are ordered such that they can be easily reversed, like so:
+    //   rev(idx X) = length(dirs) - 1 - (idx X)
+    const unsigned dirs[] = {
+        R3_UP,
+        R3_LEFT,
+        R3_RIGHT,
+        R3_DOWN,
+    };
+
+    // an incremental "move" to the cube
+    struct move {
+        unsigned diridx;
+        unsigned selector;
+    };
+
+    // the structure of moves that will be taken
+    struct move moves[1024];
+
+    // can I init a cube?
+    ck_assert_int_eq(0, r3_init(&cube));
+
+    // assert that a freshly init'ed cube is set to identity
+    assert_identity(&cube);
+
+    // seed the prng with a repeatable state
+    srand(0);
+
+    // spin the cube forward
+    for (unsigned i = 0; i < sizeof(moves) / sizeof(moves[0]); ++i) {
+        struct move *move = &moves[i];
+        move->diridx = rand() % (sizeof(dirs) / sizeof(dirs[0]));
+        move->selector = rand() % MAX_ROW_COLS; // TODO generalize
+        ck_assert_int_eq(0, r3_move(&cube, dirs[move->diridx], move->selector));
+    }
+
+    // spin the cube back
+    for (unsigned i = 0; i < sizeof(moves) / sizeof(moves[0]); ++i) {
+        struct move *move = &moves[sizeof(moves) / sizeof(moves[0]) - 1 - i];
+        unsigned rdir = (sizeof(dirs) / sizeof(dirs[0])) - 1 - move->diridx;
+        unsigned selector = move->selector;
+        ck_assert_int_eq(0, r3_move(&cube, dirs[rdir], selector));
+    }
+
+    assert_identity(&cube);
+}
+END_TEST
+
 static Suite *builder()
 {
     Suite *s;
@@ -207,6 +264,10 @@ static Suite *builder()
 
     tc = tcase_create("idempotence01");
     tcase_add_test(tc, test_idempotence_01);
+    suite_add_tcase(s, tc);
+
+    tc = tcase_create("reverse01");
+    tcase_add_test(tc, test_reverse_01);
     suite_add_tcase(s, tc);
 
     return s;
