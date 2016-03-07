@@ -234,17 +234,31 @@ START_TEST(test_reverse_01)
     // spin the cube forward
     for (unsigned i = 0; i < sizeof(moves) / sizeof(moves[0]); ++i) {
         struct move *move = &moves[i];
-        move->diridx = rand() % (sizeof(dirs) / sizeof(dirs[0]));
-        move->selector = rand() % MAX_ROW_COLS; // TODO generalize
-        ck_assert_int_eq(0, r3_move(&cube, dirs[move->diridx], move->selector));
+
+        // craft the move to be made
+        unsigned diridx = rand() % (sizeof(dirs) / sizeof(dirs[0]));
+        unsigned selector = rand() % MAX_ROW_COLS; // TODO generalize
+        unsigned dir = dirs[diridx];
+
+        // record this iteration
+        move->diridx = diridx;
+        move->selector = selector;
+
+        // advance the cube & assert the move was successful
+        ck_assert_int_eq(0, r3_move(&cube, dir, selector));
     }
 
     // spin the cube back
     for (unsigned i = 0; i < sizeof(moves) / sizeof(moves[0]); ++i) {
         struct move *move = &moves[sizeof(moves) / sizeof(moves[0]) - 1 - i];
-        unsigned rdir = (sizeof(dirs) / sizeof(dirs[0])) - 1 - move->diridx;
+
+        // compute the move to be un-made
+        unsigned rdiridx = (sizeof(dirs) / sizeof(dirs[0])) - 1 - move->diridx;
         unsigned selector = move->selector;
-        ck_assert_int_eq(0, r3_move(&cube, dirs[rdir], selector));
+        unsigned dir = dirs[rdiridx];
+
+        // reverse the cube back one move & assert success
+        ck_assert_int_eq(0, r3_move(&cube, dir, selector));
     }
 
     assert_identity(&cube);
