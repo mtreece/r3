@@ -265,6 +265,56 @@ START_TEST(test_reverse_01)
 }
 END_TEST
 
+/**
+ * @brief
+ * Test that a cube retains its "solved" property when each selector of a given
+ * direction is moved. This combined operation effectively "rotates" the entire
+ * cube in a given direction.
+ */
+START_TEST(test_solved_01)
+{
+    r3cube cube;
+
+    const unsigned dirs[] = {
+        R3_UP,
+        R3_DOWN,
+        R3_LEFT,
+        R3_RIGHT,
+    };
+
+    // can I init a cube?
+    ck_assert_int_eq(0, r3_init(&cube));
+
+    // assert that a freshly init'ed cube is set to identity
+    assert_identity(&cube);
+
+    // assert that a freshly init'ed cube is solved
+    ck_assert_int_eq(1, r3_is_solved(&cube));
+
+    // for each direction...
+    for (unsigned i = 0; i < sizeof(dirs) / sizeof(dirs[0]); ++i) {
+        unsigned dir = dirs[i];
+
+        // assert that we're currently solved
+        ck_assert_int_eq(1, r3_is_solved(&cube));
+
+        // for each selector...
+        for (unsigned sel = 0; sel < MAX_ROW_COLS; ++sel) { // TODO: generalize
+            // assert that we can move in the given direction & selection
+            ck_assert_int_eq(0, r3_move(&cube, dir, sel));
+
+            // except for the last one, assert we're NOT solved
+            if (sel < MAX_ROW_COLS - 1) {
+                ck_assert_int_eq(0, r3_is_solved(&cube));
+            }
+        }
+
+        // assert that we're again solved
+        ck_assert_int_eq(1, r3_is_solved(&cube));
+    }
+}
+END_TEST
+
 static Suite *builder()
 {
     Suite *s;
@@ -282,6 +332,10 @@ static Suite *builder()
 
     tc = tcase_create("reverse01");
     tcase_add_test(tc, test_reverse_01);
+    suite_add_tcase(s, tc);
+
+    tc = tcase_create("solved01");
+    tcase_add_test(tc, test_solved_01);
     suite_add_tcase(s, tc);
 
     return s;
