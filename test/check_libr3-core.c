@@ -53,6 +53,9 @@ START_TEST(test_basics)
     // can I init a cube?
     ck_assert_int_eq(0, r3_init(&cube));
 
+    // is the cube init'ed in a solved state?
+    ck_assert_int_eq(1, r3_is_solved(&cube));
+
     // can I move it in every direction?
     for (size_t i = 0; i < sizeof(dirs)/sizeof(dirs[0]); ++i) {
         unsigned nselectors = 0;

@@ -23,6 +23,7 @@
 #include "r3_cube_get_face.h"
 #include "r3_get_cell.h"
 #include "r3_init.h"
+#include "r3_is_solved.h"
 #include "r3_move.h"
 #include "r3_sprint.h"
 
