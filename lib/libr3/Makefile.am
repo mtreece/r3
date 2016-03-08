@@ -12,6 +12,7 @@ libr3_a_SOURCES = \
 		  r3_cube_get_face.c \
 		  r3_get_cell.c \
 		  r3_init.c \
+		  r3_is_solved.c \
 		  r3_move.c \
 		  r3_sprint.c \
 		  r3_synclinks.c \
@@ -23,6 +24,7 @@ include_HEADERS = \
 		  r3_cube_get_face.h \
 		  r3_get_cell.h \
 		  r3_init.h \
+		  r3_is_solved.h \
 		  r3_move.h \
 		  r3_sprint.h \
 		  r3_synclinks.h \
