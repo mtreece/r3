@@ -315,7 +315,7 @@ START_TEST(test_solved_01)
 }
 END_TEST
 
-static Suite *builder()
+static Suite *builder(void)
 {
     Suite *s;
     TCase *tc;

@@ -142,7 +142,7 @@ START_TEST(prng_move)
 }
 END_TEST
 
-static Suite *builder()
+static Suite *builder(void)
 {
     Suite *s;
     TCase *tc;
