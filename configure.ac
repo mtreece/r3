@@ -16,7 +16,6 @@ AC_PROG_CC_STDC
 AM_PROG_AR
 AC_CONFIG_HEADERS([config.h])
 LT_INIT
-AC_CONFIG_MACRO_DIRS([m4])
 
 dnl options which probably ought to be turned on if you're doing development
 AC_MSG_CHECKING([whether or not to enable developer mode])
