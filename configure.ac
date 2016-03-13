@@ -13,9 +13,9 @@ AM_SILENT_RULES([yes])
 AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_CC_STDC
-AC_PROG_RANLIB
 AM_PROG_AR
 AC_CONFIG_HEADERS([config.h])
+LT_INIT
 
 dnl options which probably ought to be turned on if you're doing development
 AC_MSG_CHECKING([whether or not to enable developer mode])

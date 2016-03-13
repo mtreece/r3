@@ -27,3 +27,7 @@ ar-lib
 build-aux/
 *.gcda
 *.gcno
+libtool
+.libs/
+*.la
+*.lo
