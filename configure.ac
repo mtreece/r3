@@ -108,3 +108,5 @@ AC_CONFIG_FILES([Makefile
                  test/Makefile])
 
 AC_OUTPUT
+
+# vim: set et ts=4 sw=4 :
