@@ -22,12 +22,12 @@ AC_MSG_CHECKING([whether or not to enable developer mode])
 AC_ARG_ENABLE([developer-mode],
               AS_HELP_STRING([--enable-developer-mode],
                              [turn on common options for development]),
-              [COMMONDEVOPTS=$enableval], [])
+              [COMMONDEVOPTS="$enableval"], [])
 if test "x$COMMONDEVOPTS" == "xyes"; then
     AC_MSG_RESULT([yes])
-    ASSERTIONS=yes
-    BUILD_TESTS=yes
-    GCOV_SUPPORT=yes
+    ASSERTIONS="yes"
+    BUILD_TESTS="yes"
+    GCOV_SUPPORT="yes"
     proj_cflags="$proj_cflags -O0 -Wall -Wextra -Werror"
 else
     AC_MSG_RESULT([no])
@@ -37,7 +37,7 @@ AC_MSG_CHECKING([whether or not to turn on assertions])
 AC_ARG_ENABLE([assertions],
               AS_HELP_STRING([--enable-assertions],
                              [turn on assert() for development]),
-              [ASSERTIONS=$enableval], [])
+              [ASSERTIONS="$enableval"], [])
 if test "x$ASSERTIONS" != "xyes"; then
     AC_MSG_RESULT([no])
     AC_DEFINE([NDEBUG], , [if defined, assertions do nothing])
@@ -49,7 +49,7 @@ AC_MSG_CHECKING([whether or not to build tests])
 AC_ARG_ENABLE([build-tests],
               AS_HELP_STRING([--enable-build-tests],
                              [build the 'make check' functionality]),
-              [BUILD_TESTS=$enableval], [])
+              [BUILD_TESTS="$enableval"], [])
 if test "x$BUILD_TESTS" == "xyes"; then
     AC_MSG_RESULT([yes])
 
@@ -78,7 +78,7 @@ AC_MSG_CHECKING([whether or not to build with profiling support (gcov)])
 AC_ARG_ENABLE([gcov-support],
               AS_HELP_STRING([--enable-gcov-support],
                              [compile with support for gcov]),
-              [GCOV_SUPPORT=$enableval], [])
+              [GCOV_SUPPORT="$enableval"], [])
 if test "x$GCOV_SUPPORT" == "xyes"; then
     AC_MSG_RESULT([yes])
     proj_cflags="$proj_cflags -O0 -ggdb3 -fprofile-arcs -ftest-coverage"
