@@ -60,7 +60,6 @@ static const int identity[NUM_SIDES][NUM_ROWS][NUM_COLS] = {
  *
  * @param[in] cube The cube to check for identity
  */
-__attribute__((used))
 static void assert_identity(const r3cube *cube)
 {
     r3cell *cell;
@@ -84,7 +83,6 @@ static void assert_identity(const r3cube *cube)
  *
  * @param[in] cube The cube to check for non-identity
  */
-__attribute__((used))
 static void assert_non_identity(const r3cube *cube)
 {
     r3cell *cell;
