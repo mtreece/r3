@@ -14,6 +14,9 @@ point in keeping history to this file: that's what git is for.
 
 ## Administrative
 
+The intent of this section is to capture miscellaneous TODOs that affect the
+overall health of the project.
+
 * Create an "/AUTHORS" file.
 
 * Establish a "/HACKING" file & guideline.
