@@ -6,6 +6,12 @@ published by the Free Software Foundation.
 
 # TODOs and r3 Roadmap
 
+The intent of this file is to capture noteworthy TODOs and an overall roadmap
+for r3. As ideas are implemented, they should be _deleted_ from this file and
+the deletion performed in the branch which implements the change. There's no
+point in keeping history to this file: that's what git is for.
+
+
 ## Administrative
 
 * Create an "/AUTHORS" file.
