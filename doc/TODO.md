@@ -24,6 +24,8 @@ overall health of the project.
 
 ## Roadmap
 
+Long-term ideas for advancing r3 or adding unique features.
+
 ### Python Bindings
 
 * Investigate creating a, e.g., "${REPO}/lib/libpyr3/", which provides Python
