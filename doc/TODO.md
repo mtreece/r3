@@ -38,6 +38,8 @@ Long-term ideas for advancing r3 or adding unique features.
 
 ## Misc / Noteworthy TODOs
 
+Miscellaneous ideas that could have a large-impact on the codebase.
+
 * "Rework Memory Management". Currently, users of the API (usually) need to
   have an open definition of struct r3cube in order to declare an instance and
   then pass a pointer to that instance to the API (init + operations). This is
