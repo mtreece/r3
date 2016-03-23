@@ -55,3 +55,9 @@ Miscellaneous ideas that could have a large-impact on the codebase.
   pair of "malloc" and "free" functions that are then called in "init" and a
   new "free" API function. The former would be easier, but the latter would be
   more versatile and allow for future-thinking shutdown hooks.
+
+* See if it's possible to refactor the algorithm to either remove synclinks,
+  allow it to optionally be compiled in, allow it to optionally be used (at
+  runtime), or optionally link against a dictionary API. Why have the optional
+  configurations? Depending on the primary use-case of r3, it may help reduce
+  (via tradeoff) move operations vs lookup operations.
