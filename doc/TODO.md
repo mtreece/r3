@@ -18,6 +18,8 @@ The intent of this section is to capture miscellaneous TODOs that affect the
 overall health of the project.
 
 * Create an "/AUTHORS" file.
+    * Determine format: does including email address increase spam activity to
+      the mailbox?
 
 * Establish a "/HACKING" file & guideline.
 
