@@ -25,6 +25,8 @@ overall health of the project.
 
 * Create a friendly "/README" to describe what's going on here.
 
+* Better document the algorithm.
+
 
 ## Roadmap
 
