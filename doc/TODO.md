@@ -23,6 +23,8 @@ overall health of the project.
 
 * Establish a "/HACKING" file & guideline.
 
+* Create a friendly "/README" to describe what's going on here.
+
 
 ## Roadmap
 
