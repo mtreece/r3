@@ -17,6 +17,14 @@ AM_PROG_AR
 AC_CONFIG_HEADERS([config.h])
 LT_INIT
 
+# NOTE: We turn on -Wall and -Wextra immediately so as to ensure as many code
+# defects as possible can be caught early on. With developer mode, such defects
+# are considered errors in order to ensure the codebase is only advanced with
+# "pristine" patches. We leave -Wall and -Wextra here for non-developer-mode
+# builds too so that package maintainers are aware of any potential issues that
+# arise.
+proj_cflags="-Wall -Wextra"
+
 dnl options which probably ought to be turned on if you're doing development
 AC_MSG_CHECKING([whether or not to enable developer mode])
 AC_ARG_ENABLE([developer-mode],
@@ -28,7 +36,7 @@ if test "x$COMMONDEVOPTS" == "xyes"; then
     ASSERTIONS="yes"
     BUILD_TESTS="yes"
     GCOV_SUPPORT="yes"
-    proj_cflags="$proj_cflags -O0 -Wall -Wextra -Werror"
+    proj_cflags="$proj_cflags -Werror -O0"
 else
     AC_MSG_RESULT([no])
 fi
