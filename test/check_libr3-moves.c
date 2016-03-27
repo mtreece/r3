@@ -209,8 +209,21 @@ START_TEST(test_reverse_01)
 
         // craft the move to be made
         unsigned diridx = rand() % (sizeof(dirs) / sizeof(dirs[0]));
-        unsigned selector = rand() % MAX_ROW_COLS; // TODO generalize
         unsigned dir = dirs[diridx];
+        unsigned selector;
+        switch (dir) {
+            case R3_UP:
+            case R3_DOWN:
+                selector = rand() % NUM_COLS;
+                break;
+            case R3_LEFT:
+            case R3_RIGHT:
+                selector = rand() % NUM_ROWS;
+                break;
+            default:
+                ck_abort_msg("should never reach this case");
+                break;
+        }
 
         // record this iteration
         move->diridx = diridx;
