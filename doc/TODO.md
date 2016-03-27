@@ -41,6 +41,12 @@ Long-term ideas for advancing r3 or adding unique features.
 * Investigate if any tests can be improved (or better tests added) that can be
   powered by the Python bindings.
 
+### Graphics
+
+* Investigate the creation of a library for graphically drawing the cubes
+  created with r3. (It may be better to "outsource" this, depending on what's
+  available.)
+
 
 ## Misc / Noteworthy TODOs
 
