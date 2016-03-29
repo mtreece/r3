@@ -279,17 +279,32 @@ START_TEST(test_solved_01)
     // for each direction...
     for (unsigned i = 0; i < sizeof(dirs) / sizeof(dirs[0]); ++i) {
         unsigned dir = dirs[i];
+        unsigned nsel;
 
         // assert that we're currently solved
         ck_assert_int_eq(1, r3_is_solved(&cube));
 
+        switch (dir) {
+            case R3_UP:
+            case R3_DOWN:
+                nsel = NUM_COLS;
+                break;
+            case R3_LEFT:
+            case R3_RIGHT:
+                nsel = NUM_ROWS;
+                break;
+            default:
+                ck_abort_msg("should never reach this case");
+                break;
+        }
+
         // for each selector...
-        for (unsigned sel = 0; sel < MAX_ROW_COLS; ++sel) { // TODO: generalize
+        for (unsigned sel = 0; sel < nsel; ++sel) {
             // assert that we can move in the given direction & selection
             ck_assert_int_eq(0, r3_move(&cube, dir, sel));
 
             // except for the last one, assert we're NOT solved
-            if (sel < MAX_ROW_COLS - 1) {
+            if (sel < nsel - 1) {
                 ck_assert_int_eq(0, r3_is_solved(&cube));
             }
         }
