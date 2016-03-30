@@ -73,3 +73,8 @@ Miscellaneous ideas that could have a large-impact on the codebase.
   runtime), or optionally link against a dictionary API. Why have the optional
   configurations? Depending on the primary use-case of r3, it may help reduce
   (via tradeoff) move operations vs lookup operations.
+
+* Consider breaking out make-check tests into separate executables. The problem
+  currently is that the "Testsuite Summary" only displays statistics for the
+  one test executable that is created -- either a single PASS or FAIL, which is
+  annoying.
