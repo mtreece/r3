@@ -119,7 +119,7 @@ START_TEST(prng_move)
 
     srand(0);
 
-    for (unsigned i = 0; i < 30 * 1024; ++i) {
+    for (unsigned i = 0; i < 1024; ++i) {
         unsigned dir = dirs[rand() % sizeof(dirs)/sizeof(dirs[0])];
         unsigned modulus;
 
