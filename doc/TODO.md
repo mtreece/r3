@@ -80,3 +80,9 @@ Miscellaneous ideas that could have a large-impact on the codebase.
   currently is that the "Testsuite Summary" only displays statistics for the
   one test executable that is created -- either a single PASS or FAIL, which is
   annoying.
+
+
+### Aesthetics & Misc Cleanup
+
+TODOs which can apply in multiple places, codebase-wide, that affect overall
+aesthetics and aesthetics-related health of the project.
