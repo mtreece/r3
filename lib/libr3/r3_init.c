@@ -80,10 +80,8 @@ static void link_neighbors(r3cell *a, r3cell *b, int is_brother)
 
 int r3_init(r3cube *cube, size_t *len)
 {
-    if (!cube) {
-        return -1;
-    }
-
+    // run this check before "if (!cube)" in order to allow for simple length
+    // computation with "size_t len = 0; r3_init(NULL, &len);".
     if (len) {
         size_t inlen = *len;
         *len = sizeof(r3cube);
@@ -91,6 +89,10 @@ int r3_init(r3cube *cube, size_t *len)
         if (inlen < sizeof(r3cube)) {
             return -2;
         }
+    }
+
+    if (!cube) {
+        return -1;
     }
 
     memset(cube, 0x00, sizeof(r3cube));
