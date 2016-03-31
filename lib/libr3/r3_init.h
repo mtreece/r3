@@ -40,8 +40,9 @@
  *                    `cube`; on output, this is the length that is actually
  *                    required by this implementation.
  *
- * @retval 0 success
- * @retval 1 length of buffer too small
+ * @retval  0 success
+ * @retval -1 invalid input (e.g. NULL `cube`)
+ * @retval -2 length of buffer too small
  */
 int r3_init(r3cube *cube, size_t *len);
 
