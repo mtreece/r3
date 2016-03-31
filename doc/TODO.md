@@ -86,3 +86,5 @@ Miscellaneous ideas that could have a large-impact on the codebase.
 
 TODOs which can apply in multiple places, codebase-wide, that affect overall
 aesthetics and aesthetics-related health of the project.
+
+* Add missing [in], [out], [in,out] arguments to doxygen.
