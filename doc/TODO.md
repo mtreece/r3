@@ -50,6 +50,8 @@ Long-term ideas for advancing r3 or adding unique features.
 
 ## Misc / Noteworthy TODOs
 
+### General
+
 Miscellaneous ideas that could have a large-impact on the codebase.
 
 * "Rework Memory Management". Currently, users of the API (usually) need to
