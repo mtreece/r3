@@ -78,11 +78,21 @@ static void link_neighbors(r3cell *a, r3cell *b, int is_brother)
     }
 }
 
-int r3_init(r3cube *cube)
+int r3_init(r3cube *cube, size_t *len)
 {
     if (!cube) {
         return -1;
     }
+
+    if (len) {
+        size_t inlen = *len;
+        *len = sizeof(r3cube);
+
+        if (inlen < sizeof(r3cube)) {
+            return -2;
+        }
+    }
+
     memset(cube, 0x00, sizeof(r3cube));
     cube->position = 0;
 
