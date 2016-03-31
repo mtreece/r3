@@ -44,7 +44,6 @@
 int main(int __attribute__((unused)) argc, char __attribute__((unused)) *argv[])
 {
     r3cube cube;
-    //int res;
     char buffer[R3_SPRINT_MINLENGTH];
     size_t buflen;
 
