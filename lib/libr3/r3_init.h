@@ -35,10 +35,10 @@
  * All API calls on an r3cube expect the r3cube structure state to have been
  * initialized by this call.
  *
- * @param cube The r3cube to initialize
- * @param len On input, this is the length of the supplied buffer for `cube`;
- *            on output, this is the length that is actually required by this
- *            implementation.
+ * @param[in,out] cube The r3cube to initialize
+ * @param[in,out] len On input, this is the length of the supplied buffer for
+ *                    `cube`; on output, this is the length that is actually
+ *                    required by this implementation.
  *
  * @retval 0 success
  * @retval 1 length of buffer too small
