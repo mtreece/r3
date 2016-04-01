@@ -24,7 +24,7 @@
 
 #define DO_CHECK_REPORT_END(check, xdo) \
     do { \
-        int res; \
+        typeof(xdo) res; \
         if (check (res = xdo)) { \
             fprintf(stderr, "%s:%d- error, returned %d\n", __FUNCTION__, __LINE__, res); \
             exit(-1); \
