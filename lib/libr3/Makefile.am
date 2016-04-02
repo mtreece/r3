@@ -6,3 +6,4 @@
 # published by the Free Software Foundation.
 #
 
+SUBDIRS = include/ src/
