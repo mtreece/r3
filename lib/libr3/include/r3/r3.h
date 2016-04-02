@@ -11,6 +11,13 @@
 
 #include <config.h>
 
+// common structures
+// NOTE: these are defined as incomplete types in order to decouple client
+// implementations from the inner details
+typedef struct r3cell r3cell;
+typedef struct r3cube r3cube;
+typedef struct r3side r3side;
+
 // common defines
 #include <r3/r3colors.h>
 #include <r3/r3moves.h>
