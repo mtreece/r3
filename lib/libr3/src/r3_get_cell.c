@@ -10,10 +10,10 @@
 
 #include <stdlib.h>
 
+#include <r3/r3_get_cell.h>
+
 #include "r3cube.h"
 #include "r3sides.h"
-
-#include "r3_get_cell.h"
 
 r3cell *r3_get_cell(const r3cube *cube, unsigned side, unsigned row, unsigned col)
 {

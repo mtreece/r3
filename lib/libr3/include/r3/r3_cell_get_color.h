@@ -11,7 +11,8 @@
 
 #include <config.h>
 
-#include "r3sides.h"
+//TODO create public-facing, incomplete declarations for these structs
+typedef struct r3cell r3cell;
 
 /**
  * @brief

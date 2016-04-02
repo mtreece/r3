@@ -11,9 +11,10 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include <r3/r3_cube_get_face.h>
+
 #include "r3cube.h"
 #include "r3sides.h"
-#include "r3_cube_get_face.h"
 
 const r3side *r3_cube_get_face(const r3cube *cube, unsigned side)
 {

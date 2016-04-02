@@ -8,11 +8,11 @@
  */
 #include <config.h>
 
-#include "r3colors.h"
+#include <r3/r3colors.h>
+#include <r3/r3_cell_get_color.h>
+
 #include "r3cube.h"
 #include "r3sides.h"
-
-#include "r3_cell_get_color.h"
 
 int r3_cell_get_color(const r3cell *cell)
 {

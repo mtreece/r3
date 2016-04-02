@@ -13,6 +13,9 @@
 
 #include <stdlib.h>
 
+//TODO create public-facing, incomplete declarations for these structs
+typedef struct r3cube r3cube;
+
 /**
  * @brief
  * Initialize an r3cube structure. This will reset/create state on the

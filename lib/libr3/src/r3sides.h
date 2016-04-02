@@ -11,9 +11,9 @@
 
 #include <config.h>
 
-#include "r3colors.h"
-#include "r3cube.h"
+#include <r3/r3colors.h>
 
+#include "r3cube.h"
 
 typedef struct r3cell {
     /// the color of this cell

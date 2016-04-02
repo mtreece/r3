@@ -8,8 +8,9 @@
  */
 #include <config.h>
 
-#include "r3cube.h"
-#include "r3sides.h"
+//TODO create public-facing, incomplete declarations for these structs
+typedef struct r3cube r3cube;
+typedef struct r3side r3side;
 
 /**
  * @brief

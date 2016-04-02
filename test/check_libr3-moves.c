@@ -16,7 +16,7 @@
 #error Test currently only supports 6x3x3
 #endif /* if NUM_SIDES != ... */
 
-#include <r3.h>
+#include <r3/r3.h>
 
 #include "check_libr3.h"
 

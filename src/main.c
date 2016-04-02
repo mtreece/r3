@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <r3.h>
+#include <r3/r3.h>
 
 /*
  * NOTE: this file is NOT the real "main" of this software! This is currently

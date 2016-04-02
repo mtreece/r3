@@ -11,7 +11,8 @@
 
 #include <config.h>
 
-#include "r3cube.h"
+//TODO create public-facing, incomplete declarations for these structs
+typedef struct r3cube r3cube;
 
 /**
  * @brief

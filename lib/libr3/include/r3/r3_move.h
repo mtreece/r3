@@ -11,6 +11,9 @@
 
 #include <config.h>
 
+//TODO create public-facing, incomplete declarations for these structs
+typedef struct r3cube r3cube;
+
 /**
  * @brief
  * Update the r3cube with a move-operation on the `selector` in the direction
