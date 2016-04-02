@@ -17,6 +17,4 @@ include_HEADERS = \
 		  r3_sprint.h \
 		  r3_synclinks.h \
 		  r3colors.h \
-		  r3cube.h \
-		  r3moves.h \
-		  r3sides.h
+		  r3moves.h

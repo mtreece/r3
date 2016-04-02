@@ -17,6 +17,8 @@ libr3_la_SOURCES = \
 		  r3_move.c \
 		  r3_sprint.c \
 		  r3_synclinks.c \
+		  r3cube.h \
+		  r3sides.h \
 		  util.h
 
 AM_CFLAGS = @PROJ_CFLAGS@
