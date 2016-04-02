@@ -6,7 +6,7 @@
 # published by the Free Software Foundation.
 #
 
-include_HEADERS = \
+nobase_include_HEADERS = \
 		  r3/r3.h \
 		  r3/r3_cell_get_color.h \
 		  r3/r3_cube_get_face.h \
