@@ -22,3 +22,4 @@ libr3_la_SOURCES = \
 		  util.h
 
 AM_CFLAGS = @PROJ_CFLAGS@
+AM_CPPFLAGS = -I$(srcdir)/../include/
