@@ -6,7 +6,7 @@
 # published by the Free Software Foundation.
 #
 
-SUBDIRS = lib/libr3 src/ test/
+SUBDIRS = lib/libr3/ src/ test/
 
 # clean gcov-related files from the codebase
 clean-gcov:
