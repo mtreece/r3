@@ -11,10 +11,9 @@
 
 #include <config.h>
 
-#include "r3colors.h"
-#include "r3cube.h"
+#include <r3/r3colors.h>
 
-#define MAX_ROW_COLS (NUM_COLS > NUM_ROWS ? NUM_COLS : NUM_ROWS)
+#include "r3cube.h"
 
 typedef struct r3cell {
     /// the color of this cell

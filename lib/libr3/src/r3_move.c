@@ -12,11 +12,12 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <r3/r3_move.h>
+#include <r3/r3_synclinks.h>
+#include <r3/r3moves.h>
+
 #include "r3cube.h"
 #include "r3sides.h"
-#include "r3moves.h"
-#include "r3_move.h"
-#include "r3_synclinks.h"
 
 typedef struct {
     /// the r3cube object to operate on

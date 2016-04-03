@@ -101,6 +101,8 @@ AC_DEFINE([NUM_COLS], 3,
           [number of columns on a r3side; currently only supports hard-coded 3])
 AC_DEFINE([NUM_ROWS], 3,
           [number of rows on a r3side; currently only supports hard-coded 3])
+AC_DEFINE([MAX_ROW_COLS], (NUM_COLS > NUM_ROWS ? NUM_COLS : NUM_ROWS),
+          [the number of rows or number of columns, which ever is greater])
 AC_DEFINE([MAX_NUM_BROTHERS], 2,
           [max number of possible brothers; currently only supports hard-coded
            2 (in the corner-edge case)])
@@ -112,6 +114,8 @@ AC_SUBST([PROJ_CFLAGS], [$proj_cflags])
 
 AC_CONFIG_FILES([Makefile
                  lib/libr3/Makefile
+                 lib/libr3/include/Makefile
+                 lib/libr3/src/Makefile
                  src/Makefile
                  test/Makefile])
 

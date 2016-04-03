@@ -13,6 +13,8 @@
 
 #include <stdlib.h>
 
+#include <r3/r3.h>
+
 /**
  * @brief
  * Initialize an r3cube structure. This will reset/create state on the

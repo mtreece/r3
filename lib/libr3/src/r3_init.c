@@ -10,9 +10,10 @@
 #include <assert.h>
 #include <string.h>
 
+#include <r3/r3_init.h>
+
 #include "r3cube.h"
 #include "r3sides.h"
-#include "r3_init.h"
 
 #include <stdio.h>
 

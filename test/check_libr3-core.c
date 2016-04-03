@@ -12,8 +12,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <r3.h>
-#include <r3_synclinks.h>
+#include <r3/r3.h>
+#include <r3/r3_synclinks.h>
 
 #include "check_libr3.h"
 

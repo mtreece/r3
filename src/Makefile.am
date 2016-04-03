@@ -8,7 +8,7 @@
 
 bin_PROGRAMS = r3
 r3_SOURCES = main.c
-r3_LDADD = $(top_builddir)/lib/libr3/libr3.la
-r3_CPPFLAGS = -I$(top_srcdir)/lib/libr3
+r3_LDADD = $(top_builddir)/lib/libr3/src/libr3.la
+r3_CPPFLAGS = -I$(top_srcdir)/lib/libr3/include/
 
 AM_CFLAGS = @PROJ_CFLAGS@
