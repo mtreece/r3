@@ -113,6 +113,7 @@ AC_DEFINE([MAX_NUM_NEIGHBORS], 4,
 AC_SUBST([PROJ_CFLAGS], [$proj_cflags])
 
 AC_CONFIG_FILES([Makefile
+                 doc/Makefile
                  lib/libr3/Makefile
                  src/Makefile
                  test/Makefile])
