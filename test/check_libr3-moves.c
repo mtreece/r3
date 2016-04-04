@@ -16,6 +16,8 @@
 #error Test currently only supports 6x3x3
 #endif /* if NUM_SIDES != ... */
 
+#include <assert.h>
+
 #include <r3.h>
 
 #include "check_libr3.h"
@@ -222,6 +224,11 @@ START_TEST(test_reverse_01)
                 break;
             default:
                 ck_abort_msg("should never reach this case");
+
+                // assert so that the compiler will less-likely complain about
+                // selector being uninitialized
+                assert(0);
+
                 break;
         }
 
