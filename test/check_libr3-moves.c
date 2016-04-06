@@ -69,8 +69,8 @@ static void assert_identity(const r3cube *cube)
         for (unsigned row = 0; row < NUM_ROWS; ++row) {
             for (unsigned col = 0; col < NUM_COLS; ++col) {
                 ck_assert(NULL != (cell = r3_get_cell(cube, side, row, col)));
-                ck_assert_int_eq(r3_cell_get_color(cell),
-                                 identity[side][row][col]);
+                ck_assert(r3_cell_get_color(cell) ==
+                          identity[side][row][col]);
             }
         }
     }
@@ -113,9 +113,9 @@ START_TEST(test_identity)
     size_t cubelen = 0;
 
     // can I init a cube?
-    ck_assert_int_eq(-2, r3_init(NULL, &cubelen));
+    ck_assert(-2 == r3_init(NULL, &cubelen));
     cube = malloc(cubelen);
-    ck_assert_int_eq(0, r3_init(cube, NULL));
+    ck_assert(0 == r3_init(cube, NULL));
 
     // assert that a freshly init'ed cube is set to identity
     assert_identity(cube);
@@ -142,9 +142,9 @@ START_TEST(test_idempotence_01)
     };
 
     // can I init a cube?
-    ck_assert_int_eq(-2, r3_init(NULL, &cubelen));
+    ck_assert(-2 == r3_init(NULL, &cubelen));
     cube = malloc(cubelen);
-    ck_assert_int_eq(0, r3_init(cube, NULL));
+    ck_assert(0 == r3_init(cube, NULL));
 
     // assert that a freshly init'ed cube is set to identity
     assert_identity(cube);
@@ -204,9 +204,9 @@ START_TEST(test_reverse_01)
     struct move moves[1024];
 
     // can I init a cube?
-    ck_assert_int_eq(-2, r3_init(NULL, &cubelen));
+    ck_assert(-2 == r3_init(NULL, &cubelen));
     cube = malloc(cubelen);
-    ck_assert_int_eq(0, r3_init(cube, NULL));
+    ck_assert(0 == r3_init(cube, NULL));
 
     // assert that a freshly init'ed cube is set to identity
     assert_identity(cube);
@@ -246,7 +246,7 @@ START_TEST(test_reverse_01)
         move->selector = selector;
 
         // advance the cube & assert the move was successful
-        ck_assert_int_eq(0, r3_move(cube, dir, selector));
+        ck_assert(0 == r3_move(cube, dir, selector));
     }
 
     // spin the cube back
@@ -259,7 +259,7 @@ START_TEST(test_reverse_01)
         unsigned dir = dirs[rdiridx];
 
         // reverse the cube back one move & assert success
-        ck_assert_int_eq(0, r3_move(cube, dir, selector));
+        ck_assert(0 == r3_move(cube, dir, selector));
     }
 
     assert_identity(cube);
@@ -285,15 +285,15 @@ START_TEST(test_solved_01)
     };
 
     // can I init a cube?
-    ck_assert_int_eq(-2, r3_init(NULL, &cubelen));
+    ck_assert(-2 == r3_init(NULL, &cubelen));
     cube = malloc(cubelen);
-    ck_assert_int_eq(0, r3_init(cube, NULL));
+    ck_assert(0 == r3_init(cube, NULL));
 
     // assert that a freshly init'ed cube is set to identity
     assert_identity(cube);
 
     // assert that a freshly init'ed cube is solved
-    ck_assert_int_eq(1, r3_is_solved(cube));
+    ck_assert(1 == r3_is_solved(cube));
 
     // for each direction...
     for (unsigned i = 0; i < sizeof(dirs) / sizeof(dirs[0]); ++i) {
@@ -301,7 +301,7 @@ START_TEST(test_solved_01)
         unsigned nsel;
 
         // assert that we're currently solved
-        ck_assert_int_eq(1, r3_is_solved(cube));
+        ck_assert(1 == r3_is_solved(cube));
 
         switch (dir) {
             case R3_UP:
@@ -320,16 +320,16 @@ START_TEST(test_solved_01)
         // for each selector...
         for (unsigned sel = 0; sel < nsel; ++sel) {
             // assert that we can move in the given direction & selection
-            ck_assert_int_eq(0, r3_move(cube, dir, sel));
+            ck_assert(0 == r3_move(cube, dir, sel));
 
             // except for the last one, assert we're NOT solved
             if (sel < nsel - 1) {
-                ck_assert_int_eq(0, r3_is_solved(cube));
+                ck_assert(0 == r3_is_solved(cube));
             }
         }
 
         // assert that we're again solved
-        ck_assert_int_eq(1, r3_is_solved(cube));
+        ck_assert(1 == r3_is_solved(cube));
     }
 }
 END_TEST

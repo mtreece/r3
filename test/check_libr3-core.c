@@ -52,14 +52,14 @@ START_TEST(test_basics)
     size_t cubelen = 0;
 
     // can I retrieve the size of a cube?
-    ck_assert_int_eq(-2, r3_init(NULL, &cubelen));
+    ck_assert(-2 == r3_init(NULL, &cubelen));
 
     // can I init a cube?
     cube = malloc(cubelen);
-    ck_assert_int_eq(0, r3_init(cube, NULL));
+    ck_assert(0 == r3_init(cube, NULL));
 
     // is the cube init'ed in a solved state?
-    ck_assert_int_eq(1, r3_is_solved(cube));
+    ck_assert(1 == r3_is_solved(cube));
 
     // can I move it in every direction?
     for (size_t i = 0; i < sizeof(dirs)/sizeof(dirs[0]); ++i) {
@@ -81,12 +81,12 @@ START_TEST(test_basics)
         }
 
         for (unsigned selector = 0; selector < nselectors; ++selector) {
-            ck_assert_int_eq(0, r3_move(cube, dir, selector));
+            ck_assert(0 == r3_move(cube, dir, selector));
         }
     }
 
     // can I manually call synclinks?
-    ck_assert_int_eq(0, r3_synclinks(cube));
+    ck_assert(0 == r3_synclinks(cube));
 
     // can I get the facing side?
     ck_assert(NULL != r3_cube_get_face(cube, 0));
@@ -121,9 +121,9 @@ START_TEST(prng_move)
     r3cube *cube;
     size_t cubelen = 0;
 
-    ck_assert_int_eq(-2, r3_init(NULL, &cubelen));
+    ck_assert(-2 == r3_init(NULL, &cubelen));
     cube = malloc(cubelen);
-    ck_assert_int_eq(0, r3_init(cube, NULL));
+    ck_assert(0 == r3_init(cube, NULL));
 
     srand(0);
 
@@ -145,7 +145,7 @@ START_TEST(prng_move)
         }
 
         unsigned selector = rand() % modulus;
-        ck_assert_int_eq(0, r3_move(cube, dir, selector));
+        ck_assert(0 == r3_move(cube, dir, selector));
     }
 }
 END_TEST
