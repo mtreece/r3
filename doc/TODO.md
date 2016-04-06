@@ -27,6 +27,9 @@ overall health of the project.
 
 * Better document the algorithm.
 
+* Consider bumping required version of libcheck to support ck_assert_int_eq;
+  see commit 8e2d7e1071005feaf230fe8867095c89c366fa79 for more details.
+
 
 ## Roadmap
 
