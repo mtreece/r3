@@ -12,8 +12,9 @@
 #include <stdio.h>
 #include <stddef.h>
 
+#include <r3/r3_sprint.h>
+
 #include "r3cube.h"
-#include "r3_sprint.h"
 
 // TODO: handle this generality
 #if NUM_SIDES != 6

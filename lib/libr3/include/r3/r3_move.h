@@ -11,6 +11,8 @@
 
 #include <config.h>
 
+#include <r3/r3.h>
+
 /**
  * @brief
  * Update the r3cube with a move-operation on the `selector` in the direction

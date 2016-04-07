@@ -10,9 +10,10 @@
 #include <assert.h>
 #include <string.h>
 
+#include <r3/r3_init.h>
+
 #include "r3cube.h"
 #include "r3sides.h"
-#include "r3_init.h"
 
 #include <stdio.h>
 
@@ -78,11 +79,23 @@ static void link_neighbors(r3cell *a, r3cell *b, int is_brother)
     }
 }
 
-int r3_init(r3cube *cube)
+int r3_init(r3cube *cube, size_t *len)
 {
+    // run this check before "if (!cube)" in order to allow for simple length
+    // computation with "size_t len = 0; r3_init(NULL, &len);".
+    if (len) {
+        size_t inlen = *len;
+        *len = sizeof(r3cube);
+
+        if (inlen < sizeof(r3cube)) {
+            return -2;
+        }
+    }
+
     if (!cube) {
         return -1;
     }
+
     memset(cube, 0x00, sizeof(r3cube));
     cube->position = 0;
 

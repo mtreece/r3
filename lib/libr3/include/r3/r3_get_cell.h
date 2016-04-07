@@ -11,8 +11,7 @@
 
 #include <config.h>
 
-#include "r3cube.h"
-#include "r3sides.h"
+#include <r3/r3.h>
 
 /**
  * @brief

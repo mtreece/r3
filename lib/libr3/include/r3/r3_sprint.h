@@ -13,6 +13,8 @@
 
 #include <stddef.h>
 
+#include <r3/r3.h>
+
 /*
  * Side to sides-number:
  *

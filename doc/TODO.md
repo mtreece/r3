@@ -27,6 +27,9 @@ overall health of the project.
 
 * Better document the algorithm.
 
+* Consider bumping required version of libcheck to support ck_assert_int_eq;
+  see commit 8e2d7e1071005feaf230fe8867095c89c366fa79 for more details.
+
 
 ## Roadmap
 
@@ -53,22 +56,6 @@ Long-term ideas for advancing r3 or adding unique features.
 ### General
 
 Miscellaneous ideas that could have a large-impact on the codebase.
-
-* "Rework Memory Management". Currently, users of the API (usually) need to
-  have an open definition of struct r3cube in order to declare an instance and
-  then pass a pointer to that instance to the API (init + operations). This is
-  somewhat problematic, as it makes it harder to change the internals of the
-  structs without breaking some sort of dependency. I'm reluctant to modify r3
-  to instead make calls to malloc in a "init" / "close" pattern (where "init"
-  calls into a "well-known" malloc/calloc-like function, and "close" calls into
-  a free-like function), since that's outside the scope of what this library
-  should do. Furthermore, I don't want to limit r3 from running in limited,
-  embedded environments which may not have malloc-like calls. The "solution" to
-  this will be to either 1) allow the API to be queried for the struct r3cube
-  size (so the user has to manage memory), or 2) allow the API to be passed a
-  pair of "malloc" and "free" functions that are then called in "init" and a
-  new "free" API function. The former would be easier, but the latter would be
-  more versatile and allow for future-thinking shutdown hooks.
 
 * See if it's possible to refactor the algorithm to either remove synclinks,
   allow it to optionally be compiled in, allow it to optionally be used (at

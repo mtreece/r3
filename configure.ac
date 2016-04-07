@@ -115,6 +115,8 @@ AC_SUBST([PROJ_CFLAGS], [$proj_cflags])
 AC_CONFIG_FILES([Makefile
                  doc/Makefile
                  lib/libr3/Makefile
+                 lib/libr3/include/Makefile
+                 lib/libr3/src/Makefile
                  src/Makefile
                  test/Makefile])
 

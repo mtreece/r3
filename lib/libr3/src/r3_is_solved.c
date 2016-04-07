@@ -10,8 +10,9 @@
 
 #include <assert.h>
 
+#include <r3/r3_is_solved.h>
+
 #include "r3cube.h"
-#include "r3_is_solved.h"
 
 int r3_is_solved(const r3cube *cube)
 {

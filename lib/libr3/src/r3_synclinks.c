@@ -12,8 +12,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <r3/r3_synclinks.h>
+
 #include "r3cube.h"
-#include "r3_synclinks.h"
 
 /// simple macro to find max of two values
 #define max(x,y) (x >= y ? x : y)

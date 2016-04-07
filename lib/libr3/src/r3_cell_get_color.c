@@ -8,28 +8,25 @@
  */
 #include <config.h>
 
-#include <stdlib.h>
+#include <r3/r3colors.h>
+#include <r3/r3_cell_get_color.h>
 
 #include "r3cube.h"
 #include "r3sides.h"
 
-#include "r3_get_cell.h"
-
-r3cell *r3_get_cell(const r3cube *cube, unsigned side, unsigned row, unsigned col)
+int r3_cell_get_color(const r3cell *cell)
 {
-    if (!cube) {
-        return NULL;
-    }
-
-    if (row >= NUM_ROWS || col >= NUM_COLS || side >= NUM_SIDES) {
-        return NULL;
+    if (!cell) {
+        return -1;
     }
 
 #if !defined(NDEBUG)
-    _r3_cube_check_integrity(cube);
+    assert(cell->side);
+    assert(cell->side->cube);
+    _r3_cube_check_integrity(cell->side->cube);
 #endif
 
-    return cube->sides[side].cells[row][col];
+    return cell->color;
 }
 
 // vim: et ts=4 sw=4 :
