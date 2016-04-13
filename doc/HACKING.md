@@ -10,6 +10,9 @@ upstream.
 
 ## Code Style
 
+* tabs have many uses; r3 isn't one of them. Any existing tabs (where possible)
+  are slated to be converted.
+
 ## How to Contribute
 
 ### How to Commit
