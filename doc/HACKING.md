@@ -28,6 +28,12 @@ Notable exceptions deviating from this coding style are briefly outlined here:
   statements in that conditional (e.g. temporary printf). It's a pain having to
   add and remove braces in those cases, so just leave them in. You'll thank me.
 
+* finally, like Wikipedia, "ignore all rules" if it's appropriate to do so.
+  Rules are only a (strong) guideline: if whatever you're trying to convey
+  isn't properly demonstrated using the "rules" here, please express it in any
+  way which is most effective. Just be sure you are capable of justifying your
+  style (in the commit message, etc.) ;-).
+
 ## How to Contribute
 
 ### How to Commit
