@@ -36,6 +36,13 @@ Notable exceptions deviating from this coding style are briefly outlined here:
 
 ## How to Contribute
 
+If you are interested in contributing to r3, feel free to submit patches either
+via the GitHub pull request feature or through email. Please make sure your
+changes are tested in both "developer mode" as well as non-"developer mode",
+and in any other configuration as appropriate. Ensure that the changes do not
+break any tests (or if they do, please update existing tests as necessary). Any
+new features, where possible, should also have tests written for them.
+
 ### How to Commit
 
 ### Tests
