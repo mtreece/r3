@@ -43,6 +43,13 @@ and in any other configuration as appropriate. Ensure that the changes do not
 break any tests (or if they do, please update existing tests as necessary). Any
 new features, where possible, should also have tests written for them.
 
+Please make sure each of your commits are "small", cohesive, and meaningful.
+Each commit should avoid introducing whitespace errors (see git-diff --check).
+As much as possible, try to avoid messy commit history (e.g. messy merge
+lineages). Make sure everything is spell-checked (commit message included).
+Finally, make sure your commit will merge cleanly with the latest upstream
+master branch.
+
 ### How to Commit
 
 ### Tests
