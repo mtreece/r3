@@ -50,8 +50,4 @@ lineages). Make sure everything is spell-checked (commit message included).
 Finally, make sure your commit will merge cleanly with the latest upstream
 master branch.
 
-### How to Commit
-
-### Tests
-
 ## Misc Concerns
