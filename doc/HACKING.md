@@ -51,3 +51,8 @@ Finally, make sure your changes will merge cleanly with the latest upstream
 master branch.
 
 ## Misc Concerns
+
+If you have changes that you want to contribute that are significantly large,
+you should consider reaching out first before implementing them, just to ensure
+the changes fit nicely in the (semi-non-existent) short and long-term roadmap
+plans.
