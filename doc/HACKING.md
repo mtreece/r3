@@ -20,7 +20,8 @@ kernel coding style" guide here:
 Notable exceptions deviating from this coding style are briefly outlined here:
 
 * tabs have many uses; r3 isn't one of them. Any existing tabs (where possible)
-  are slated to be converted.
+  are slated to be converted. Makefiles are, of course, the exception where
+  required.
 
 * generally speaking, braces should be used _even_ around a single-statement
   conditional. It's great knowing that the language makes this optional, but in
