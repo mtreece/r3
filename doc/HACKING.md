@@ -8,8 +8,8 @@ published by the Free Software Foundation.
 
 The purpose of this file is to collectively detail some of the necessary and
 helpful pieces of information for hacking on r3. Contributors should treat this
-as the "contributor-friendly" README and authoritative guide for submitting
-patches upstream.
+as the "contributor-friendly" README addendum and authoritative guide for
+submitting patches upstream.
 
 
 ## Administrivia
