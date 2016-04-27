@@ -37,7 +37,17 @@ Notable exceptions deviating from this coding style are briefly outlined here:
 
 Additional guidelines:
 
-* finally, like Wikipedia, "ignore all rules" if it's appropriate to do so.
+* Files should be "self contained" regarding header includes. In other words,
+  if a header references a particular type, it should (itself) `#include` any
+  needed headers to define those types.
+
+* All source files should `#include <config.h>` so as to appropriately
+  configure a build. This should be the _first_ `#include` of a source file.
+  The next block of includes should be any needed system header files, followed
+  by a block of project/public (i.e. `#include <something.h>`) headers, finally
+  followed by private/local (i.e. `#include "something.h"`) headers.
+
+* Finally, like Wikipedia, "ignore all rules" if it's appropriate to do so.
   Rules are only a (strong) guideline: if whatever you're trying to convey
   isn't properly demonstrated using the "rules" here, please express it in any
   way which is most effective. Just be sure you are capable of justifying your
