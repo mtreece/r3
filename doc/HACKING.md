@@ -47,6 +47,8 @@ Additional guidelines:
   by a block of project/public (i.e. `#include <something.h>`) headers, finally
   followed by private/local (i.e. `#include "something.h"`) headers.
 
+* Within logical groups, `#include` blocks should be sorted lexicographically.
+
 * Finally, like Wikipedia, "ignore all rules" if it's appropriate to do so.
   Rules are only a (strong) guideline: if whatever you're trying to convey
   isn't properly demonstrated using the "rules" here, please express it in any
