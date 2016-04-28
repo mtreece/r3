@@ -29,11 +29,11 @@ Notable exceptions deviating from this coding style are briefly outlined here:
   are slated to be converted. Makefiles are, of course, the exception where
   required.
 
-* Generally speaking, braces should be used _even_ around a single-statement
-  conditional. It's great knowing that the language makes this optional, but in
-  my experience, you will almost always need the flexibility of inserting extra
-  statements in that conditional (e.g. temporary printf). It's a pain having to
-  add and remove braces in those cases, so just leave them in. You'll thank me.
+* Braces should be used _even_ around a single-statement conditional. It's
+  great knowing that the language makes this optional, but in my experience,
+  you will almost always need the flexibility of inserting extra statements in
+  that conditional (e.g. temporary printf). It's a pain having to add and then
+  later remove braces when that happens, so leave them in. You'll thank me.
 
 Additional guidelines:
 
