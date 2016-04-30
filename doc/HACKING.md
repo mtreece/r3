@@ -22,6 +22,13 @@ submitting patches upstream.
     everything together, but it's the long-term goal to only advance the
     baseline with branches.
 
+* Branch names should follow the format: "${type}-${description}"
+  where ${type} is one of ...
+      "rf" = "refactor"
+      "ft" = "feature"
+      "bf" = "bugfix"
+  and ${description} is a brief alphanumeric description string, using "\_"
+  (underscore) in place of spaces.
 
 ## Code Style
 
