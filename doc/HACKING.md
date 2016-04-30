@@ -14,6 +14,11 @@ submitting patches upstream.
 
 ## Administrivia
 
+* Changes should be carried out on branches. When merged upstream, they will be
+  merged with the --no-ff option; this allows contributions to be captured in a
+  cohesive unit.
+
+
 ## Code Style
 
 Generally speaking, the "Linux kernel coding style" has worthy guidelines and
