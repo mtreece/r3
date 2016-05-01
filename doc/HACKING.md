@@ -15,8 +15,8 @@ submitting patches upstream.
 ## Administrivia
 
 * Changes should be carried out on branches. When merged upstream, they will be
-  merged with the --no-ff option; this allows contributions to be captured in a
-  cohesive unit.
+  merged with the --no-ff option in order to always checkpoint the merger; this
+  allows contributions to be captured in a cohesive unit.
 
   * "Mainline" development may routinely break this rule while trying to pull
     everything together, but it's the long-term goal to only advance the
