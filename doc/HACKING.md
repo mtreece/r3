@@ -11,6 +11,9 @@ helpful pieces of information for hacking on r3. Contributors should treat this
 as the "contributor-friendly" README addendum and authoritative guide for
 submitting patches upstream.
 
+Note, this document may change often as lessons-learned are accumulated; be
+sure to check back often to ensure you are familiar with any new guidance.
+
 ## Administrivia
 
 * Changes should be carried out on branches. When merged upstream, they will be
