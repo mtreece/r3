@@ -24,8 +24,8 @@ sure to check back often to ensure you are familiar with any new guidance.
     everything together, but it's the long-term goal to only advance the
     baseline with branches.
 
-* Branch names should follow the format: "${type}-${description}"
-  where ${type} is one of ...
+* Branch names should follow the format "${type}-${description}", where ${type}
+  is one of ...
       "rf" = "refactor"
       "ft" = "feature"
       "bf" = "bugfix"
