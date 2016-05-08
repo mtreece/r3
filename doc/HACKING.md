@@ -38,8 +38,8 @@ sure to check back often to ensure you are familiar with any new guidance.
 
 Generally speaking, the "Linux kernel coding style" has worthy guidelines and
 is an entertaining few minutes of reading material. This is true as of the time
-of this commit. You should be able to find the latest version of the "Linux
-kernel coding style" guide [here](https://www.kernel.org/doc/Documentation/CodingStyle).
+of this commit. You should be able to find the latest version of the document
+linked [here](https://www.kernel.org/doc/Documentation/CodingStyle).
 
 Notable exceptions deviating from this coding style are briefly outlined here:
 
