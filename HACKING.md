@@ -21,7 +21,7 @@ sure to check back often to ensure you are familiar with any new guidance.
   allows contributions to be captured in a cohesive unit.
 
   * "Mainline" development may routinely break this rule while trying to pull
-    everything together, but it's the long-term goal to only advance the
+    everything together; however, the long-term goal is to only advance the
     baseline with branch merges.
 
 * Branch names should follow the format "${type}-${description}", where ${type}
