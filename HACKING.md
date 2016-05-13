@@ -17,8 +17,8 @@ sure to check back often to ensure you are familiar with any new guidance.
 ## Administrivia
 
 * Changes should be carried out on branches. When merged upstream, they will be
-  merged with the --no-ff option in order to always checkpoint the merger; this
-  allows contributions to be captured in a cohesive unit.
+  merged with the `--no-ff` option in order to always checkpoint the merger;
+  this allows contributions to be captured in a cohesive unit.
 
   * "Mainline" development may routinely break this rule while trying to pull
     everything together; however, the long-term goal is to only advance the
