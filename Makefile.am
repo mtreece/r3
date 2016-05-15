@@ -8,6 +8,10 @@
 
 SUBDIRS = doc/ lib/libr3/ src/ test/
 
+EXTRA_DIST = \
+    HACKING \
+    HACKING.md
+
 # clean gcov-related files from the codebase
 clean-gcov:
 	find \( \
