@@ -21,8 +21,6 @@ overall health of the project.
     * Determine format: does including email address increase spam activity to
       the mailbox?
 
-* Establish a "/HACKING" file & guideline.
-
 * Create a friendly "/README" to describe what's going on here.
 
 * Better document the algorithm.
