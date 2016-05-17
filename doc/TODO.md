@@ -67,7 +67,7 @@ Miscellaneous ideas that could have a large-impact on the codebase.
   annoying.
 
 * Compiling with `--enable-developer-mode` appears to break `make dist-*`. Need
-  to investigate and fix.
+  to investigate and fix. (It could just be a "don't do this" type of thing?)
 
 
 ### Aesthetics & Misc Cleanup
