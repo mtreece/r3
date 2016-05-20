@@ -66,10 +66,6 @@ Miscellaneous ideas that could have a large-impact on the codebase.
   one test executable that is created -- either a single PASS or FAIL, which is
   annoying.
 
-* Compiling with `--enable-developer-mode` appears to break `make dist-*`. Need
-  to investigate and fix.
-
-
 ### Aesthetics & Misc Cleanup
 
 TODOs which can apply in multiple places, codebase-wide, that affect overall
