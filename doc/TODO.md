@@ -36,8 +36,7 @@ Long-term ideas for advancing r3 or adding unique features.
 ### Python Bindings
 
 * Investigate creating a, e.g., "${REPO}/lib/libpyr3/", which provides Python
-  bindings (python3) to call into libr3. Note, "Rework Memory Management" may
-  be a prereq for Python bindings. Need to investigate...
+  bindings (python3) to call into libr3.
 
 * Investigate if any tests can be improved (or better tests added) that can be
   powered by the Python bindings.
