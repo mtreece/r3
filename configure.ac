@@ -97,6 +97,8 @@ fi
 dnl currently "hard coded" configuration options
 AC_DEFINE([NUM_SIDES], 6,
           [number of faces on an r3cube; currently only supports hard-coded 6])
+AC_DEFINE([NUM_SIDES_RING], (NUM_SIDES - 2),
+          [number of faces on an r3cube "ring"; property of the topology])
 AC_DEFINE([NUM_COLS], 3,
           [number of columns on a r3side; currently only supports hard-coded 3])
 AC_DEFINE([NUM_ROWS], 3,
