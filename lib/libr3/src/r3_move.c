@@ -357,7 +357,7 @@ int r3_move(r3cube *cube, unsigned direction, unsigned selector)
     link_record *linkptr = links;
     link_record *unlinkptr = unlinks;
 
-    r3side *sides[NUM_SIDES + 1 + 1];
+    r3side *sides[NUM_SIDES_RING + 1 + 1]; // +1 loop-around, +1 NULL
     for (int i = 0; i < nsides; ++i) {
         sides[i] = &cube->sides[sidelist[i]];
     }
