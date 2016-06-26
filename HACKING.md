@@ -94,3 +94,9 @@ master branch.
 If you have changes that you want to contribute that are significantly large,
 you should consider reaching out first before implementing them, just to ensure
 the changes fit nicely in the short and long-term roadmap plans.
+
+Also note, if you peruse the git history of this repo, you may see commits that
+aren't always "complete" or at that point in time compileable. This is usually
+caused by a combination of 1) doing incremental commits, and 2) trying to build
+a GitHub streak; however, these non-functional commits should only ever appear
+on branches that are eventually merged --no-ff to master once complete.
