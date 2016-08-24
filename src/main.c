@@ -81,4 +81,4 @@ int main(int __attribute__((unused)) argc, char __attribute__((unused)) *argv[])
     return 0;
 }
 
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

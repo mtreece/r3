@@ -24,4 +24,4 @@
 int r3_cell_get_color(const r3cell *cell);
 
 #endif /* _R3_CELL_GET_COLOR_ */
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

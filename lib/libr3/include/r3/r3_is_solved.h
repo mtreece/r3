@@ -26,4 +26,4 @@
 int r3_is_solved(const r3cube *cube);
 
 #endif /* _R3_IS_SOLVED_ */
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

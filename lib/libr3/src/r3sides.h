@@ -44,4 +44,4 @@ typedef struct r3side {
 } r3side;
 
 #endif /* _R3SIDES_H_ */
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

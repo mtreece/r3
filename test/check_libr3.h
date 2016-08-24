@@ -29,4 +29,4 @@ extern suite_getter *_esuite_getters;
 
 #endif /* _CHECK_LIBR3_H_ */
 
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

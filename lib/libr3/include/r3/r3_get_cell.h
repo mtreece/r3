@@ -31,4 +31,4 @@
 r3cell *r3_get_cell(const r3cube *cube, unsigned side, unsigned row, unsigned col);
 
 #endif /* _R3_GET_CELL_ */
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

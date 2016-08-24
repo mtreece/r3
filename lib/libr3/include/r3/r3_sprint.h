@@ -64,4 +64,4 @@
 int r3_sprint(char *buffer, size_t *buflen, const r3cube *cube);
 
 #endif /* _R3_SPRINT_H_ */
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

@@ -34,4 +34,4 @@
 int r3_move(r3cube *cube, unsigned direction, unsigned selector);
 
 #endif /* _R3_MOVE_H_ */
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :
