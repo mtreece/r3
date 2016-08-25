@@ -22,4 +22,4 @@ check_libr3_LDADD = @CHECK_LIBS@
 check_libr3_LDADD += $(top_builddir)/lib/libr3/src/libr3.la
 check_libr3_LDFLAGS = -Wl,$(srcdir)/check_libr3.map
 
-# vim: et ts=4 sw=4 :
+# vim: ts=4 sts=4 sw=4 et :

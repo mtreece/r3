@@ -33,4 +33,4 @@ const r3side *r3_cube_get_face(const r3cube *cube, unsigned side)
     return &cube->sides[side];
 }
 
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

@@ -66,4 +66,4 @@ static inline void _r3_cube_check_integrity(const r3cube *cube)
 #endif
 
 #endif /* _R3CUBE_H_ */
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

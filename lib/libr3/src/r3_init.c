@@ -217,4 +217,4 @@ int r3_init(r3cube *cube, size_t *len)
     return 0;
 }
 
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :

@@ -491,4 +491,4 @@ eloop5:
     return 0;
 }
 
-// vim: et ts=4 sw=4 :
+// vim: ts=4 sts=4 sw=4 et :
