@@ -78,6 +78,9 @@ int main(int __attribute__((unused)) argc, char __attribute__((unused)) *argv[])
 
     DO_MOVE_AND_PRINT(cube, R3_RIGHT, 0);
 
+    // free for sake of appeasing valgrind
+    free(cube);
+
     return 0;
 }
 
