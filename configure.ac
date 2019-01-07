@@ -61,6 +61,11 @@ AC_ARG_ENABLE([build-tests],
 if test "x$BUILD_TESTS" == "xyes"; then
     AC_MSG_RESULT([yes])
 
+    dnl verify that check is installed on the system.
+    dnl If found, continue; if not found, error.
+    PKG_CHECK_MODULES([CHECK_EXISTS], [check],
+                      [], [AC_MSG_ERROR([check is not installed.])])
+
     dnl Tests require basic libcheck functionality, but we also want to support
     dnl libcheck TAP, if it's available. TAP requires libcheck 0.9.12 or
     dnl higher; so let's check for that, but not bail if it's unavailable.
